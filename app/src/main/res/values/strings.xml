@@ -107,6 +107,7 @@
     //pet card
     <string name="price">Price:</string>
     <string name="date">Date:</string>
+    <string name="title_activity_pet_page">PetPageActivity</string>
 
 
 </resources>

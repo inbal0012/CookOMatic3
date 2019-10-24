@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".PetPageActivity"
+            android:label="@string/title_activity_pet_page"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".SearchActivity"
             android:label="@string/title_activity_search"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".FilterActivity"
             android:label="@string/title_activity_filter"

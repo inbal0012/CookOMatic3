@@ -59,11 +59,14 @@ public class SearchActivity extends AppCompatActivity {
                 String str = "name: " + pet.getName() + "\nage: " + pet.getAge() + "\ntype: " + pet.getKind() + "\ngender: " + pet.getGender();
                 Log.d(TAG, "onCardClicked: selected: \n" + str);
                 Toast.makeText(SearchActivity.this, "selected: \n" + str, Toast.LENGTH_SHORT).show();
-//                Gson gson = new Gson();
-//                Intent intent = new Intent(SearchActivity.this, PetPageActivity.class);
-//                intent.putExtra("pet", gson.toJson(pet));
-//                startActivity(intent);
-
+                Gson gson = new Gson();
+                Intent intent = new Intent(SearchActivity.this, PetPageActivity.class);
+                String gstr = gson.toJson(pet);
+                Log.d(TAG, "onCardClicked: gson.toJson(pet)");
+                intent.putExtra("pet", gstr);
+                Log.d(TAG, "onCardClicked: putExtra");
+                startActivity(intent);
+                Log.d(TAG, "onCardClicked: done");
             }
 
             @Override

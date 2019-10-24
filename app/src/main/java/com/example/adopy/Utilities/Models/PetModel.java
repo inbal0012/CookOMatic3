@@ -12,8 +12,8 @@ public class PetModel implements Serializable {
     private String Name;
     @SerializedName("kind")
     private String Kind;
-    @SerializedName("bitmap")
-    private android.graphics.Bitmap Bitmap;
+    //@SerializedName("bitmap")
+    //private android.graphics.Bitmap Bitmap;
     @SerializedName("location")
     private String Location;
     @SerializedName("age")
@@ -31,7 +31,7 @@ public class PetModel implements Serializable {
         Name = name;
         Age = age;
         Gender = gender;
-        Bitmap = bitmap;
+        //Bitmap = bitmap;
     }
 
     public PetModel() {
@@ -54,11 +54,11 @@ public class PetModel implements Serializable {
     }
 
     public android.graphics.Bitmap getBitmap() {
-        return Bitmap;
+        return Bitmap.createBitmap(1,1, Bitmap.Config.ALPHA_8); //Bitmap;
     }
 
     public void setBitmap(android.graphics.Bitmap bitmap) {
-        Bitmap = bitmap;
+        //Bitmap = bitmap;
     }
 
     public String getLocation() {
