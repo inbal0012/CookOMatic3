@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">adopy</string>
+
     <string name="title_activity_filter">FilterActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -91,5 +92,13 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+
+
+    <string-array name="sex_array">
+        <item>"Male"</item>
+        <item>"Doesn't matter"</item>
+        <item>"Female"</item>
+    </string-array>
+
     <string name="title_activity_search">SearchActivity</string>
 </resources>
