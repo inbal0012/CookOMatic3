@@ -37,7 +37,7 @@ public class PetsAdapter extends RecyclerView.Adapter<PetsAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_pet,viewGroup,false);
-        return new PetsAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override

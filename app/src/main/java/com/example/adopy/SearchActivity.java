@@ -9,24 +9,27 @@ import com.example.adopy.UI_utilities.Adapters.PetsAdapter;
 import com.example.adopy.Utilities.Interfaces_and_Emuns.CardListener;
 import com.example.adopy.Utilities.Interfaces_and_Emuns.Gender;
 import com.example.adopy.Utilities.Models.PetModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -39,11 +42,21 @@ public class SearchActivity extends AppCompatActivity {
     private PetsAdapter petsAdapter;
     private List<PetModel> petModelArrayList;
 
+    //Firebase
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        //Firebase
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("Pets");
+
+
+        //RecyclerView START
         GridLayoutManager linearLayoutManager = new GridLayoutManager(this,2);
         petModelArrayList = new ArrayList<>();
         petsAdapter = new PetsAdapter(petModelArrayList, this);
@@ -95,10 +108,10 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
-
         itemTouchHelper.attachToRecyclerView(recyclerView);
+        //RecyclerView END
 
-        fillPetList();
+        //fillPetList();
     }
 
     private void fillPetList() {
@@ -106,7 +119,7 @@ public class SearchActivity extends AppCompatActivity {
         petModelArrayList.add(new PetModel("dog", "nero", 4.2, Gender.Male, BitmapFactory.decodeResource(getResources(), R.drawable.dog)));
         petModelArrayList.add(new PetModel("cat", "laila", 2.7, Gender.Female, BitmapFactory.decodeResource(getResources(), R.drawable.cat)));
         petModelArrayList.add(new PetModel("cat", "nobles", 3.5, Gender.Male, BitmapFactory.decodeResource(getResources(), R.drawable.cat)));
-        petModelArrayList.add(new PetModel("dog", "menesh", 0.9, Gender.Female, BitmapFactory.decodeResource(getResources(), R.drawable.dog)));
+        petModelArrayList.add(new PetModel("dog", "nemesh", 0.9, Gender.Female, BitmapFactory.decodeResource(getResources(), R.drawable.dog)));
         petModelArrayList.add(new PetModel("iguana", "gourg", 0.5, Gender.Female, BitmapFactory.decodeResource(getResources(), R.drawable.iguana)));
         petModelArrayList.add(new PetModel("turtle", "slowy", 10.0, Gender.Male, BitmapFactory.decodeResource(getResources(), R.drawable.turtle)));
         petModelArrayList.add(new PetModel("chinchilla", "archy", 5.0, Gender.Male, BitmapFactory.decodeResource(getResources(), R.drawable.chinchilla)));
@@ -136,5 +149,39 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    //load data into recycler view - onStart
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseRecyclerOptions<PetModel> options =
+                new FirebaseRecyclerOptions.Builder<PetModel>()
+                        .setQuery(databaseReference, PetModel.class)
+                        .build();
+
+        FirebaseRecyclerAdapter firebaseRecyclerAdapter =
+                new FirebaseRecyclerAdapter<PetModel, PetsAdapter.ViewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull PetsAdapter.ViewHolder holder, int position, @NonNull PetModel model) {
+                        petsAdapter.onBindViewHolder(holder, position);
+                    }
+
+                    @NonNull
+                    @Override
+                    public PetsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.card_pet, parent, false);
+
+                        return petsAdapter.new ViewHolder(view);
+                    }
+                };
+    }
+
+    //search data
+    private void firebaseSearch(String i_searchText) {
+        //Query firebaseSearchQuery =
     }
 }
