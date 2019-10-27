@@ -1,6 +1,7 @@
 package com.example.adopy.UI_utilities.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PetsAdapter extends RecyclerView.Adapter<PetsAdapter.ViewHolder> {
 
+    private static final String TAG = "my_PetsAdapter";
 
+    private Context context;
     List<PetModel> petModelList;
     private CardListener cardListener;
-    private Context context;
 
     public void setCardListener(CardListener cardListener) {
         this.cardListener = cardListener;
@@ -67,14 +69,16 @@ public class PetsAdapter extends RecyclerView.Adapter<PetsAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            Log.d(TAG, "ViewHolder: Init");
+
             petImage = itemView.findViewById(R.id.pet_image);
             petName = itemView.findViewById(R.id.pet_name);
             publish_Date = itemView.findViewById(R.id.publish_date);
             pet_price = itemView.findViewById(R.id.pet_price);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     cardListener.onCardClicked(getAdapterPosition(),v);
                 }
             });

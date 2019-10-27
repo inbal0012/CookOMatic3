@@ -12,7 +12,7 @@
         android:paddingTop="20dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:id="@+id/recycler_home"
+        android:id="@+id/recycler_search_act"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
