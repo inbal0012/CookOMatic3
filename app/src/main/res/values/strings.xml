@@ -109,5 +109,9 @@
     <string name="date">Date:</string>
     <string name="title_activity_pet_page">PetPageActivity</string>
 
+    //notifications
+    <string name="onBootChannelDesc">Adopt animals around you in ease</string>
+    <string name="weeklyUpdatesChannelDesc">Don\'t miss your best friend. See the new animals added when you weren\'t here</string>
+
 
 </resources>

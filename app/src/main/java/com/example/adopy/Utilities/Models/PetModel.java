@@ -12,8 +12,8 @@ public class PetModel implements Serializable {
     private String Name;
     @SerializedName("kind")
     private String Kind;
-    //@SerializedName("bitmap")
-    //private android.graphics.Bitmap Bitmap;
+    @SerializedName("bitmapUrl")
+    private String BitmapUrl;
     @SerializedName("location")
     private String Location;
     @SerializedName("age")
