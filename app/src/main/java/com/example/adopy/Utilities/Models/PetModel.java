@@ -24,6 +24,10 @@ public class PetModel implements Serializable {
     private String Price;
     @SerializedName("owner")
     private String PostOwner;
+    @SerializedName("latitude")
+    private Double latitude;
+    @SerializedName("longitude")
+    private Double longitude;
 
 
     public PetModel(String kind, String name, Double age, Gender gender, android.graphics.Bitmap bitmap) {
@@ -99,5 +103,21 @@ public class PetModel implements Serializable {
 
     public void setPostOwner(String postOwner) {
         PostOwner = postOwner;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = Double.parseDouble(latitude);
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = Double.parseDouble(longitude);
     }
 }

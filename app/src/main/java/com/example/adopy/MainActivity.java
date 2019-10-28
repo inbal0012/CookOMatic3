@@ -6,13 +6,23 @@ import androidx.core.app.NotificationManagerCompat;
 
 import android.Manifest;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,20 +32,26 @@ import android.widget.Toast;
 import com.example.adopy.Utilities.AlarmReceiver;
 import com.example.adopy.Utilities.BootRegisterService;
 
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 import static com.example.adopy.Utilities.App.CHANNEL_1_ID;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements LocationListener {
 
     private static final String TAG = "my_MainActivity";
+
     private static final int FOREGROUND_SERVICE_PERMISSION_REQUEST = 101;
+    private static final int LOCATION_PERMISSION_REQUEST = 102;
 
     private NotificationManagerCompat notificationManager;
+    private LocationManager locationManager;
+    private AlarmManager alarmManager;
 
-    private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
+
+    private Geocoder geocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +77,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button saveUpdates = findViewById(R.id.reminderRepeat_btn);
+        saveUpdates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveUpdates();
+            }
+        });
+
         notificationManager = NotificationManagerCompat.from(this);
         sendOnChannel1();
 
@@ -80,24 +104,30 @@ public class MainActivity extends AppCompatActivity {
             startService(new Intent(this, BootRegisterService.class));
         }
 
-        Button saveUpdates = findViewById(R.id.reminderRepeat_btn);
-        saveUpdates.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SaveUpdates();
+        //location permission
+        geocoder = new Geocoder(this);
+        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+
+        if(Build.VERSION.SDK_INT>=23) {
+            int hasLocationPermission = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+            if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST);
             }
-        });
+            else {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,100,MainActivity.this);
+            }
+        }
+        else
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,100,MainActivity.this);
 
 
-
-//        startService(new Intent(this, BootRegisterService.class));
 
     }
 
     private void SaveUpdates() {
         EditText time = findViewById(R.id.reminderRepeat_et);
 
-        alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
@@ -107,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
 // setRepeating() lets you specify a precise custom interval--in this case,
 // user choice minutes.
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 1000 * 60 * Integer.parseInt(time.getText().toString()) , alarmIntent);
     }
 
@@ -123,6 +153,27 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 Toast.makeText(this, "Sorry, can't work without foreground permission", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        if(requestCode==LOCATION_PERMISSION_REQUEST) {
+            if(grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Attention").setMessage("The application must have location permission in order for it to work!")
+                        .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                intent.setData(Uri.parse("package:"+getPackageName()));
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        }).setCancelable(false).show();
             }
         }
     }
@@ -151,4 +202,51 @@ public class MainActivity extends AppCompatActivity {
 
         notificationManager.notify(1, notification);
     }
+
+    //LocationListener funcs START
+    @Override
+    public void onLocationChanged(Location location) {
+
+        final double lat = location.getLatitude();
+        final double lng = location.getLongitude();
+        Log.d(TAG, "onLocationChanged: " + lat + " , " + lng);
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(lat,lng,1);
+                    final Address bestAddress = addresses.get(0);
+
+                    Log.d(TAG, "onLocationChanged: run: " + bestAddress.getCountryName()
+                            + " , " + bestAddress.getLocality()
+                            + " , " + bestAddress.getThoroughfare()
+                            + " , " + bestAddress.getSubThoroughfare()
+                            + " , " + bestAddress.getAdminArea());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+    //LocationListener funcs END
 }
