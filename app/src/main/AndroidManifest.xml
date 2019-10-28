@@ -40,6 +40,12 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+
+        <receiver android:name=".Utilities.AlarmReceiver">
+            <intent-filter>
+                <action android:name="com.android.alarmclock.ALARM_ALERT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

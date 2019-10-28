@@ -34,14 +34,14 @@ public class App extends Application {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(
                     CHANNEL_1_ID,
-                    "on Boot Channel",
+                    getString(R.string.onBootChannelName),
                     NotificationManager.IMPORTANCE_HIGH
             );
             channel1.setDescription(getString(R.string.onBootChannelDesc));
 
             NotificationChannel channel2 = new NotificationChannel(
                     CHANNEL_2_ID,
-                    "weekly Updates Channel",
+                    getString(R.string.weeklyUpdatesChannelName),
                     NotificationManager.IMPORTANCE_LOW
             );
             channel2.setDescription(getString(R.string.weeklyUpdatesChannelDesc));

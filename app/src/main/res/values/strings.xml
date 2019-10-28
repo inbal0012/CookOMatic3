@@ -112,6 +112,10 @@
     //notifications
     <string name="onBootChannelDesc">Adopt animals around you in ease</string>
     <string name="weeklyUpdatesChannelDesc">Don\'t miss your best friend. See the new animals added when you weren\'t here</string>
+    <string name="weekly_update_title">Pets update</string>
+    <string name="weeklyUpdatesChannelName">weekly Updates Channel</string>
+    <string name="onBootChannelName">on Boot Channel</string>
+    <string name="reminderRepeat_tv_hint">get updates every X days</string>
 
 
 </resources>
