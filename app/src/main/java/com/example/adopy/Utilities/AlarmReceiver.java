@@ -10,13 +10,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
-import com.example.adopy.MainActivity;
 import com.example.adopy.R;
 import com.example.adopy.SearchActivity;
 
-import androidx.core.app.NotificationCompat;
-
-import static com.example.adopy.Utilities.App.CHANNEL_2_ID;
+import static com.example.adopy.Utilities.App.WEEKLY_UPDATES_CHANNEL_ID;
 
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
@@ -35,9 +32,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if(Build.VERSION.SDK_INT>=26) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_2_ID, context.getString(R.string.weeklyUpdatesChannelName), NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel channel = new NotificationChannel(WEEKLY_UPDATES_CHANNEL_ID, context.getString(R.string.weeklyUpdatesChannelName), NotificationManager.IMPORTANCE_HIGH);
             manager.createNotificationChannel(channel);
-            builder.setChannelId(CHANNEL_2_ID);
+            builder.setChannelId(WEEKLY_UPDATES_CHANNEL_ID);
         }
 
         Notification notification = builder.build();

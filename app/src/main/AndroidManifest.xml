@@ -44,11 +44,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".Utilities.AlarmReceiver">
-            <intent-filter>
-                <action android:name="com.android.alarmclock.ALARM_ALERT" />
-            </intent-filter>
-        </receiver>
+        <receiver android:name=".Utilities.AlarmReceiver"/>
     </application>
 
 </manifest>

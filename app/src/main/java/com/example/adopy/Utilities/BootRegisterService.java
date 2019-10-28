@@ -15,10 +15,8 @@ import com.example.adopy.R;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-import static com.example.adopy.Utilities.App.CHANNEL_1_ID;
+import static com.example.adopy.Utilities.App.ON_BOOT_CHANNEL_ID;
 
 public class BootRegisterService extends Service {
     BootReceiver receiver;
@@ -41,11 +39,11 @@ public class BootRegisterService extends Service {
 
 
         Notification.Builder notifBuilder = new Notification.Builder(this);
-        notifBuilder.setSmallIcon(android.R.drawable.star_on).setContentTitle("Screen register service")
-                .setContentText("Monitoring screen on and off");
+        notifBuilder.setSmallIcon(R.drawable.foot).setContentTitle(getString(R.string.onBootChannelName))
+                .setContentText(getString(R.string.onBootChannelDesc));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            startMyOwnForeground();
+            startMyOwnForeground(notifBuilder);
         else
             startForeground(1, notifBuilder.build());
 
@@ -61,18 +59,11 @@ public class BootRegisterService extends Service {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private void startMyOwnForeground(){
-        String NOTIFICATION_CHANNEL_ID = "com.example.adopy.Utilities";
-        String channelName = "My Background Service";
-        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+    private void startMyOwnForeground(Notification.Builder notifBuilder){
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         assert manager != null;
-        manager.createNotificationChannel(chan);
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
-        Notification notification = notificationBuilder.setSmallIcon(android.R.drawable.star_on).setContentTitle("Screen register service")
-                .setContentText("Monitoring screen on and off")
-                .setCategory(Notification.CATEGORY_SERVICE)
+        Notification notification = notifBuilder.setChannelId(ON_BOOT_CHANNEL_ID).setCategory(Notification.CATEGORY_SERVICE)
                 .build();
         startForeground(2, notification);
     }

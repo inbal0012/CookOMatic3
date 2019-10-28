@@ -21,7 +21,6 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -36,7 +35,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.example.adopy.Utilities.App.CHANNEL_1_ID;
+import static com.example.adopy.Utilities.App.ON_BOOT_CHANNEL_ID;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
@@ -85,24 +84,24 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
-        notificationManager = NotificationManagerCompat.from(this);
-        sendOnChannel1();
-
-
-        if(Build.VERSION.SDK_INT>=23) {
-
-            int hasForegroundPermission = checkSelfPermission(Manifest.permission.FOREGROUND_SERVICE);
-            if(hasForegroundPermission == PackageManager.PERMISSION_GRANTED) {
-                startService(new Intent(this, BootRegisterService.class));
-            }
-            else { //PERMISSION_DENIED
-
-                requestPermissions(new String[] {Manifest.permission.FOREGROUND_SERVICE},FOREGROUND_SERVICE_PERMISSION_REQUEST);
-            }
-        }
-        else {
-            startService(new Intent(this, BootRegisterService.class));
-        }
+//        notificationManager = NotificationManagerCompat.from(this);
+//        sendOnChannel1();
+//
+//
+//        if(Build.VERSION.SDK_INT>=23) {
+//
+//            int hasForegroundPermission = checkSelfPermission(Manifest.permission.FOREGROUND_SERVICE);
+//            if(hasForegroundPermission == PackageManager.PERMISSION_GRANTED) {
+//                startService(new Intent(this, BootRegisterService.class));
+//            }
+//            else { //PERMISSION_DENIED
+//
+//                requestPermissions(new String[] {Manifest.permission.FOREGROUND_SERVICE},FOREGROUND_SERVICE_PERMISSION_REQUEST);
+//            }
+//        }
+//        else {
+//            startService(new Intent(this, BootRegisterService.class));
+//        }
 
         //location permission
         geocoder = new Geocoder(this);
@@ -180,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
 
     public void sendOnChannel1() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, ON_BOOT_CHANNEL_ID)
                 .setSmallIcon(R.drawable.foot)
                 .setContentTitle(getString(R.string.onBootChannelDesc))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

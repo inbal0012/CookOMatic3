@@ -1,25 +1,18 @@
 package com.example.adopy.Utilities;
 
 import android.app.Application;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
-import com.example.adopy.MainActivity;
 import com.example.adopy.R;
-import com.example.adopy.SearchActivity;
 
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 public class App extends Application {
-    public static final String CHANNEL_1_ID = "onBootChannel";
-    public static final String CHANNEL_2_ID = "weeklyUpdatesChannel";
+    public static final String ON_BOOT_CHANNEL_ID = "onBootChannel";
+    public static final String WEEKLY_UPDATES_CHANNEL_ID = "weeklyUpdatesChannel";
 
     private NotificationManagerCompat manager;
 
@@ -33,14 +26,14 @@ public class App extends Application {
     private void createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(
-                    CHANNEL_1_ID,
+                    ON_BOOT_CHANNEL_ID,
                     getString(R.string.onBootChannelName),
                     NotificationManager.IMPORTANCE_HIGH
             );
             channel1.setDescription(getString(R.string.onBootChannelDesc));
 
             NotificationChannel channel2 = new NotificationChannel(
-                    CHANNEL_2_ID,
+                    WEEKLY_UPDATES_CHANNEL_ID,
                     getString(R.string.weeklyUpdatesChannelName),
                     NotificationManager.IMPORTANCE_LOW
             );
@@ -56,7 +49,7 @@ public class App extends Application {
 
 //
 //    public void sendOnChannel1() {
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, ON_BOOT_CHANNEL_ID)
 //                .setSmallIcon(R.drawable.foot)
 //                .setContentTitle(getString(R.string.onBootChannelDesc))
 //                .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -83,7 +76,7 @@ public class App extends Application {
 //        String title = editTextTitle.getText().toString();
 //        String message = editTextMessage.getText().toString();
 //
-//        Notification notification = new NotificationCompat.Builder(this, CHANNEL_2_ID)
+//        Notification notification = new NotificationCompat.Builder(this, WEEKLY_UPDATES_CHANNEL_ID)
 //                .setSmallIcon(R.drawable.ic_two)
 //                .setContentTitle(title)
 //                .setContentText(message)
