@@ -25,8 +25,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,taoIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentText(context.getString(R.string.weeklyUpdatesChannelDesc)).setContentTitle(context.getString(R.string.weekly_update_title))
-                .setSmallIcon(android.R.drawable.star_on)
+        builder.setContentText(context.getString(R.string.weeklyUpdatesChannelDesc))
+                .setContentTitle(context.getString(R.string.weeklyUpdatesChannelTitle))
+                .setSmallIcon(R.drawable.foot)
                 .setContentIntent(pendingIntent);
 
         NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);

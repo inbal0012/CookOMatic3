@@ -3,6 +3,7 @@ package com.example.adopy.Utilities;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.example.adopy.R;
+import com.example.adopy.SearchActivity;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -38,9 +40,14 @@ public class BootRegisterService extends Service {
         registerReceiver(receiver,filter);
 
 
+        Intent taoIntent = new Intent(getApplicationContext(), SearchActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,taoIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+
         Notification.Builder notifBuilder = new Notification.Builder(this);
-        notifBuilder.setSmallIcon(R.drawable.foot).setContentTitle(getString(R.string.onBootChannelName))
-                .setContentText(getString(R.string.onBootChannelDesc));
+        notifBuilder.setSmallIcon(R.drawable.foot)
+                .setContentTitle(getString(R.string.onBootChannelTitle))
+                .setContentText(getString(R.string.onBootChannelDesc))
+                .setContentIntent(pendingIntent);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             startMyOwnForeground(notifBuilder);

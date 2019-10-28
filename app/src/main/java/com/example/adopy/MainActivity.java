@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
-        Button saveUpdates = findViewById(R.id.reminderRepeat_btn);
+        Button saveUpdates = findViewById(R.id.reminderRepeatSave_btn);
         saveUpdates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,24 +84,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
-//        notificationManager = NotificationManagerCompat.from(this);
-//        sendOnChannel1();
-//
-//
-//        if(Build.VERSION.SDK_INT>=23) {
-//
-//            int hasForegroundPermission = checkSelfPermission(Manifest.permission.FOREGROUND_SERVICE);
-//            if(hasForegroundPermission == PackageManager.PERMISSION_GRANTED) {
-//                startService(new Intent(this, BootRegisterService.class));
-//            }
-//            else { //PERMISSION_DENIED
-//
-//                requestPermissions(new String[] {Manifest.permission.FOREGROUND_SERVICE},FOREGROUND_SERVICE_PERMISSION_REQUEST);
-//            }
-//        }
-//        else {
-//            startService(new Intent(this, BootRegisterService.class));
-//        }
+        Button cancelUpdatesBtn = findViewById(R.id.reminderRepeatCancel_btn);
+        cancelUpdatesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,AlarmReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+                alarmManager.cancel(pendingIntent);
+            }
+        });
 
         //location permission
         geocoder = new Geocoder(this);
@@ -130,12 +121,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Intent intent = new Intent(this, AlarmReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
-// Set the alarm to start now
+        // Set the alarm to start now
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
-// setRepeating() lets you specify a precise custom interval--in this case,
-// user choice minutes.
+        // setRepeating() lets you specify a precise custom interval--in this case,
+        // user choice in minutes.
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 1000 * 60 * Integer.parseInt(time.getText().toString()) , alarmIntent);
     }

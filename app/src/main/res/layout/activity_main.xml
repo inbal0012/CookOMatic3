@@ -45,19 +45,29 @@
         app:layout_constraintRight_toRightOf="parent"
         android:gravity="center_horizontal">
 
+        <Button
+            android:id="@+id/reminderRepeatCancel_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="cancel"
+            android:layout_marginStart="10dp"/>
+
         <EditText
             android:id="@+id/reminderRepeat_et"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="wrap_content"
             android:hint="@string/reminderRepeat_tv_hint"
             android:layout_marginStart="10dp"/>
 
         <Button
-            android:id="@+id/reminderRepeat_btn"
-            android:layout_width="wrap_content"
+            android:id="@+id/reminderRepeatSave_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="save"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginEnd="10dp"/>
 
     </LinearLayout>
 

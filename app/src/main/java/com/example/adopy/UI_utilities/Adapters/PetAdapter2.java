@@ -93,14 +93,14 @@ public class PetAdapter2 extends RecyclerView.Adapter<PetAdapter2.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PetModel petModel = petModels.get(position);
         float[] results = new float[1];
-        Log.d(TAG, "onBindViewHolder: " + userLat + " , " + userLng + " pet: " + petModel.getLatitude() + " , " + petModel.getLongitude());
+        Log.d(TAG, "onBindViewHolder: " + userLat + " , " + userLng + " pet " + petModel.getName() + ": " + petModel.getLatitude() + " , " + petModel.getLongitude());
         Location.distanceBetween(userLat, userLng, petModel.getLatitude(), petModel.getLongitude(), results);
-        Log.d(TAG, "onBindViewHolder: " + results[0]);
+        String dist = String.valueOf(Math.round(results[0])/1000);
+        Log.d(TAG, "onBindViewHolder: " + results[0]/1000);
 
         holder.petName.setText(petModel.getName());
         holder.petImage.setImageBitmap(petModel.getBitmap());
         holder.petAge.setText(petModel.getAge().toString());
-        String dist = String.valueOf(results[0]/1000);
         holder.petDist.setText(dist);
     }
 
