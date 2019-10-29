@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+                startActivity(new Intent(MainActivity.this, SigninActivity.class));
             }
         });
 

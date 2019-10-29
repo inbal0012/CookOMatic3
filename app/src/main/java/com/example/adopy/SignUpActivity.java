@@ -122,11 +122,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 if(!task.isSuccessful()){
                     if(pass.length() < 6 ) {
                         Log.d(TAG, "onComplete: pass " + pass + " length " + pass.length());
-                        Toast toast= Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error_incorrect_password) + pass,Toast.LENGTH_SHORT);
+                        Toast toast= Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error_invalid_password) + pass,Toast.LENGTH_SHORT);
                         toast.show();
                     }
                     if(!email.contains("@")){
-                        Toast toast=  Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error_invalid_password),Toast.LENGTH_SHORT);
+                        Toast toast=  Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error_invalid_email),Toast.LENGTH_SHORT);
                         toast.show();
                     }
                     else
