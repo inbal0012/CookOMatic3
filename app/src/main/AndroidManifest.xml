@@ -2,11 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.adopy">
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".Utilities.Models.App"
@@ -16,10 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".ResetPassword" />
+        <activity android:name=".SigninActivity" />
         <activity
             android:name=".PetPageActivity"
             android:label="@string/title_activity_pet_page"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SearchActivity"
             android:label="@string/title_activity_search"
@@ -36,15 +38,14 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".Utilities.BootRegisterService"/>
+        <service android:name=".Utilities.BootRegisterService" />
 
         <receiver android:name=".Utilities.BootReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name=".Utilities.AlarmReceiver"/>
+        <receiver android:name=".Utilities.AlarmReceiver" />
     </application>
 
 </manifest>

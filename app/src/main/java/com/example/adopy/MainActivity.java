@@ -94,6 +94,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
+        Button loginBtn = findViewById(R.id.signinBtn);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+            }
+        });
+
         //location permission
         geocoder = new Geocoder(this);
         locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
