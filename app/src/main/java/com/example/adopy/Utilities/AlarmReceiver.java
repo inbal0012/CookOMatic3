@@ -13,7 +13,7 @@ import android.util.Log;
 import com.example.adopy.R;
 import com.example.adopy.SearchActivity;
 
-import static com.example.adopy.Utilities.App.WEEKLY_UPDATES_CHANNEL_ID;
+import static com.example.adopy.Utilities.Models.App.WEEKLY_UPDATES_CHANNEL_ID;
 
 public class AlarmReceiver extends BroadcastReceiver {
     @Override

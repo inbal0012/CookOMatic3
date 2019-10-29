@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.adopy.MainActivity;
 import com.example.adopy.R;
 import com.example.adopy.Utilities.Models.PetModel;
 
@@ -56,7 +56,7 @@ public class PetAdapter2 extends RecyclerView.Adapter<PetAdapter2.ViewHolder> {
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         userLat = location.getLatitude();
         userLng = location.getLongitude();
-        Log.d(TAG, "getLastKnownLocation: " + userLat + " , " + userLng);
+//        Log.d(TAG, "getLastKnownLocation: " + userLat + " , " + userLng);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -93,13 +93,13 @@ public class PetAdapter2 extends RecyclerView.Adapter<PetAdapter2.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PetModel petModel = petModels.get(position);
         float[] results = new float[1];
-        Log.d(TAG, "onBindViewHolder: " + userLat + " , " + userLng + " pet " + petModel.getName() + ": " + petModel.getLatitude() + " , " + petModel.getLongitude());
+        Log.d(TAG, "onBindViewHolder: " + userLat + " , " + userLng + " \npet " + petModel.getName() + ": " + petModel.getLatitude() + " , " + petModel.getLongitude() + "\nuri: " + petModel.getBitmapUri());
         Location.distanceBetween(userLat, userLng, petModel.getLatitude(), petModel.getLongitude(), results);
         String dist = String.valueOf(Math.round(results[0])/1000);
-        Log.d(TAG, "onBindViewHolder: " + results[0]/1000);
+//        Log.d(TAG, "onBindViewHolder: " + results[0]/1000);
 
         holder.petName.setText(petModel.getName());
-        holder.petImage.setImageBitmap(petModel.getBitmap());
+       // holder.petImage.setImageURI(Uri.parse(petModel.getBitmapUri()));
         holder.petAge.setText(petModel.getAge().toString());
         holder.petDist.setText(dist);
     }

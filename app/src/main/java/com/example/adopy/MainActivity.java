@@ -35,7 +35,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.example.adopy.Utilities.App.ON_BOOT_CHANNEL_ID;
+import static com.example.adopy.Utilities.Models.App.ON_BOOT_CHANNEL_ID;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
 

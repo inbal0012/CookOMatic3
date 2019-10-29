@@ -165,6 +165,11 @@ public class MultipleSelectionSpinner extends AppCompatSpinner implements
                 selection.add(_items[i]);
             }
         }
+        if (selection.isEmpty()){
+            for (int i = 0; i < _items.length; ++i) {
+                    selection.add(_items[i]);
+            }
+        }
         return selection;
     }
 

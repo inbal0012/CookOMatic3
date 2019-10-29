@@ -1,4 +1,4 @@
-package com.example.adopy.Utilities;
+package com.example.adopy.Utilities.Models;
 
 import android.app.Application;
 import android.app.NotificationChannel;

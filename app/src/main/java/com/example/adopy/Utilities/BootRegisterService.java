@@ -1,7 +1,6 @@
 package com.example.adopy.Utilities;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -18,7 +17,7 @@ import com.example.adopy.SearchActivity;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import static com.example.adopy.Utilities.App.ON_BOOT_CHANNEL_ID;
+import static com.example.adopy.Utilities.Models.App.ON_BOOT_CHANNEL_ID;
 
 public class BootRegisterService extends Service {
     BootReceiver receiver;
