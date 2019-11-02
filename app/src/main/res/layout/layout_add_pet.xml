@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginTop="10dp"
-                android:text="New Post"
+                android:text="@string/new_pet"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -38,7 +38,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="170dp"
                     android:layout_marginBottom="5dp"
-                    android:src="@drawable/ic_add_pic" />
+                    android:src="@drawable/ic_add_pic"
+                    android:contentDescription="@string/add_pet_IV_contentDescription" />
 
                 <AutoCompleteTextView
                     android:id="@+id/name"
@@ -60,7 +61,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginRight="20dp"
                         android:text="@string/does_your_pet_is_immunized"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"
@@ -98,7 +98,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
                         android:text="@string/what_is_her_his_age"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
@@ -153,7 +153,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
                     android:background="@drawable/buton_cancel"
                     android:text="@string/no_sad"
                     android:textColor="#FFFF"

@@ -122,7 +122,7 @@ public class PetAdapter2 extends RecyclerView.Adapter<PetAdapter2.ViewHolder> {
 
         holder.petName.setText(petModel.getName());
        // holder.petImage.setImageURI(Uri.parse(petModel.getBitmapUri()));
-        holder.petAge.setText(petModel.getAge().toString());
+        holder.petAge.setText(String.format(petModel.getAge().toString()));
         holder.petDist.setText(dist);
     }
 

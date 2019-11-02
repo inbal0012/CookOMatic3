@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Types:" />
+            android:text="@string/types" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
             android:layout_below="@id/ageSeekBar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="Age:" />
+            android:text="@string/age" />
 
         <com.jaygoo.widget.RangeSeekBar
             android:id="@+id/distanceSeekBar"
@@ -83,7 +83,7 @@
             android:layout_below="@id/distanceSeekBar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="Distance in km:" />
+            android:text="@string/distance_in_km" />
 
         <org.honorato.multistatetogglebutton.MultiStateToggleButton
             android:id="@+id/sex_mstb"

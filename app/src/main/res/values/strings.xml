@@ -164,7 +164,6 @@
     <string name="failed">Sorry, The authentication have been failed.</string>
     <string name="blank">One or more details are blank.</string>
     <string name="success">You entered with Success</string>
-    <string name="gender">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="nick_name">Nick Name</string>
@@ -183,5 +182,20 @@
     <string name="yes_sad">YES :(</string>
     <string name="send_massage">SEND MASSAGE</string>
     <string name="write_here_your_massage">write here your massage..</string>
+    <string name="save">save</string>
+    <string name="cancel">cancel</string>
+    <string name="Filter_Page">Filter Page</string>
+    <string name="search_page">Search Page</string>
+    <string name="pet_s_name">Pet\'s Name</string>
+    <string name="types">Types:</string>
+    <string name="distance_in_km">Distance in km:</string>
+    <string name="kind">Kind</string>
+    <string name="immunized">Immunized</string>
+    <string name="truee">true</string>
+    <string name="gender">Gender</string>
+    <string name="info">Info</string>
+    <string name="new_pet">New Pet</string>
+    <string name="add_pet_IV_contentDescription">add pet image</string>
+    <string name="logo_IV_contentDescription">TODO</string>
 
 </resources>

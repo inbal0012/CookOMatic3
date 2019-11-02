@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".ResetPassword" />
+        <activity android:name=".ResetPassword"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SigninActivity" />
         <activity
             android:name=".PetPageActivity"
