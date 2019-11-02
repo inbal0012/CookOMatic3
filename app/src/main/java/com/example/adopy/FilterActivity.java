@@ -45,14 +45,14 @@ public class FilterActivity extends AppCompatActivity {
         //casting of spinner
         typeSpinner = findViewById(R.id.typeSpinner);
 
-        //adding items to typeSpinnerList TODO localais & other
-        typeSpinnerList.add("Dog");
-        typeSpinnerList.add("Cat");
-        typeSpinnerList.add("Rabbit");
-        typeSpinnerList.add("Hedgehog");
-        typeSpinnerList.add("Chinchilla");
-        typeSpinnerList.add("Iguana");
-        typeSpinnerList.add("Turtle");
+        //adding items to typeSpinnerList TODO other
+        typeSpinnerList.add(getString(R.string.Dog));
+        typeSpinnerList.add(getString(R.string.Cat));
+        typeSpinnerList.add(getString(R.string.Rabbit));
+        typeSpinnerList.add(getString(R.string.Hedgehog));
+        typeSpinnerList.add(getString(R.string.Chinchilla));
+        typeSpinnerList.add(getString(R.string.Iguana));
+        typeSpinnerList.add(getString(R.string.Turtle));
 
         //set items to spinner from typeSpinnerList
         typeSpinner.setItems(typeSpinnerList);

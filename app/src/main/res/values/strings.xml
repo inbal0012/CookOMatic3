@@ -197,5 +197,12 @@
     <string name="new_pet">New Pet</string>
     <string name="add_pet_IV_contentDescription">add pet image</string>
     <string name="logo_IV_contentDescription">TODO</string>
+    <string name="Dog">Dog</string>
+    <string name="Cat">Cat</string>
+    <string name="Rabbit">Rabbit</string>
+    <string name="Hedgehog">Hedgehog</string>
+    <string name="Chinchilla">Chinchilla</string>
+    <string name="Iguana">Iguana</string>
+    <string name="Turtle">Turtle</string>
 
 </resources>
