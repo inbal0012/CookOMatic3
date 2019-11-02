@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.honorato.multistatetogglebutton:multistatetogglebutton:0.2.2'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
 
     //Firebase
     implementation 'com.google.firebase:firebase-storage:19.1.0'
@@ -41,8 +42,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
     //facebook
-    implementation 'com.facebook.android:facebook-android-sdk:5.2.0'
-    implementation 'com.facebook.android:facebook-login:5.2.0'
+//    implementation 'com.facebook.android:facebook-android-sdk:5.2.0'
+//    implementation 'com.facebook.android:facebook-login:5.2.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'

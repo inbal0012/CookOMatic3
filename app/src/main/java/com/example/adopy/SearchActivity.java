@@ -1,28 +1,44 @@
 package com.example.adopy;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
+import com.example.adopy.Utilities.FileSystemMemory;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.SearchPreferences;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +48,10 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class SearchActivity extends AppCompatActivity {
     private static final String TAG = "my_SearchActivity";
@@ -40,13 +59,27 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<PetModel> mPetModels;
     private PetAdapter2 mPetAdapter;
 
-    DatabaseReference mDatabaseReference;
+    FloatingActionButton fab;
+
 
     public static final int REQUEST_CODE = 1;
 
     SearchPreferences sp;
     Double userLat, userLng;
     String SPans, PetAns;
+
+    //add dialog
+    private ImageView image;
+    private Bitmap bitmap;
+    private Date petBirthday;
+    private String namePet;
+
+    //firebase
+    private FirebaseAuth mAuth;
+    //private FirebaseUser user;
+    DatabaseReference mDatabaseReference;
+
+    private final static int SELECT_IMAGE = 100;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +93,140 @@ public class SearchActivity extends AppCompatActivity {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
         mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
 
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddDialog();
+            }
+        });
+
         getUserLocation();
+    }
+
+    private void AddDialog() {
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.foot);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this,R.style.AlertTheme).setCancelable(true);
+        final LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.layout_add_pet, null);
+        dialogBuilder.setView(dialogView);
+        TextView Title = dialogView.findViewById(R.id.kind);
+        final TextView btn_cancel = dialogView.findViewById(R.id.btn_cancel);
+        TextView btn_ok = dialogView.findViewById(R.id.btn_ok);
+        image = dialogView.findViewById(R.id.image);
+        final AutoCompleteTextView name = dialogView.findViewById(R.id.name);
+        RadioGroup radio_group = dialogView.findViewById(R.id.radio_group);
+        final DatePicker age_picker = dialogView.findViewById(R.id.age_picker);
+        final AutoCompleteTextView price = dialogView.findViewById(R.id.price);
+        final AutoCompleteTextView about = dialogView.findViewById(R.id.about);
+        final AutoCompleteTextView location = dialogView.findViewById(R.id.location);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            age_picker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+                @Override
+                public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    petBirthday  = new Date(year,monthOfYear,dayOfMonth);
+                }
+            });
+        }
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageOnClickListener();
+            }
+        });
+
+
+        Title.setText(getResources().getString(R.string.title_post));
+        final AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //user = mAuth.getCurrentUser();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, ''yy");
+                String currentDateandTime = sdf.format(new Date());
+                Date currentDate= Calendar.getInstance().getTime();
+                long ageOfPet = currentDate.getTime() - petBirthday.getTime();
+                long seconds = ageOfPet / 1000;
+                long minutes = seconds / 60;
+                long hours = minutes / 60;
+                long days = hours / 24;
+
+                long years = (days>=360) ? days/360 : 0;
+                long months = years >0 ? ((days%360)>= 30 ? (days%360) /30 : 0 ): ((days)>= 30? days/30 : 0 );
+                long leftDays = years > 0 ? (months >0?((days%360)%30) : days%360) : months > 0?(days%30) : days;
+
+                namePet = name.getText().toString();
+
+                PetModel petModel = new PetModel();
+                //String Uid=user.getUid();
+
+                petModel.setName(namePet);
+                petModel.setBitmapUrl("https://firebasestorage.googleapis.com/v0/b/adopy-76b55.appspot.com/o/dog.png?alt=media&token=0bf5a729-1e56-4f3d-8ea9-3c0d3c0b4095");
+                if(about.getText().equals(""))
+                {
+                    petModel.setInfo(getResources().getString(R.string.adopt_me_now_and_save_me_from_the_street));
+                }
+                else{
+                    petModel.setInfo(about.getText().toString());
+                }
+                //petModel.setDate(currentDateandTime);
+                petModel.setLocation(location.getText().toString());
+                //petModel.setImmunized(isImmunized);
+                Double age = (double)years + ((double)months)/12;
+                petModel.setAge(age);
+                petModel.setPrice(price.getText().toString());
+                //petModel.setPostOwnerId(user.getUid());
+                mPetModels.add(petModel);
+                mPetAdapter.notifyDataSetChanged();
+
+                FileSystemMemory.SaveToFile(mPetModels,SearchActivity.this);
+                //mDatabaseReference.setValue(petModel);
+
+
+                alertDialog.dismiss();
+            }
+        });
+
+    }
+
+
+    private void imageOnClickListener() {
+        android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(SearchActivity.this);
+        CharSequence[] options=new CharSequence[]{
+                "Open Gallery",
+                "Open Camera"
+        };
+        builder.setTitle("Select option");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which == 0){
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
+                }
+                else if (which == 1){
+                    CropImage.activity()
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(SearchActivity.this);
+                }
+            }
+        });
+
+        builder.create();
+        builder.show();
     }
 
     ValueEventListener valueEventListener = new ValueEventListener() {

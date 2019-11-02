@@ -15,7 +15,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -42,7 +41,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private int Progress;
 
     //facebook
-    private LoginButton loginButton;
+   // private LoginButton loginButton;
 
     //firebase
     private FirebaseAuth mAuth;

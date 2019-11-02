@@ -11,10 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.login.LoginManager;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,7 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class SigninActivity extends AppCompatActivity implements View.OnClickListener{
 
 
-    private LoginButton loginButton;
     private AutoCompleteTextView InputEmail;
     private AutoCompleteTextView InputPass;
 
@@ -34,7 +29,8 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
 
     private boolean ENTER_SIGN=false;
 
-    CallbackManager mCallbackManager;
+//    private LoginButton loginButton;
+//    CallbackManager mCallbackManager;
 
     //firebase
     private FirebaseAuth mAuth;
@@ -54,7 +50,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
         btn_signup=findViewById(R.id.btn_layout_signup);
 
         mAuth = FirebaseAuth.getInstance();
-        mCallbackManager = CallbackManager.Factory.create();
+        //mCallbackManager = CallbackManager.Factory.create();
 
         //AccessToken accessToken=AccessToken.getCurrentAccessToken();
 //        if (mAuth != null || accessToken!=null) {
@@ -86,7 +82,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        //mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void updateUI(FirebaseUser currentUser) {

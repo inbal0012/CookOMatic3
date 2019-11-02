@@ -28,6 +28,8 @@ public class PetModel implements Serializable {
     private Double latitude;
     @SerializedName("longitude")
     private Double longitude;
+    @SerializedName("Info")
+    private String Info;
 
 
     public PetModel(String kind, String name, Double age, Gender gender, String bitmapUrl) {
@@ -119,5 +121,15 @@ public class PetModel implements Serializable {
 
     public void setLongitude(String longitude) {
         this.longitude = Double.parseDouble(longitude);
+    }
+
+
+
+    public String getInfo() {
+        return Info;
+    }
+
+    public void setInfo(String info) {
+        Info = info;
     }
 }

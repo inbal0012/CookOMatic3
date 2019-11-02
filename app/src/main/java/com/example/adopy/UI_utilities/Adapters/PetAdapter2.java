@@ -2,6 +2,7 @@ package com.example.adopy.UI_utilities.Adapters;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,9 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.adopy.PetPageActivity;
 import com.example.adopy.R;
+import com.example.adopy.SearchActivity;
 import com.example.adopy.Utilities.Models.PetModel;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -84,8 +89,25 @@ public class PetAdapter2 extends RecyclerView.Adapter<PetAdapter2.ViewHolder> {
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_pet, parent, false);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int itemPosition =  ((RecyclerView)parent).getChildLayoutPosition(v);
+                PetModel pet = petModels.get(itemPosition);
+                Toast.makeText(context, pet.getName(), Toast.LENGTH_LONG).show();
+
+                Gson gson = new Gson();
+                Intent intent = new Intent(context, PetPageActivity.class);
+                String gstr = gson.toJson(pet);
+                Log.d(TAG, "onCardClicked: gson.toJson(pet)");
+                intent.putExtra("pet", gstr);
+                Log.d(TAG, "onCardClicked: putExtra");
+                context.startActivity(intent);
+            }
+        });
         return new ViewHolder(view);
     }
 
