@@ -189,12 +189,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
 
-        //Adding action  - note must work with NotificatioComapt
-//        Intent actionIntent = new Intent(MainActivity.this,SecondActivity.class);
-//        actionIntent.putExtra("notif_txt","PLAY");
-//        PendingIntent playPendingIntent = PendingIntent.getActivity(MainActivity.this,1,actionIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-//        builder.addAction(new NotificationCompat.Action(android.R.drawable.ic_media_play,"Play",playPendingIntent));
-
         Notification notification = builder.build();
 
 

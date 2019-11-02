@@ -5,8 +5,6 @@ import android.os.Bundle;
 
 import com.example.adopy.UI_utilities.MultipleSelectionSpinner;
 import com.example.adopy.Utilities.SearchPreferences;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.jaygoo.widget.RangeSeekBar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +28,7 @@ public class FilterActivity extends AppCompatActivity {
     MultipleSelectionSpinner typeSpinner;
 
     //List which hold multiple selection spinner values
-    List<String> typeSpinnerList = new ArrayList<String>();
+    List<String> typeSpinnerList = new ArrayList<>();
 
     RangeSeekBar ageSeekbar;
     RangeSeekBar distanceSeekbar;

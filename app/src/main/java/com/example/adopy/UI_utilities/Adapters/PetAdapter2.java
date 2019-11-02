@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 
 import com.example.adopy.PetPageActivity;
 import com.example.adopy.R;
-import com.example.adopy.SearchActivity;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.google.gson.Gson;
 
@@ -101,9 +99,9 @@ public class PetAdapter2 extends RecyclerView.Adapter<PetAdapter2.ViewHolder> {
 
                 Gson gson = new Gson();
                 Intent intent = new Intent(context, PetPageActivity.class);
-                String gstr = gson.toJson(pet);
+                String gStr = gson.toJson(pet);
                 Log.d(TAG, "onCardClicked: gson.toJson(pet)");
-                intent.putExtra("pet", gstr);
+                intent.putExtra("pet", gStr);
                 Log.d(TAG, "onCardClicked: putExtra");
                 context.startActivity(intent);
             }

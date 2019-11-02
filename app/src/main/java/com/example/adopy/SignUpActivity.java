@@ -131,7 +131,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     else
                         Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error), Toast.LENGTH_SHORT).show();
                 }else{
-//if person didnt add gender
+//if person didn't add gender
 
                     int radioId = radio_group.getCheckedRadioButtonId();
                     radioButton = findViewById(radioId);

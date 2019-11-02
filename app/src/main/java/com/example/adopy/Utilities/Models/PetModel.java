@@ -1,7 +1,5 @@
 package com.example.adopy.Utilities.Models;
 
-import android.graphics.Bitmap;
-
 import com.example.adopy.Utilities.Interfaces_and_Emuns.Gender;
 import com.google.gson.annotations.SerializedName;
 

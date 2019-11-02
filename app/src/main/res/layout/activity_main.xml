@@ -59,6 +59,7 @@
             android:layout_weight="3"
             android:layout_height="wrap_content"
             android:hint="@string/reminderRepeat_tv_hint"
+            android:inputType="number"
             android:layout_marginStart="10dp"/>
 
         <Button

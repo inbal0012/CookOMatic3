@@ -10,7 +10,7 @@
         "technologically advanced and open to imagination and magic.\n"
         "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
         "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
-        "flexibility of the material creates new affordances that supercede those in the physical "
+        "flexibility of the material creates new affordances that supercode those in the physical "
         "world, without breaking the rules of physics.\n"
         "The fundamentals of light, surface, and movement are key to conveying how objects move, "
         "interact, and exist in space and in relation to each other. Realistic lighting shows "
@@ -183,7 +183,7 @@
     <string name="send_massage">SEND MASSAGE</string>
     <string name="write_here_your_massage">write here your massage..</string>
     <string name="save">save</string>
-    <string name="cancel">cancel</string>
+    <string name="cancel">Cancel</string>
     <string name="Filter_Page">Filter Page</string>
     <string name="search_page">Search Page</string>
     <string name="pet_s_name">Pet\'s Name</string>

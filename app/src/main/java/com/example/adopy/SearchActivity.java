@@ -30,7 +30,6 @@ import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.SearchPreferences;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -88,7 +87,7 @@ public class SearchActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recycler_search_act);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        mPetModels = new ArrayList<PetModel>();
+        mPetModels = new ArrayList<>();
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
         mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
@@ -154,7 +153,7 @@ public class SearchActivity extends AppCompatActivity {
                 //user = mAuth.getCurrentUser();
 
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, ''yy");
-                String currentDateandTime = sdf.format(new Date());
+                String currentDateAndTime = sdf.format(new Date());
                 Date currentDate= Calendar.getInstance().getTime();
                 long ageOfPet = currentDate.getTime() - petBirthday.getTime();
                 long seconds = ageOfPet / 1000;
@@ -180,7 +179,7 @@ public class SearchActivity extends AppCompatActivity {
                 else{
                     petModel.setInfo(about.getText().toString());
                 }
-                //petModel.setDate(currentDateandTime);
+                //petModel.setDate(currentDateAndTime);
                 petModel.setLocation(location.getText().toString());
                 //petModel.setImmunized(isImmunized);
                 Double age = (double)years + ((double)months)/12;
@@ -467,7 +466,7 @@ public class SearchActivity extends AppCompatActivity {
 //            @Override
 //            public void onCardClicked(int position, View view) {
 //                PetModel pet = mPetModelArrayList.get(position);
-//                String str = "name: " + pet.getName() + "\nage: " + pet.getAge() + "\ntype: " + pet.getKind() + "\ngender: " + pet.getGender();
+//                String str = "name: " + pet.getName() + "\n age: " + pet.getAge() + "\n type: " + pet.getKind() + "\n gender: " + pet.getGender();
 //                Log.d(TAG, "onCardClicked: selected: \n" + str);
 //                Toast.makeText(SearchActivity.this, "selected: \n" + str, Toast.LENGTH_SHORT).show();
 //                Gson gson = new Gson();

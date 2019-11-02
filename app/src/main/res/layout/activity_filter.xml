@@ -54,19 +54,20 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/saveBtn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/save"/>
-
-            <Button
                 android:id="@+id/cancelBtn"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:text="@string/cancel"/>
+
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/save"/>
+
         </LinearLayout>
 
     </RelativeLayout>

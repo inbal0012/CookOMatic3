@@ -1,6 +1,5 @@
 package com.example.adopy;
 
-import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.adopy.Utilities.Models.PetModel;

@@ -153,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
-                    android:background="@drawable/buton_cancel"
+                    android:background="@drawable/button_cancel"
                     android:text="@string/no_sad"
                     android:textColor="#FFFF"
                     android:textStyle="bold" />
