@@ -45,13 +45,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     //firebase
     private FirebaseAuth mAuth;
-    FirebaseUser user;
-    private DatabaseReference UserDataBase;
+    private FirebaseUser mUser;
+    private DatabaseReference mReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        //firebase
+        mAuth = FirebaseAuth.getInstance();
 
         InputEmail=findViewById(R.id.email);
         InputPass=findViewById(R.id.password);
@@ -59,7 +62,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signUp=findViewById(R.id.sign_up_button);
         //loginButton=findViewById(R.id.login_button);
         radio_group=findViewById(R.id.radio_group);
-        mAuth = FirebaseAuth.getInstance();
         UserGender="Male";
         UserAge="";
 
@@ -104,7 +106,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 else{
                     Log.d(TAG, "onClick: email: " + InputEmail.getText().toString() + " pass: " + InputPass.getText().toString());
-                    signupUser( InputEmail.getText().toString(),InputPass.getText().toString());
+                    register(UserNameText.getText().toString(), InputEmail.getText().toString(),InputPass.getText().toString());
                 }
 
                 break;
@@ -112,25 +114,24 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void signupUser(final String email, final String pass) {
+    private void signupUser(String i_userName, final String i_email, final String i_pass) {
         mAuth = FirebaseAuth.getInstance();
-        mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(i_email,i_pass)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(TAG, "onComplete: ");
                 if(!task.isSuccessful()){
-                    if(pass.length() < 6 ) {
-                        Log.d(TAG, "onComplete: pass " + pass + " length " + pass.length());
-                        Toast toast= Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error_invalid_password) + pass,Toast.LENGTH_SHORT);
-                        toast.show();
+                    if(i_pass.length() < 6 ) {
+                        Log.d(TAG, "onComplete: pass " + i_pass + " length " + i_pass.length());
+                        Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error_invalid_password) + i_pass,Toast.LENGTH_SHORT).show();
                     }
-                    if(!email.contains("@")){
-                        Toast toast=  Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error_invalid_email),Toast.LENGTH_SHORT);
-                        toast.show();
+                    if(!i_email.contains("@")){
+                        Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error_invalid_email),Toast.LENGTH_SHORT).show();
                     }
                     else
                         Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error), Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
 //if person didn't add gender
 
                     int radioId = radio_group.getCheckedRadioButtonId();
@@ -140,23 +141,23 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                     Toast.makeText(SignUpActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
 
-                    user = task.getResult().getUser();
+                    mUser = task.getResult().getUser();
 
-                    String Uid=user.getUid();
+                    String Uid= mUser.getUid();
 
 
                     HashMap<String,String> hashMapUsr=new HashMap<>();
                     hashMapUsr.put("Image"," ");
-                    hashMapUsr.put("Email",user.getEmail());
-                    hashMapUsr.put("Id",user.getUid() );
+                    hashMapUsr.put("Email", mUser.getEmail());
+                    hashMapUsr.put("Id", mUser.getUid() );
                     hashMapUsr.put("UserName",UserNameText.getText().toString());
                     hashMapUsr.put("UserAge",String.valueOf(Progress));
                     hashMapUsr.put("UserCity","");
                     hashMapUsr.put("UserGender",UserGender);
 
 
-                    UserDataBase= FirebaseDatabase.getInstance().getReference().child("Users").child(Uid);
-                    UserDataBase.setValue(hashMapUsr).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mReference = FirebaseDatabase.getInstance().getReference().child("Users").child(Uid);
+                    mReference.setValue(hashMapUsr).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
@@ -168,5 +169,60 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
+    }
+
+    private void register(final String i_userName, final String i_email, final String i_pass) {
+        mAuth.createUserWithEmailAndPassword(i_email, i_pass)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            mUser = mAuth.getCurrentUser();
+                            assert mUser != null;
+                            String userId = mUser.getUid();
+
+                            mReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+
+                            //get Gender
+                            int radioId = radio_group.getCheckedRadioButtonId();
+                            radioButton = findViewById(radioId);
+                            UserGender=radioButton.getText().toString();
+
+
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("id", userId);
+                            hashMap.put("username", i_userName);
+                            hashMap.put("image", "default");
+
+                            hashMap.put("age",String.valueOf(Progress));
+                            hashMap.put("city","");
+                            hashMap.put("gender",UserGender);
+
+                            mReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(SignUpActivity.this,"Entered with Success ",Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(SignUpActivity.this,MainActivity.class));
+                                        finish();
+                                    }
+                                }
+                            });
+                        }
+                        else {
+                            if(i_pass.length() < 6 ) {
+                                Log.d(TAG, "onComplete: pass " + i_pass + " length " + i_pass.length());
+                                Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error_invalid_password) + i_pass,Toast.LENGTH_SHORT).show();
+                            }
+                            if(!i_email.contains("@")){
+                                Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error_invalid_email),Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error), Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "onComplete: " + task.getException().getMessage());
+                            }
+                        }
+                    }
+                });
     }
 }

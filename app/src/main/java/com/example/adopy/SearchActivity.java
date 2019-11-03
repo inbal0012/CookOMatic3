@@ -87,6 +87,7 @@ public class SearchActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recycler_search_act);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        mPetAdapter = new PetAdapter2(SearchActivity.this, mPetModels);
         mPetModels = new ArrayList<>();
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
@@ -235,7 +236,7 @@ public class SearchActivity extends AppCompatActivity {
                 PetModel petModel = dataSnapshot1.getValue(PetModel.class);
                 mPetModels.add(petModel);
             }
-            mPetAdapter = new PetAdapter2(SearchActivity.this, mPetModels);
+            //mPetAdapter = new PetAdapter2(SearchActivity.this, mPetModels);
             mRecyclerView.setAdapter(mPetAdapter);
         }
 

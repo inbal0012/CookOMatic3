@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class SigninActivity extends AppCompatActivity implements View.OnClickListener{
 
 
+    private static final String TAG = "my_SigninActivity";
     private AutoCompleteTextView InputEmail;
     private AutoCompleteTextView InputPass;
 
@@ -61,7 +63,12 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
 //        }
 
         mEmailSignInButton.setOnClickListener(this);
-        btn_forgot_pass.setOnClickListener(this);
+        btn_forgot_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SigninActivity.this, ResetPassword.class));
+            }
+        });
         btn_signup.setOnClickListener(this);
     }
 
@@ -101,22 +108,12 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-
-
         switch (v.getId()){
-
-            case R.id.btn_forgot_password:
-
-                startActivity(new Intent(SigninActivity.this, ResetPassword.class));
-
-                break;
-
             case R.id.btn_layout_signup:
 
                 Intent intent=new Intent(SigninActivity.this, SignUpActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
-
                 break;
 
             case R.id.email_sign_in_button:
@@ -135,41 +132,43 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void loginUser(final String Email, final String Pass) {
+    private void loginUser(final String i_Email, final String i_Pass) {
         mAuth = FirebaseAuth.getInstance();
 
-        mAuth.signInWithEmailAndPassword(Email, Pass)
+        mAuth.signInWithEmailAndPassword(i_Email, i_Pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-
-
                             Toast.makeText(SigninActivity.this, getResources().getString(R.string.success),Toast.LENGTH_SHORT).show();
                             updateUI(user);
-                            Intent intent=new Intent(SigninActivity.this,MainActivity.class);
+
+                            Intent intent = new Intent(SigninActivity.this,MainActivity.class);
                             intent.putExtra("publisherId", mAuth.getCurrentUser().getUid());
                             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(intent);
-                            // updateUI(user);
+                            finish();
 
                         } else {
                             // If sign in fails, display a message to the user.
 
-                            if(Pass.length()<6 ) {
-                                Toast toast= Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_incorrect_password),Toast.LENGTH_SHORT);
+                            if(i_Pass.length()<6 ) {
+                                Toast toast= Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_invalid_password),Toast.LENGTH_SHORT);
                                 toast.show();
                             }
-                            if(!Email.contains("@")){
-                                Toast toast=  Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_invalid_password),Toast.LENGTH_SHORT);
+                            if(!i_Email.contains("@")){
+                                Toast toast=  Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_invalid_email),Toast.LENGTH_SHORT);
                                 toast.show();
                             }
-                            Toast.makeText(SigninActivity.this, getResources().getString(R.string.error), Toast.LENGTH_SHORT).show();
+                            else {
+                                Toast.makeText(SigninActivity.this, getResources().getString(R.string.error) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "onComplete: unsucceessfull attempt " + task.getException().getMessage());
+                            }
+
                             updateUI(null);
                         }
 
-                        // ...
                     }
                 });
 
