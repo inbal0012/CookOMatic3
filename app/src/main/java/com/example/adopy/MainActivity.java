@@ -110,6 +110,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
+        Button chatBtn = findViewById(R.id.chatBtn);
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ChatActivity2.class);
+                intent.putExtra("userid", "Zf0DLpaCtHSP9vEMWly4KQ1bdlU2");
+                startActivity(intent);
+            }
+        });
+
         //location permission
         geocoder = new Geocoder(this);
         locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);

@@ -123,6 +123,8 @@
     <string name="title_activity_filter">FilterActivity</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_pet_page">PetPageActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_chat">ChatActivity</string>
 
     //pet card
     <string name="price">Price:</string>
@@ -179,6 +181,10 @@
     <string name="what_is_her_his_age">What is her/his age?</string>
     <string name="describe_your_pet_in_a_few_words">Describe your pet in a few words..</string>
 
+    //chat act
+    <string name="username">username</string>
+
+
     //pet features
     <string name="kind">Kind</string>
     <string name="immunized">Immunized</string>
@@ -193,11 +199,12 @@
 
     <string name="Filter_Page">Filter Page</string>
     <string name="Search_page">Search Page</string>
+    <string name="Profile_Page">Profile Page</string>
 
 
     <string name="add_pet_IV_contentDescription">add pet image</string>
     <string name="logo_IV_contentDescription">TODO</string>
-    <string name="title_activity_profile">ProfileActivity</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -210,10 +217,11 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
-    <string name="Profile_Page">Profile Page</string>
     <string name="menu_logout">logout</string>
     <string name="menu_communicate">Communicate</string>
-    <string name="title_activity_chat">ChatActivity</string>
+    <string name="Chat_page">Chat Page</string>
+    <string name="type_a_message">Type a message...</string>
+    <string name="empty_msg">You can\'t send empty message</string>
 
 
 </resources>
