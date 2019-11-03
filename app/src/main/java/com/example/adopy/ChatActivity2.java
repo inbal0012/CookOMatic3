@@ -3,6 +3,8 @@ package com.example.adopy;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.content.Intent;
@@ -14,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.adopy.UI_utilities.Adapters.MessageAdapter;
+import com.example.adopy.Utilities.Models.Chat;
 import com.example.adopy.Utilities.Models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,7 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ChatActivity2 extends AppCompatActivity {
 
@@ -32,11 +38,17 @@ public class ChatActivity2 extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mReference;
 
+    MessageAdapter messageAdapter;
+    List<Chat> mChatsList;
+
+    RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat2);
 
+        //toolbar START ------------------------
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
@@ -47,6 +59,13 @@ public class ChatActivity2 extends AppCompatActivity {
                 finish();
             }
         });
+        //toolbar END ------------------------
+
+        recyclerView = findViewById(R.id.chat_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         //firebase
         mAuth = FirebaseAuth.getInstance();
@@ -117,6 +136,8 @@ public class ChatActivity2 extends AppCompatActivity {
                 } else {
                     Glide.with(ChatActivity2.this).load(user.getImageURL()).into(profile_image);
                 }
+
+                readMessages(mFirebaseUser.getUid(), userId, user.getImageURL());
             }
 
             @Override
@@ -150,6 +171,31 @@ public class ChatActivity2 extends AppCompatActivity {
         hashMap.put("message", i_Message);
 
         reference.child("Chats").push().setValue(hashMap);
+    }
 
+    private void readMessages (final String i_MyId, final String i_UserId, final String I_ImageURL) {
+        mChatsList = new ArrayList<>();
+        mReference = FirebaseDatabase.getInstance().getReference("Chats");
+        mReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mChatsList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Chat chat = snapshot.getValue(Chat.class);
+                    if((chat.getReceiver().equals(i_MyId) && chat.getSender().equals(i_UserId)) ||
+                            (chat.getReceiver().equals(i_UserId) && chat.getSender().equals(i_MyId))) {
+                        mChatsList.add(chat);
+                    }
+
+                    messageAdapter = new MessageAdapter(ChatActivity2.this, mChatsList, I_ImageURL);
+                    recyclerView.setAdapter(messageAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
