@@ -191,14 +191,25 @@
     <string name="title_post">NEW POST</string>
 
 
-
-
     <string name="Filter_Page">Filter Page</string>
     <string name="Search_page">Search Page</string>
 
 
     <string name="add_pet_IV_contentDescription">add pet image</string>
     <string name="logo_IV_contentDescription">TODO</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 
 
 </resources>
