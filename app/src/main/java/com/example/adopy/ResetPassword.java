@@ -31,7 +31,7 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_reset_password);
         mAuth = FirebaseAuth.getInstance();
 
-        image = findViewById(R.id.imageView);
+        image = findViewById(R.id.nav_header_circleImageView);
         btn_reset = findViewById(R.id.reset_pass_button);
         InputEmail = findViewById(R.id.reset_email);
 

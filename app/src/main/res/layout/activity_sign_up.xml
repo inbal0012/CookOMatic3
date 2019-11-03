@@ -18,7 +18,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/nav_header_circleImageView"
             android:layout_width="386dp"
             android:layout_height="228dp"
             android:layout_marginTop="10dp"

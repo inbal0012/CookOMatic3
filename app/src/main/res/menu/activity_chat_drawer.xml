@@ -22,7 +22,7 @@
             android:title="@string/menu_tools" />
     </group>
 
-    <item android:title="@string/menu_communicate">
+    <item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_share"
@@ -34,10 +34,5 @@
                 android:title="@string/menu_send" />
         </menu>
     </item>
-
-    <item
-        android:id="@+id/nav_logout"
-        android:icon="@drawable/ic_log_out"
-        android:title="@string/menu_logout"/>
 
 </menu>

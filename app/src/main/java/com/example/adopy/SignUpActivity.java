@@ -192,7 +192,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("id", userId);
                             hashMap.put("username", i_userName);
-                            hashMap.put("image", "default");
+                            hashMap.put("imageURL", "default");
 
                             hashMap.put("age",String.valueOf(Progress));
                             hashMap.put("city","");
