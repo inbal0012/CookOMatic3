@@ -28,8 +28,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.adopy.Utilities.AlarmReceiver;
-import com.example.adopy.Utilities.BootRegisterService;
+import com.example.adopy.Utilities.Receivers_and_Services.AlarmReceiver;
+import com.example.adopy.Utilities.Receivers_and_Services.BootRegisterService;
 
 import java.io.IOException;
 import java.util.Calendar;

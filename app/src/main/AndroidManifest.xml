@@ -44,14 +44,14 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".Utilities.BootRegisterService" />
+        <service android:name=".Utilities.Receivers_and_Services.BootRegisterService" />
 
-        <receiver android:name=".Utilities.BootReceiver">
+        <receiver android:name=".Utilities.Receivers_and_Services.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".Utilities.AlarmReceiver" />
+        <receiver android:name=".Utilities.Receivers_and_Services.AlarmReceiver" />
     </application>
 
 </manifest>

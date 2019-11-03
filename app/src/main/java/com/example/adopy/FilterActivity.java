@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.adopy.UI_utilities.MultipleSelectionSpinner;
-import com.example.adopy.Utilities.SearchPreferences;
+import com.example.adopy.Utilities.Models.SearchPreferences;
 import com.jaygoo.widget.RangeSeekBar;
 
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,4 +1,4 @@
-package com.example.adopy.Utilities;
+package com.example.adopy.Utilities.Receivers_and_Services;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

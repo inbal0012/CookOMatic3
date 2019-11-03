@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
 import com.example.adopy.Utilities.FileSystemMemory;
 import com.example.adopy.Utilities.Models.PetModel;
-import com.example.adopy.Utilities.SearchPreferences;
+import com.example.adopy.Utilities.Models.SearchPreferences;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
