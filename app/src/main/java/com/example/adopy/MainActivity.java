@@ -114,8 +114,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ChatActivity2.class);
-                intent.putExtra("userid", "Zf0DLpaCtHSP9vEMWly4KQ1bdlU2");
+                Intent intent = new Intent(MainActivity.this, ChatsActivity.class);
+                //intent.putExtra("userid", "Zf0DLpaCtHSP9vEMWly4KQ1bdlU2");
                 startActivity(intent);
             }
         });
