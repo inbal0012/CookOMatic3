@@ -20,20 +20,27 @@ public class PetModel implements Serializable {
     private com.example.adopy.Utilities.Interfaces_and_Emuns.Gender Gender;
     @SerializedName("price")
     private String Price;
-    @SerializedName("owner")
-    private String PostOwner;
     @SerializedName("latitude")
     private Double latitude;
     @SerializedName("longitude")
     private Double longitude;
     @SerializedName("Info")
     private String Info;
+    @SerializedName("PostOwnerId")
+    private String postOwnerId;
 
 
     public PetModel(String kind, String name, Double age, Gender gender, String bitmapUrl) {
         Kind = kind;
         Name = name;
         Age = age;
+        Gender = gender;
+        BitmapUrl = bitmapUrl;
+    }
+    public PetModel(String kind, String name, String age, Gender gender, String bitmapUrl) {
+        Kind = kind;
+        Name = name;
+        Age = Double.parseDouble(age);
         Gender = gender;
         BitmapUrl = bitmapUrl;
     }
@@ -81,6 +88,7 @@ public class PetModel implements Serializable {
         Age = age;
     }
 
+
     public com.example.adopy.Utilities.Interfaces_and_Emuns.Gender getGender() {
         return Gender;
     }
@@ -95,14 +103,6 @@ public class PetModel implements Serializable {
 
     public void setPrice(String price) {
         Price = price;
-    }
-
-    public String getPostOwner() {
-        return PostOwner;
-    }
-
-    public void setPostOwner(String postOwner) {
-        PostOwner = postOwner;
     }
 
     public Double getLatitude() {
@@ -121,13 +121,19 @@ public class PetModel implements Serializable {
         this.longitude = Double.parseDouble(longitude);
     }
 
-
-
     public String getInfo() {
         return Info;
     }
 
     public void setInfo(String info) {
         Info = info;
+    }
+
+    public String getPostOwnerId() {
+        return postOwnerId;
+    }
+
+    public void setPostOwnerId(String postOwnerId) {
+        this.postOwnerId = postOwnerId;
     }
 }

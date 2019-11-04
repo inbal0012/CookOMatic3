@@ -28,8 +28,11 @@ import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
 import com.example.adopy.Utilities.FileSystemMemory;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.Models.SearchPreferences;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,6 +54,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class SearchActivity extends AppCompatActivity {
     private static final String TAG = "my_SearchActivity";
@@ -75,7 +79,7 @@ public class SearchActivity extends AppCompatActivity {
 
     //firebase
     private FirebaseAuth mAuth;
-    //private FirebaseUser user;
+    private FirebaseUser fuser;
     DatabaseReference mDatabaseReference;
 
     private final static int SELECT_IMAGE = 100;
@@ -87,21 +91,29 @@ public class SearchActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recycler_search_act);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        mPetAdapter = new PetAdapter2(SearchActivity.this, mPetModels);
         mPetModels = new ArrayList<>();
+        mPetAdapter = new PetAdapter2(SearchActivity.this, mPetModels);
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
         mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
 
-        fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fabFav);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddDialog();
+                fuser = FirebaseAuth.getInstance().getCurrentUser();
+                if (fuser == null) {
+                    loginDialog();
+                }
+                else
+                    AddDialog();
             }
         });
 
         getUserLocation();
+    }
+
+    private void loginDialog() {
     }
 
     private void AddDialog() {
@@ -151,8 +163,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //user = mAuth.getCurrentUser();
-
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, ''yy");
                 String currentDateAndTime = sdf.format(new Date());
                 Date currentDate= Calendar.getInstance().getTime();
@@ -184,9 +194,34 @@ public class SearchActivity extends AppCompatActivity {
                 petModel.setLocation(location.getText().toString());
                 //petModel.setImmunized(isImmunized);
                 Double age = (double)years + ((double)months)/12;
+                Log.d(TAG, "onClick: " + age.toString());
                 petModel.setAge(age);
                 petModel.setPrice(price.getText().toString());
-                //petModel.setPostOwnerId(user.getUid());
+                petModel.setLatitude(userLat.toString());
+                petModel.setLongitude(userLng.toString());
+                petModel.setPostOwnerId(fuser.getUid());
+
+                DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Pets").push();
+
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("age", age);
+                hashMap.put("bitmapUrl", "null");
+                hashMap.put("gender", "Male"); //TODO
+                hashMap.put("kind","dog"); //TODO
+                hashMap.put("name",namePet);
+                hashMap.put("latitude",userLat.toString());
+                hashMap.put("longitude",userLng.toString());
+                hashMap.put("postOwnerId",fuser.getUid());
+
+                mReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(),"pet added to database ",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
                 mPetModels.add(petModel);
                 mPetAdapter.notifyDataSetChanged();
 

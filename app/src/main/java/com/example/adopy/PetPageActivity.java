@@ -1,10 +1,13 @@
 package com.example.adopy;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.adopy.Utilities.Models.PetModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,10 +52,29 @@ public class PetPageActivity extends AppCompatActivity {
         ImageView petImg = findViewById(R.id.pet_image);
 //        petImg.setImageURI(Uri.parse("https://firebasestorage.googleapis.com/v0/b/adopy-76b55.appspot.com/o/dog.png?alt=media&token=0bf5a729-1e56-4f3d-8ea9-3c0d3c0b4095"));
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabFav = findViewById(R.id.fabFav);
+        fabFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FloatingActionButton fabMsg= findViewById(R.id.fabMsg);
+        if (pet.getPostOwnerId().equals(user.getUid())) {
+            fabMsg.setVisibility(View.GONE);
+        }
+        fabMsg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(user != null) {
+                    Intent intent = new Intent(getApplicationContext(), ChatActivity2.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("userid", pet.getPostOwnerId());
+                    startActivity(intent);
+                }
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }

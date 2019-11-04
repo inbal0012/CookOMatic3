@@ -47,7 +47,7 @@
     <include layout="@layout/content_pet_page" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fabFav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
@@ -55,5 +55,17 @@
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         android:src="@drawable/ic_favorite_empty" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:elevation="100dp"
+        app:layout_anchor="@id/fabFav"
+        app:layout_anchorGravity="start|center_vertical"
+        android:layout_gravity="start|center_vertical"
+        app:useCompatPadding="true"
+        android:src="@drawable/ic_email" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
