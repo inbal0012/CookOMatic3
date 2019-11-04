@@ -235,7 +235,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         final double lat = location.getLatitude();
         final double lng = location.getLongitude();
-        Log.d(TAG, "onLocationChanged: " + lat + " , " + lng);
 
         new Thread() {
             @Override

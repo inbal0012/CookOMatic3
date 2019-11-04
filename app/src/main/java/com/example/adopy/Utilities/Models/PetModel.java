@@ -37,13 +37,6 @@ public class PetModel implements Serializable {
         Gender = gender;
         BitmapUrl = bitmapUrl;
     }
-    public PetModel(String kind, String name, String age, Gender gender, String bitmapUrl) {
-        Kind = kind;
-        Name = name;
-        Age = Double.parseDouble(age);
-        Gender = gender;
-        BitmapUrl = bitmapUrl;
-    }
 
     public PetModel() {
     }

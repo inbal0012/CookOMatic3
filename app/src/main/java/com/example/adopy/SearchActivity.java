@@ -117,11 +117,12 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void AddDialog() {
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.foot);
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this,R.style.AlertTheme).setCancelable(true);
         final LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.layout_add_pet, null);
+        View dialogView = inflater.inflate(R.layout.dialog_layout_add_pet, null);
         dialogBuilder.setView(dialogView);
+
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.foot);
         TextView Title = dialogView.findViewById(R.id.kind);
         final TextView btn_cancel = dialogView.findViewById(R.id.btn_cancel);
         TextView btn_ok = dialogView.findViewById(R.id.btn_ok);

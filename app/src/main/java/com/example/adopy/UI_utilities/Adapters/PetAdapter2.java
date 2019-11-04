@@ -95,14 +95,11 @@ public class PetAdapter2 extends RecyclerView.Adapter<PetAdapter2.ViewHolder> {
 
                 int itemPosition =  ((RecyclerView)parent).getChildLayoutPosition(v);
                 PetModel pet = petModels.get(itemPosition);
-                Toast.makeText(context, pet.getName(), Toast.LENGTH_LONG).show();
 
                 Gson gson = new Gson();
                 Intent intent = new Intent(context, PetPageActivity.class);
                 String gStr = gson.toJson(pet);
-                Log.d(TAG, "onCardClicked: gson.toJson(pet)");
                 intent.putExtra("pet", gStr);
-                Log.d(TAG, "onCardClicked: putExtra");
                 context.startActivity(intent);
             }
         });
@@ -113,7 +110,7 @@ public class PetAdapter2 extends RecyclerView.Adapter<PetAdapter2.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PetModel petModel = petModels.get(position);
         float[] results = new float[1];
-        Log.d(TAG, "onBindViewHolder: " + userLat + " , " + userLng + " \npet " + petModel.getName() + ": " + petModel.getLatitude() + " , " + petModel.getLongitude() + "\nuri: " + petModel.getBitmapUri());
+        Log.d(TAG, "onBindViewHolder: \n " + petModel.getName() + ": " + petModel.getLatitude() + " , " + petModel.getLongitude() + "\nuri: " + petModel.getBitmapUri());
         Location.distanceBetween(userLat, userLng, petModel.getLatitude(), petModel.getLongitude(), results);
         String dist = String.valueOf(Math.round(results[0])/1000);
 //        Log.d(TAG, "onBindViewHolder: " + results[0]/1000);
