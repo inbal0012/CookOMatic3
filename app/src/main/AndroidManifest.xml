@@ -20,10 +20,6 @@
             android:name=".ChatActivity2"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ChatActivity"
-            android:label="@string/title_activity_chat"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -53,6 +49,11 @@
         </activity>
 
         <service android:name=".Utilities.Receivers_and_Services.BootRegisterService" />
+        <service android:name=".Notifications.MyFirebaseMessaging">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <receiver android:name=".Utilities.Receivers_and_Services.BootReceiver">
             <intent-filter>
@@ -60,6 +61,7 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".Utilities.Receivers_and_Services.AlarmReceiver" />
+
     </application>
 
 </manifest>

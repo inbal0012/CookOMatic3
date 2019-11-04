@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
 
@@ -197,6 +198,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             hashMap.put("age",String.valueOf(Progress));
                             hashMap.put("city","");
                             hashMap.put("gender",UserGender);
+
+                            String currUserId = mAuth.getCurrentUser().getUid();
+                            String deviceToken = FirebaseInstanceId.getInstance().getToken();
+                            hashMap.put("device_token", deviceToken);
+
 
                             mReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

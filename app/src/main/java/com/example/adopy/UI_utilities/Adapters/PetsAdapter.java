@@ -45,7 +45,7 @@ public class PetsAdapter extends RecyclerView.Adapter<PetsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         PetModel petModel = petModelList.get(i);
-        if(!petModel.getBitmapUri().toString().isEmpty()){
+        if(!petModel.getBitmapUri().isEmpty()){
             Glide.with(context).load(petModel.getBitmapUri()).placeholder(R.drawable.foot).into(viewHolder.petImage);
         }
 

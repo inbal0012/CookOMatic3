@@ -7,14 +7,16 @@ public class User {
     private String age;
     private String gender;
     private String city;
+    private String device_token;
 
-    public User(String id, String username, String imageURL, String age, String gender, String city) {
+    public User(String id, String username, String imageURL, String age, String gender, String city, String device_token) {
         this.id = id;
         this.username = username;
         this.imageURL = imageURL;
         this.age = age;
         this.gender = gender;
         this.city = city;
+        this.device_token = device_token;
     }
 
     public User() {
@@ -66,5 +68,13 @@ public class User {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getDevice_token() {
+        return device_token;
+    }
+
+    public void setDevice_token(String device_token) {
+        this.device_token = device_token;
     }
 }

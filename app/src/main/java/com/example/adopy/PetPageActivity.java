@@ -22,7 +22,7 @@ public class PetPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_page);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         TextView Info = findViewById(R.id.Info);
@@ -49,7 +49,7 @@ public class PetPageActivity extends AppCompatActivity {
         ImageView petImg = findViewById(R.id.pet_image);
 //        petImg.setImageURI(Uri.parse("https://firebasestorage.googleapis.com/v0/b/adopy-76b55.appspot.com/o/dog.png?alt=media&token=0bf5a729-1e56-4f3d-8ea9-3c0d3c0b4095"));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

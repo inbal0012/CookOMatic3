@@ -17,8 +17,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
-public class SigninActivity extends AppCompatActivity implements View.OnClickListener{
+public class SigninActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private static final String TAG = "my_SigninActivity";
@@ -29,7 +32,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
     private TextView btn_signup;
     Button mEmailSignInButton;
 
-    private boolean ENTER_SIGN=false;
+    private boolean ENTER_SIGN = false;
 
 //    private LoginButton loginButton;
 //    CallbackManager mCallbackManager;
@@ -43,13 +46,13 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         //loginButton = findViewById(R.id.facebook_login_button);
-        InputEmail = (AutoCompleteTextView) findViewById(R.id.email);
-        InputPass = (AutoCompleteTextView) findViewById(R.id.password);
+        InputEmail = findViewById(R.id.email);
+        InputPass = findViewById(R.id.password);
 
 
-        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        btn_forgot_pass=findViewById(R.id.btn_forgot_password);
-        btn_signup=findViewById(R.id.btn_layout_signup);
+        mEmailSignInButton = findViewById(R.id.email_sign_in_button);
+        btn_forgot_pass = findViewById(R.id.btn_forgot_password);
+        btn_signup = findViewById(R.id.btn_layout_signup);
 
         mAuth = FirebaseAuth.getInstance();
         //mCallbackManager = CallbackManager.Factory.create();
@@ -93,36 +96,30 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void updateUI(FirebaseUser currentUser) {
-        if (currentUser== null){
-            ENTER_SIGN=false;
-        }else{
-            // getData(currentUser);
-            ENTER_SIGN=true;
-            //entering to app
-            //startActivity(new Intent(LoginActivity.this,MainActivity.class));
-
-
-        }
+        // getData(currentUser);
+        //entering to app
+        //startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        ENTER_SIGN = currentUser != null;
 
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_layout_signup:
 
-                Intent intent=new Intent(SigninActivity.this, SignUpActivity.class);
+                Intent intent = new Intent(SigninActivity.this, SignUpActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 break;
 
             case R.id.email_sign_in_button:
 
-                if( InputEmail.getText().toString().equals("") || InputPass.getText().toString().equals("")){
+                if (InputEmail.getText().toString().equals("") || InputPass.getText().toString().equals("")) {
                     Toast.makeText(SigninActivity.this, getResources().getString(R.string.blank),
                             Toast.LENGTH_SHORT).show();
                     updateUI(null);
-                }else{
+                } else {
                     loginUser(InputEmail.getText().toString(), InputPass.getText().toString());
 
                 }
@@ -141,10 +138,26 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(SigninActivity.this, getResources().getString(R.string.success),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SigninActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
                             updateUI(user);
 
-                            Intent intent = new Intent(SigninActivity.this,MainActivity.class);
+
+                            String currUserId = mAuth.getCurrentUser().getUid();
+                            String deviceToken = FirebaseInstanceId.getInstance().getToken();
+
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child("Users")
+                                    .child(currUserId)
+                                    .child("device_token")
+                                    .setValue(deviceToken)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Log.d(TAG, "onComplete: device_token added");
+                                        }
+                                    });
+
+                            Intent intent = new Intent(SigninActivity.this, MainActivity.class);
                             intent.putExtra("publisherId", mAuth.getCurrentUser().getUid());
                             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(intent);
@@ -153,25 +166,21 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
                         } else {
                             // If sign in fails, display a message to the user.
 
-                            if(i_Pass.length()<6 ) {
-                                Toast toast= Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_invalid_password),Toast.LENGTH_SHORT);
+                            if (i_Pass.length() < 6) {
+                                Toast toast = Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_invalid_password), Toast.LENGTH_SHORT);
                                 toast.show();
                             }
-                            if(!i_Email.contains("@")){
-                                Toast toast=  Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_invalid_email),Toast.LENGTH_SHORT);
+                            if (!i_Email.contains("@")) {
+                                Toast toast = Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_invalid_email), Toast.LENGTH_SHORT);
                                 toast.show();
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(SigninActivity.this, getResources().getString(R.string.error) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 Log.d(TAG, "onComplete: unsucceessfull attempt " + task.getException().getMessage());
                             }
 
                             updateUI(null);
                         }
-
                     }
                 });
-
     }
-
 }

@@ -26,10 +26,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adopy.Utilities.Receivers_and_Services.AlarmReceiver;
 import com.example.adopy.Utilities.Receivers_and_Services.BootRegisterService;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -60,6 +62,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Log.d(TAG, "onCreate: ");
 
         //Temp buttons
+        TextView userTV = findViewById(R.id.user_TV);
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+            userTV.setText("hello " + FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        else
+            userTV.setText("no user connected");
+
         Button filter = findViewById(R.id.filterBtn);
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +125,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 Intent intent = new Intent(MainActivity.this, ChatsActivity.class);
                 //intent.putExtra("userid", "Zf0DLpaCtHSP9vEMWly4KQ1bdlU2");
                 startActivity(intent);
+            }
+        });
+
+        Button logoutBtn = findViewById(R.id.logoutBtn);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
             }
         });
 
