@@ -222,6 +222,7 @@
     <string name="Chat_page">Chat Page</string>
     <string name="type_a_message">Type a message...</string>
     <string name="empty_msg">You can\'t send empty message</string>
+    <string name="no_msg">No Message</string>
 
 
 </resources>
