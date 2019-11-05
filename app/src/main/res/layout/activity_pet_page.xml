@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".Activities.PetPageActivity">
+    tools:activity=".Activities.PetPageActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -66,6 +66,6 @@
         app:layout_anchorGravity="start|center_vertical"
         android:layout_gravity="start|center_vertical"
         app:useCompatPadding="true"
-        android:src="@drawable/ic_email" />
+        android:src="@drawable/ic_email_white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

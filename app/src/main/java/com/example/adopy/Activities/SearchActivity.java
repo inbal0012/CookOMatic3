@@ -29,6 +29,7 @@ import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
 import com.example.adopy.Utilities.FileSystemMemory;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.Models.SearchPreferences;
+import com.example.adopy.Utilities.MyLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -152,7 +153,7 @@ public class SearchActivity extends AppCompatActivity {
         });
 
 
-        Title.setText(getResources().getString(R.string.title_post));
+        Title.setText(getResources().getString(R.string.new_pet));
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
         btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -335,22 +336,9 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void getUserLocation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (getApplicationContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    Activity#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                return;
-            }
-        }
-        LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        userLat = location.getLatitude();
-        userLng = location.getLongitude();
+        MyLocation myLocation = new MyLocation(this);
+        userLat = myLocation.getLatitude();
+        userLng = myLocation.getLongitude();
     }
 
     //search data

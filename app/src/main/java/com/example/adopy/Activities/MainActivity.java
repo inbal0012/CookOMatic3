@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adopy.R;
+import com.example.adopy.Utilities.MyLocation;
 import com.example.adopy.Utilities.Receivers_and_Services.AlarmReceiver;
 import com.example.adopy.Utilities.Receivers_and_Services.BootRegisterService;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +41,7 @@ import java.util.List;
 
 import static com.example.adopy.Utilities.Models.App.ON_BOOT_CHANNEL_ID;
 
-public class MainActivity extends AppCompatActivity implements LocationListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "my_MainActivity";
 
@@ -139,23 +140,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         });
 
         //location permission
-        geocoder = new Geocoder(this);
-        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
-
-        if(Build.VERSION.SDK_INT>=23) {
-            int hasLocationPermission = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
-            if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST);
-            }
-            else {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,100,MainActivity.this);
-            }
-        }
-        else
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,100,MainActivity.this);
-
-
-
+        MyLocation myLocation = new MyLocation(this);
+        myLocation.getLocation();
     }
 
     private void SaveUpdates() {
@@ -189,27 +175,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 Toast.makeText(this, "Sorry, can't work without foreground permission", Toast.LENGTH_LONG).show();
             }
         }
-
-        if(requestCode==LOCATION_PERMISSION_REQUEST) {
-            if(grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Attention").setMessage("The application must have location permission in order for it to work!")
-                        .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                intent.setData(Uri.parse("package:"+getPackageName()));
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                finish();
-                            }
-                        }).setCancelable(false).show();
-            }
-        }
+//
+//        if(requestCode==LOCATION_PERMISSION_REQUEST) {
+//            if(grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//                builder.setTitle("Attention").setMessage("The application must have location permission in order for it to work!")
+//                        .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                intent.setData(Uri.parse("package:"+getPackageName()));
+//                                startActivity(intent);
+//                            }
+//                        })
+//                        .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                finish();
+//                            }
+//                        }).setCancelable(false).show();
+//            }
+//        }
     }
 
 
@@ -231,49 +217,49 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         notificationManager.notify(1, notification);
     }
 
-    //LocationListener funcs START
-    @Override
-    public void onLocationChanged(Location location) {
-
-        final double lat = location.getLatitude();
-        final double lng = location.getLongitude();
-
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-
-                try {
-                    List<Address> addresses = geocoder.getFromLocation(lat,lng,1);
-                    final Address bestAddress = addresses.get(0);
-
-                    Log.d(TAG, "onLocationChanged: run: " + bestAddress.getCountryName()
-                            + " , " + bestAddress.getLocality()
-                            + " , " + bestAddress.getThoroughfare()
-                            + " , " + bestAddress.getSubThoroughfare()
-                            + " , " + bestAddress.getAdminArea());
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }.start();
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
+//    //LocationListener funcs START
+//    @Override
+//    public void onLocationChanged(Location location) {
+//
+//        final double lat = location.getLatitude();
+//        final double lng = location.getLongitude();
+//
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                super.run();
+//
+//                try {
+//                    List<Address> addresses = geocoder.getFromLocation(lat,lng,1);
+//                    final Address bestAddress = addresses.get(0);
+//
+//                    Log.d(TAG, "onLocationChanged: run: " + bestAddress.getCountryName()
+//                            + " , " + bestAddress.getLocality()
+//                            + " , " + bestAddress.getThoroughfare()
+//                            + " , " + bestAddress.getSubThoroughfare()
+//                            + " , " + bestAddress.getAdminArea());
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }.start();
+//    }
+//
+//    @Override
+//    public void onStatusChanged(String provider, int status, Bundle extras) {
+//
+//    }
+//
+//    @Override
+//    public void onProviderEnabled(String provider) {
+//
+//    }
+//
+//    @Override
+//    public void onProviderDisabled(String provider) {
+//
+//    }
     //LocationListener funcs END
 }

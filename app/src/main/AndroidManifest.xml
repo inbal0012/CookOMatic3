@@ -15,10 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activities.EditProfileActivity"></activity>
         <activity
             android:name=".Activities.MyPetsActivity"
-            android:label="@string/title_activity_my_pets"></activity>
+            android:label="@string/title_activity_my_pets"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name=".Activities.ChatsActivity" />
+
         <activity
             android:name=".Activities.ChatActivity2"
             android:theme="@style/AppTheme.NoActionBar" />
