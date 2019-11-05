@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme_NoActionBar);     //return from splash
         setContentView(R.layout.activity_main);
 
         Log.d(TAG, "onCreate: ");
