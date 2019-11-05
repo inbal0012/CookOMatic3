@@ -1,4 +1,4 @@
-package com.example.adopy;
+package com.example.adopy.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adopy.R;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

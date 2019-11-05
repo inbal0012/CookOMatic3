@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Activities.MainActivity">
 
     <TextView
         android:id="@+id/user_TV"
@@ -45,19 +45,19 @@
         android:text="@string/Profile_Page"/>
 
     <Button
-        android:id="@+id/filterBtn"
+        android:id="@+id/myPetsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/profileBtn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/Filter_Page"/>
+        android:text="@string/My_Pets_Page"/>
 
     <Button
         android:id="@+id/searchBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/filterBtn"
+        app:layout_constraintTop_toBottomOf="@id/myPetsBtn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:text="@string/Search_page"/>

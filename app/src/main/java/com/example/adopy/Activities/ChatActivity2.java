@@ -1,4 +1,4 @@
-package com.example.adopy;
+package com.example.adopy.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +26,7 @@ import com.example.adopy.Notifications.Data;
 import com.example.adopy.Notifications.MyResponse;
 import com.example.adopy.Notifications.Sender;
 import com.example.adopy.Notifications.Token;
+import com.example.adopy.R;
 import com.example.adopy.UI_utilities.Adapters.MessageAdapter;
 import com.example.adopy.Utilities.Models.Chat;
 import com.example.adopy.Utilities.Models.User;
@@ -44,7 +45,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChatActivity2 extends AppCompatActivity {
 

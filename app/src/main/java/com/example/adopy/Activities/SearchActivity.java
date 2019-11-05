@@ -1,4 +1,4 @@
-package com.example.adopy;
+package com.example.adopy.Activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -24,6 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adopy.R;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
 import com.example.adopy.Utilities.FileSystemMemory;
 import com.example.adopy.Utilities.Models.PetModel;
@@ -203,8 +204,10 @@ public class SearchActivity extends AppCompatActivity {
                 petModel.setPostOwnerId(fuser.getUid());
 
                 DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Pets").push();
+                String petId = mReference.getKey();
 
                 HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("id", petId);
                 hashMap.put("age", age);
                 hashMap.put("bitmapUrl", "null");
                 hashMap.put("gender", "Male"); //TODO

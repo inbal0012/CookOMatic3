@@ -1,8 +1,9 @@
-package com.example.adopy;
+package com.example.adopy.Activities;
 
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
+import com.example.adopy.R;
 import com.example.adopy.Utilities.Models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -75,46 +76,47 @@ public class ProfileActivity extends AppCompatActivity {
         //firebase
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
-        mReference = FirebaseDatabase.getInstance().getReference("Users").child(mFirebaseUser.getUid());
-        mReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+        if (mFirebaseUser != null) {
+            mReference = FirebaseDatabase.getInstance().getReference("Users").child(mFirebaseUser.getUid());
+            mReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
 
-                //Header of Navigation Drawer
-                //----------------------------------------------------------------
-                View headerView = navigationView.getHeaderView(0);
+                    //Header of Navigation Drawer
+                    //----------------------------------------------------------------
+                    View headerView = navigationView.getHeaderView(0);
 
-                TextView userNameTv = headerView.findViewById(R.id.nav_header_user_name);
-                TextView userEmailTv = headerView.findViewById(R.id.nav_header_user_email);
-                CircleImageView profile_image = findViewById(R.id.nav_header_circleImageView);
+                    TextView userNameTv = headerView.findViewById(R.id.nav_header_user_name);
+                    TextView userEmailTv = headerView.findViewById(R.id.nav_header_user_email);
+                    CircleImageView profile_image = findViewById(R.id.nav_header_circleImageView);
 
-                //user name
-                String userName = user.getUsername();
-                userNameTv.setText(userName);
+                    //user name
+                    String userName = user.getUsername();
+                    userNameTv.setText(userName);
 
-                //email
-                String userEmail = mFirebaseUser.getEmail();
-                userEmailTv.setText(userEmail);
+                    //email
+                    String userEmail = mFirebaseUser.getEmail();
+                    userEmailTv.setText(userEmail);
 
-                //image
-                if (user.getImageURL().equals("default")) {
-                    profile_image.setImageResource(R.drawable.user_male);
-                    if (user.getGender().equals("Female")) {
-                        profile_image.setImageResource(R.drawable.user_female);
+                    //image
+                    if (user.getImageURL().equals("default")) {
+                        profile_image.setImageResource(R.drawable.user_male);
+                        if (user.getGender().equals("Female")) {
+                            profile_image.setImageResource(R.drawable.user_female);
+                        }
+                    } else {
+                        Glide.with(ProfileActivity.this).load(user.getImageURL()).into(profile_image);
                     }
+                    //----------------------------------------------------------------
                 }
-                else {
-                    Glide.with(ProfileActivity.this).load(user.getImageURL()).into(profile_image);
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                 }
-                //----------------------------------------------------------------
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+            });
+        }
     }
 
     @Override

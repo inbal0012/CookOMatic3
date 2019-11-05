@@ -11,7 +11,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.example.adopy.R;
-import com.example.adopy.SearchActivity;
+import com.example.adopy.Activities.SearchActivity;
 
 import static com.example.adopy.Utilities.Models.App.WEEKLY_UPDATES_CHANNEL_ID;
 

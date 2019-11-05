@@ -15,32 +15,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChatsActivity"></activity>
         <activity
-            android:name=".ChatActivity2"
+            android:name=".Activities.MyPetsActivity"
+            android:label="@string/title_activity_my_pets"></activity>
+        <activity android:name=".Activities.ChatsActivity" />
+        <activity
+            android:name=".Activities.ChatActivity2"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".Activities.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".Activities.SignUpActivity" />
         <activity
-            android:name=".ResetPassword"
+            android:name=".Activities.ResetPassword"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SigninActivity" />
+        <activity android:name=".Activities.SigninActivity" />
         <activity
-            android:name=".PetPageActivity"
+            android:name=".Activities.PetPageActivity"
             android:label="@string/title_activity_pet_page"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".Activities.SearchActivity"
             android:label="@string/title_activity_search"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".FilterActivity"
+            android:name=".Activities.FilterActivity"
             android:label="@string/title_activity_filter"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".Activities.MainActivity"
+            android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,7 +66,6 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".Utilities.Receivers_and_Services.AlarmReceiver" />
-
     </application>
 
 </manifest>

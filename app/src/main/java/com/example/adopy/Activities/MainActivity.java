@@ -1,4 +1,4 @@
-package com.example.adopy;
+package com.example.adopy.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -29,6 +29,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adopy.R;
 import com.example.adopy.Utilities.Receivers_and_Services.AlarmReceiver;
 import com.example.adopy.Utilities.Receivers_and_Services.BootRegisterService;
 import com.google.firebase.auth.FirebaseAuth;
@@ -69,11 +70,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         else
             userTV.setText("no user connected");
 
-        Button filter = findViewById(R.id.filterBtn);
-        filter.setOnClickListener(new View.OnClickListener() {
+        Button mtPets = findViewById(R.id.myPetsBtn);
+        mtPets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FilterActivity.class));
+                startActivity(new Intent(MainActivity.this, MyPetsActivity.class));
             }
         });
 

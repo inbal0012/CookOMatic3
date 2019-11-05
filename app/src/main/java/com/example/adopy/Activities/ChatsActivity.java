@@ -1,4 +1,4 @@
-package com.example.adopy;
+package com.example.adopy.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.example.adopy.R;
 import com.example.adopy.UI_utilities.Adapters.UserAdapter;
 import com.example.adopy.Utilities.Models.Chat;
 import com.example.adopy.Utilities.Models.User;

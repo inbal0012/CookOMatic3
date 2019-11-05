@@ -9,9 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.adopy.ChatActivity2;
-import com.example.adopy.ChatsActivity;
-import com.example.adopy.MainActivity;
+import com.example.adopy.Activities.ChatActivity2;
 import com.example.adopy.R;
 import com.example.adopy.Utilities.Models.Chat;
 import com.example.adopy.Utilities.Models.User;

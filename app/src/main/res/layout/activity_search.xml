@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".SearchActivity">
+    tools:context=".Activities.SearchActivity">
 
     <include layout="@layout/content_search" />
 
@@ -17,7 +17,7 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:elevation="30dp"
-        android:src="@drawable/ic_fab"
+        android:src="@drawable/ic_fab_add_pet"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="30dp"

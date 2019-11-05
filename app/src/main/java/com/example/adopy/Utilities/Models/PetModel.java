@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class PetModel implements Serializable {
+    @SerializedName("id")
+    private String id;
     @SerializedName("name")
     private String Name;
     @SerializedName("kind")
@@ -30,7 +32,8 @@ public class PetModel implements Serializable {
     private String postOwnerId;
 
 
-    public PetModel(String kind, String name, Double age, Gender gender, String bitmapUrl) {
+    public PetModel(String id, String kind, String name, Double age, Gender gender, String bitmapUrl) {
+        this.id = id;
         Kind = kind;
         Name = name;
         Age = age;
@@ -128,5 +131,13 @@ public class PetModel implements Serializable {
 
     public void setPostOwnerId(String postOwnerId) {
         this.postOwnerId = postOwnerId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -6,4 +6,8 @@
     <color name="back_text_solid">#E7EBEB</color>
     <color name="white">#FFFFFF</color>
     <color name="pink">#FF90BA</color>
+
+
+    <color name="text_color_secondary">#01103C</color>
+    <color name="light_ish_blue"> #4DB6AC </color>
 </resources>

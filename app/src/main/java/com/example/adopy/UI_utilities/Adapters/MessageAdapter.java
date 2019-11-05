@@ -1,7 +1,6 @@
 package com.example.adopy.UI_utilities.Adapters;
 
 import android.content.Context;
-import android.text.method.MultiTapKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.adopy.ChatActivity2;
 import com.example.adopy.R;
 import com.example.adopy.Utilities.Models.Chat;
 import com.google.firebase.auth.FirebaseAuth;

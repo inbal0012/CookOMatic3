@@ -7,7 +7,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.adopy.ChatActivity2;
+import com.example.adopy.Activities.ChatActivity2;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessagingService;

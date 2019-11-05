@@ -197,7 +197,7 @@
     <string name="title_post">NEW POST</string>
 
 
-    <string name="Filter_Page">Filter Page</string>
+    <string name="My_Pets_Page">My Pets Page</string>
     <string name="Search_page">Search Page</string>
     <string name="Profile_Page">Profile Page</string>
 
@@ -219,10 +219,26 @@
     <string name="menu_send">Send</string>
     <string name="menu_logout">logout</string>
     <string name="menu_communicate">Communicate</string>
+
     <string name="Chat_page">Chat Page</string>
     <string name="type_a_message">Type a message...</string>
     <string name="empty_msg">You can\'t send empty message</string>
     <string name="no_msg">No Message</string>
+    <string name="please_login">Please Login</string>
+    <string name="go_back">go back</string>
+    <string name="dialog_login">Login</string>
+    <string name="msg_owner_dialog_body">In order to message the owner you need to be logged in</string>
+    <string name="add_fav_dialog_body">To save your favorite pets you need to be logged in</string>
+
+    <string name="title_activity_my_pets">MyPetsActivity</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_my_pets">My Pets</string>
+    <string name="title_my_fav">My Favorites</string>
+
+    <string name="delete">delete</string>
+    <string name="keep">keep</string>
+    <string name="deleting_a_pet">Deleting a Pet</string>
+    <string name="delete_pet_dialog_body">Are you sure you want to delete</string>
 
 
 </resources>

@@ -1,8 +1,9 @@
-package com.example.adopy;
+package com.example.adopy.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.adopy.R;
 import com.example.adopy.Utilities.Dialogs;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.Models.User;
@@ -140,6 +141,6 @@ public class PetPageActivity extends AppCompatActivity {
     }
 
     private void loginDialog(int id) {
-        new Dialogs().showLoginDialog(this, id);
+        new Dialogs(this).showLoginDialog(id);
     }
 }

@@ -1,8 +1,9 @@
-package com.example.adopy;
+package com.example.adopy.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.adopy.R;
 import com.example.adopy.UI_utilities.MultipleSelectionSpinner;
 import com.example.adopy.Utilities.Models.SearchPreferences;
 import com.jaygoo.widget.RangeSeekBar;
