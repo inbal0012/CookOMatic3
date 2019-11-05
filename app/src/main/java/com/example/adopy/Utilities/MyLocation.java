@@ -38,6 +38,7 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
 
     private double lat;
     private double lng;
+    private Address address;
 
     private static final int LOCATION_PERMISSION_REQUEST = 102;
 
@@ -55,17 +56,29 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
         return lng;
     }
 
+    public Address getAddress() {
+        try {
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            address = addresses.get(0);
+
+            Log.d(TAG, "getAddress: run: " + address.getCountryName()
+                    + " , " + address.getLocality()
+                    + " , " + address.getThoroughfare()
+                    + " , " + address.getSubThoroughfare()
+                    + " , " + address.getAdminArea());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return address;
+    }
+
     @SuppressLint("NewApi")
     public void updateLocation() {
         LocationManager locationManager = (LocationManager) activity.getSystemService(LOCATION_SERVICE);
         if (activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    Activity#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
             return;
         }
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -91,8 +104,8 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
 
     @Override
     public void onLocationChanged(Location location) {
-         lat = location.getLatitude();
-         lng = location.getLongitude();
+        lat = location.getLatitude();
+        lng = location.getLongitude();
 
         new Thread() {
             @Override
@@ -101,13 +114,13 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
 
                 try {
                     List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
-                    final Address bestAddress = addresses.get(0);
+                    address = addresses.get(0);
 
-                    Log.d(TAG, "onLocationChanged: run: " + bestAddress.getCountryName()
-                            + " , " + bestAddress.getLocality()
-                            + " , " + bestAddress.getThoroughfare()
-                            + " , " + bestAddress.getSubThoroughfare()
-                            + " , " + bestAddress.getAdminArea());
+                    Log.d(TAG, "onLocationChanged: run: " + address.getCountryName()
+                            + " , " + address.getLocality()
+                            + " , " + address.getThoroughfare()
+                            + " , " + address.getSubThoroughfare()
+                            + " , " + address.getAdminArea());
 
                 } catch (IOException e) {
                     e.printStackTrace();
