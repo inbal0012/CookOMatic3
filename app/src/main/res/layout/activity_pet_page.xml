@@ -54,7 +54,7 @@
         android:elevation="100dp"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        android:src="@drawable/ic_favorite_empty" />
+        app:srcCompat="@drawable/ic_favorite_empty" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabMsg"
@@ -66,6 +66,6 @@
         app:layout_anchorGravity="start|center_vertical"
         android:layout_gravity="start|center_vertical"
         app:useCompatPadding="true"
-        android:src="@drawable/ic_email_white" />
+        app:srcCompat="@drawable/ic_email_white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

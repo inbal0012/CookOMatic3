@@ -1,6 +1,7 @@
 package com.example.adopy.Utilities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -54,6 +55,7 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
         return lng;
     }
 
+    @SuppressLint("NewApi")
     public void updateLocation() {
         LocationManager locationManager = (LocationManager) activity.getSystemService(LOCATION_SERVICE);
         if (activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -131,6 +133,7 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
 
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
