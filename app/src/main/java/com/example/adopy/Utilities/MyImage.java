@@ -41,7 +41,6 @@ public class MyImage {
     private Uri imageUri;
     private String path;
     private String key;
-    //TODO
 
     public MyImage(Activity activity, String path, String key) {
         this.activity = activity;

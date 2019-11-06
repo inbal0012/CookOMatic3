@@ -69,7 +69,7 @@ public class EditPetActivity extends AppCompatActivity {
         });
 
         //gender
-        AwesomeSpinner genderSpinner = findViewById(R.id.kindSpinner);
+        AwesomeSpinner genderSpinner = findViewById(R.id.genderSpinner);
         ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(this, R.array.gender_array, android.R.layout.simple_spinner_item);
         genderSpinner.setAdapter(genderAdapter, 0);
         genderSpinner.setOnSpinnerItemClickListener(new AwesomeSpinner.onSpinnerItemClickListener<String>() {
