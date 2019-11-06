@@ -1,7 +1,6 @@
 package com.example.adopy.ui.myPets;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.adopy.Activities.SearchActivity;
 import com.example.adopy.R;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
 import com.example.adopy.Utilities.Dialogs;
@@ -26,6 +24,7 @@ import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +34,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyPetsFragment extends Fragment {
 
@@ -86,6 +84,14 @@ public class MyPetsFragment extends Fragment {
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                }
+            });
+
+            FloatingActionButton fab = root.findViewById(R.id.fabAdd);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        dialogs.AddPetDialog(mPetModels, mPetAdapter);
                 }
             });
         }
@@ -170,6 +176,7 @@ public class MyPetsFragment extends Fragment {
 
     private void deletePetFromDatabase(final PetModel petModel1){
         DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Pets");
+        Log.d(TAG, "deletePetFromDatabase: " + mReference + petModel1.getId());
         mReference.child(petModel1.getId()).setValue(null)
         .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

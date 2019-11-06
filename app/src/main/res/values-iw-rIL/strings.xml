@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sex_array">
+        <item>"זכר"</item>
+        <item>"לא משנה"</item>
+        <item>"נקבה"</item>
+    </string-array>
+
+    //typeSpinner Types
+    <string-array name="type_array">
+        <item name="Dog">כלב</item>
+        <item name="Cat">חתול</item>
+        <item name="Rabbit">ארנב</item>
+        <item name="Hedgehog">קיפוד</item>
+        <item name="Chinchilla">צינצילה</item>
+        <item name="Iguana">איגואנה</item>
+        <item name="Turtle">צב</item>
+    </string-array>
+
+    <string-array name="gender_array">
+        <item>"זכר"</item>
+        <item>"נקבה"</item>
+    </string-array>
+
+
+    <string name="app_name">adopy</string>
+    <string name="Chat_page">עמוד שיחה</string>
+    <string name="LOCATION_PERMISSION_warning_body">האפליקציה חייבת הרשאות מיקום על מנת לעבוד כהלכה!</string>
+    <string name="LOCATION_PERMISSION_warning_title">שים לב</string>
+    <string name="My_Pets_Page">עמוד החיות שלי</string>
+    <string name="Profile_Page">עמוד פרופיל</string>
+    <string name="Search_page">עמוד חיפוש</string>
+    <string name="Select_pet_species">בחר את סוג החיה</string>
+    <string name="action_search">חפש</string>
+    <string name="action_settings">הגדרות</string>
+    <string name="add_fav_dialog_body">על מנת לשמור את החיות שאהבת עליך להיות מחובר</string>
+    <string name="add_pet_IV_contentDescription">הוסף תמונה של החיה</string>
+    <string name="adopt_me_now_and_save_me_from_the_street">אמץ אותי והצל אותי מחיים ברחוב</string>
+    <string name="age">גיל</string>
+    <string name="blank">אחד או יותר מהשדות ריקים</string>
+    <string name="cancel">בטל</string>
+    <string name="date">תאריך:</string>
+    <string name="delete">מחק</string>
+    <string name="delete_chat_dialog_body">"האם אתה בטוח שאתה רוצה למחוק את השיחה שלך עם "</string>
+    <string name="delete_pet_dialog_body">"האם אתה בטוח שאתה רוצה למחוק את "</string>
+    <string name="deleting_a_chat">מחק שיחה</string>
+    <string name="deleting_a_pet">מחק חיה</string>
+    <string name="describe_your_pet_in_a_few_words">תאר את החיה שלך בכמה מילים</string>
+    <string name="dialog_login">התחבר</string>
+    <string name="distance_in_km">מרחק בק\"מ</string>
+    <string name="edit_pet">ערוך את החיה שלך</string>
+    <string name="empty_msg">לא ניתן לשלוח הודעה ריקה</string>
+    <string name="error">אירעה שגיאה, מתנצלים. אנא נסה שנית מאוחר יותר</string>
+    <string name="error_invalid_email">כתובת המייל אינה בתוקף</string>
+    <string name="error_invalid_password">הסיסמא קצרה מידי</string>
+    <string name="failed">נכשל!</string>
+    <string name="female">נקבה</string>
+    <string name="forgotPass">שכחת את הסיסמא?</string>
+    <string name="gender">מין</string>
+    <string name="go_back">חזור</string>
+    <string name="info">מידע</string>
+    <string name="keep">שמור</string>
+    <string name="kind">סוג</string>
+    <string name="location">מיקום</string>
+    <string name="male">זכר</string>
+    <string name="msg_owner_dialog_body">על מנת לדבר עם הבעלים עליך להיות מחובר</string>
+    <string name="new_pet">חיה חדשה</string>
+    <string name="nick_name">כינוי</string>
+    <string name="no">לא</string>
+    <string name="no_happy">לא :)</string>
+    <string name="no_image_selected">לא נבחרה תמונה</string>
+    <string name="no_msg">אין הודעה</string>
+    <string name="no_sad">לא :(</string>
+    <string name="onBootChannelDesc">אמץ חיות בסביבתך בקלות</string>
+    <string name="onBootChannelName">ערוץ איתחול</string>
+    <string name="onBootChannelTitle">אל תפספס!</string>
+    <string name="or">או</string>
+    <string name="pet_s_name">שם החיה</string>
+    <string name="please_login">אנא התחבר</string>
+    <string name="price">מחיר:</string>
+    <string name="prompt_email">אימייל</string>
+    <string name="prompt_password">סיסמא</string>
+    <string name="reminderRepeat_tv_hint">קבל עדכונים כל X דקות</string>
+    <string name="reset_password">אפס סיסמא</string>
+    <string name="save">שמור</string>
+    <string name="signUpEmailBTN">לחץ כאן על מנת להרשם חינם</string>
+    <string name="sign_in">התחבר</string>
+    <string name="signup_now">התחבר עכשו!</string>
+    <string name="signup_press">אין לך חשבון?</string>
+    <string name="success">התחברת בהצלחה</string>
+    <string name="title_activity_chat">שיחה</string>
+    <string name="title_activity_filter">סנן</string>
+    <string name="title_activity_my_pets">החיות שלי</string>
+    <string name="title_activity_pet_page">חיה</string>
+    <string name="title_activity_profile">פרופיל</string>
+    <string name="title_activity_search">חפש</string>
+    <string name="title_my_fav">המועדפים שלי</string>
+    <string name="title_my_pets">החיות שלי</string>
+    <string name="title_profile">פרופיל</string>
+    <string name="type_a_message">רשום הודעה...</string>
+    <string name="types">סוגים</string>
+    <string name="upload_in_progress">העלאה בתהליך</string>
+    <string name="uploading">מעלה</string>
+    <string name="use_current_location">השתמש במיקום הנוכחי שלי</string>
+    <string name="username">שם משתמש</string>
+    <string name="weeklyUpdatesChannelDesc">אל תפספס את החבר הכי טוב שלך. ראה את החיות שנוספו כשלא היית</string>
+    <string name="weeklyUpdatesChannelName">ערוץ עדכונים שבועיים</string>
+    <string name="weeklyUpdatesChannelTitle">עדכון חיות</string>
+    <string name="what_is_her_his_age">מה הגיל שלו/ה?</string>
+    <string name="yes">כן</string>
+    <string name="yes_happy">כן :)</string>
+    <string name="yes_sad">כן :(</string>
+    <string name="menu_logout">התנתק</string>
+</resources>

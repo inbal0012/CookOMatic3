@@ -49,7 +49,6 @@ public class PetPageActivity extends AppCompatActivity {
         TextView Info = findViewById(R.id.Info);
         TextView Date = findViewById(R.id.Date);
         TextView Location = findViewById(R.id.Location);
-        TextView Immunized = findViewById(R.id.Immunized);
         TextView Age = findViewById(R.id.Age);
         TextView Price = findViewById(R.id.Price);
         TextView kind = findViewById(R.id.kind);
@@ -87,11 +86,13 @@ public class PetPageActivity extends AppCompatActivity {
 
         FloatingActionButton fabFav = findViewById(R.id.fabFav);
         FloatingActionButton fabMsg = findViewById(R.id.fabMsg);
+        FloatingActionButton fabEdit = findViewById(R.id.fabEdit);
 
         if (fuser != null) {
             if (pet.getPostOwnerId().equals(fuser.getUid())) {
                 fabMsg.setVisibility(View.GONE);
                 fabFav.setVisibility(View.GONE);
+                fabEdit.setVisibility(View.VISIBLE);
             }
         }
         fabFav.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +116,24 @@ public class PetPageActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), ChatActivity2.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("userid", pet.getPostOwnerId());
+                    startActivity(intent);
+                }
+                else {
+                    loginDialog(R.id.fabMsg);
+                }
+            }
+        });
+
+        fabEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (fuser != null) {
+                    Gson gson = new Gson();
+                    Intent intent = new Intent(getApplicationContext(), EditPetActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    String gStr = gson.toJson(pet);
+                    intent.putExtra("pet", gStr);
                     startActivity(intent);
                 }
                 else {

@@ -1,5 +1,6 @@
 package com.example.adopy.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -19,7 +20,9 @@ import android.widget.Toast;
 import org.honorato.multistatetogglebutton.MultiStateToggleButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class FilterActivity extends AppCompatActivity {
 
@@ -47,13 +50,7 @@ public class FilterActivity extends AppCompatActivity {
         typeSpinner = findViewById(R.id.typeSpinner);
 
         //adding items to typeSpinnerList TODO other
-        typeSpinnerList.add(getString(R.string.Dog));
-        typeSpinnerList.add(getString(R.string.Cat));
-        typeSpinnerList.add(getString(R.string.Rabbit));
-        typeSpinnerList.add(getString(R.string.Hedgehog));
-        typeSpinnerList.add(getString(R.string.Chinchilla));
-        typeSpinnerList.add(getString(R.string.Iguana));
-        typeSpinnerList.add(getString(R.string.Turtle));
+        typeSpinnerList = Arrays.asList( getResources().getStringArray(R.array.type_array) );
 
         //set items to spinner from typeSpinnerList
         typeSpinner.setItems(typeSpinnerList);
@@ -94,7 +91,8 @@ public class FilterActivity extends AppCompatActivity {
         sp.setTypes(typeSpinner.getSelectedStrings());
         sp.setAgeMin(Math.round(ageSeekbar.getLeftSeekBar().getProgress()));
         sp.setAgeMax(Math.round(ageSeekbar.getRightSeekBar().getProgress()));
-        sp.setSex(getResources().getStringArray(R.array.sex_array)[sex_mstb.getValue()]);
+        String[] sexEng = new String[]{"Male", "Doesn't matter", "Female"};
+        sp.setSex(sexEng[sex_mstb.getValue()]);
         sp.setDistance(Math.round(distanceSeekbar.getLeftSeekBar().getProgress()));
 
         String ans = "types: " + sp.getTypes() + "\nage: " + sp.getAgeMin() + " - " + sp.getAgeMax() + "\nSex: " + sp.getSex() + "\nDistance: " + sp.getDistance();

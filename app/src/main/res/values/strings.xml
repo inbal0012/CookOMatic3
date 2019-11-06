@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">adopy</string>
 
-    <string name="large_text">
+    <string name="large_text" translatable="false">
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
@@ -111,13 +111,21 @@
     </string-array>
 
     //typeSpinner Types
-    <string name="Dog">dog</string>
-    <string name="Cat">cat</string>
-    <string name="Rabbit">rabbit</string>
-    <string name="Hedgehog">hedgehog</string>
-    <string name="Chinchilla">chinchilla</string>
-    <string name="Iguana">iguana</string>
-    <string name="Turtle">turtle</string>
+    <string-array name="type_array">
+        <item name="Dog">dog</item>
+        <item name="Cat">cat</item>
+        <item name="Rabbit">rabbit</item>
+        <item name="Hedgehog">hedgehog</item>
+        <item name="Chinchilla">chinchilla</item>
+        <item name="Iguana">iguana</item>
+        <item name="Turtle">turtle</item>
+    </string-array>
+
+
+    <string-array name="gender_array">
+        <item>"Male"</item>
+        <item>"Female"</item>
+    </string-array>
 
     //title_activity
     <string name="title_activity_filter">FilterActivity</string>
@@ -147,13 +155,11 @@
 
     //forgot pass act
     <string name="prompt_email">Email</string>
-    <string name="back">Back</string>
     <string name="reset_password">Reset Password</string>
 
     //sign in act
-    <string name="sign_in">SIGN IN</string>
+    <string name="sign_in">Sign in</string>
     <string name="prompt_password">Password </string>
-    <string name="action_sign_in_short">Sign in</string>
     <string name="forgotPass">Forgot your Password?</string>
     <string name="signup_press">Don\'t have an account?</string>
     <string name="signUpEmailBTN">Press HERE to Sign Up now</string>
@@ -161,7 +167,7 @@
     <string name="success">You entered with Success</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
-    <string name="error">Error have been occurred,sorry. Please try again later</string>
+    <string name="error">Error have been occurred, sorry. Please try again later</string>
 
     //sign up act
     <string name="nick_name">Nick Name</string>
@@ -171,13 +177,10 @@
     <string name="or">OR</string>
 
     //pet page act
-    <string name="truee">true</string>
     <string name="adopt_me_now_and_save_me_from_the_street">Adopt me now and save me from the street..</string>
 
     //add pet act
     <string name="new_pet">New Pet</string>
-    <string name="the_pet_s_name">The pet\'s name</string>
-    <string name="does_your_pet_is_immunized">is He/She Immunized?</string>
     <string name="what_is_her_his_age">What is her/his age?</string>
     <string name="describe_your_pet_in_a_few_words">Describe your pet in a few words..</string>
 
@@ -187,14 +190,12 @@
 
     //pet features
     <string name="kind">Kind</string>
-    <string name="immunized">Immunized</string>
     <string name="location">Location</string>
     <string name="age">Age</string>
     <string name="gender">Gender</string>
     <string name="info">Info</string>
 
     //unknown
-    <string name="title_post">NEW POST</string>
 
 
     <string name="My_Pets_Page">My Pets Page</string>
@@ -225,10 +226,11 @@
     <string name="empty_msg">You can\'t send empty message</string>
     <string name="no_msg">No Message</string>
     <string name="please_login">Please Login</string>
-    <string name="go_back">go back</string>
+    <string name="go_back">back</string>
     <string name="dialog_login">Login</string>
-    <string name="msg_owner_dialog_body">In order to message the owner you need to be logged in</string>
-    <string name="add_fav_dialog_body">To save your favorite pets you need to be logged in</string>
+    <string name="msg_owner_dialog_body">In order to message the owner you need to login</string>
+    <string name="add_fav_dialog_body">To save your favorite pets you need to login</string>
+    <string name="add_pet_dialog_body">To add a pet you need to login</string>
 
     <string name="title_activity_my_pets">MyPetsActivity</string>
     <string name="title_profile">Profile</string>
@@ -247,6 +249,11 @@
     <string name="failed">Failed!</string>
     <string name="no_image_selected">No image selected</string>
     <string name="upload_in_progress">Upload in progress</string>
+    <string name="edit_pet">Edit Your Pet</string>
+    <string name="Select_pet_species">Select pet species</string>
+    <string name="use_current_location">use my current location</string>
+    <string name="mssOK">select</string>
+    <string name="Tap_to_select">Tap to select</string>
 
 
 </resources>

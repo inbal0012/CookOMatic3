@@ -11,7 +11,7 @@
     <include layout="@layout/content_search" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabFav"
+        android:id="@+id/fabAdd"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_margin="16dp"

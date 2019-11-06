@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
+import com.example.adopy.R;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -45,7 +47,7 @@ public class MultipleSelectionSpinner extends AppCompatSpinner implements
             if (buildSelectedItemString().length() > 0) {
                 simple_adapter.add(buildSelectedItemString());
             } else {
-                simple_adapter.add("Tap to select");
+                simple_adapter.add(getContext().getString(R.string.Tap_to_select));
             }
         } else {
             throw new IllegalArgumentException(
@@ -59,7 +61,7 @@ public class MultipleSelectionSpinner extends AppCompatSpinner implements
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMultiChoiceItems(_items, mSelection, this);
 
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getContext().getString(R.string.mssOK), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
 
@@ -92,7 +94,7 @@ public class MultipleSelectionSpinner extends AppCompatSpinner implements
         _items = items.toArray(new String[items.size()]);
         mSelection = new boolean[_items.length];
         simple_adapter.clear();
-        simple_adapter.add("Tap to select");
+        simple_adapter.add(getContext().getString(R.string.Tap_to_select));
         ///simple_adapter.add(_items[0]);
         Arrays.fill(mSelection, false);
     }
@@ -160,14 +162,16 @@ public class MultipleSelectionSpinner extends AppCompatSpinner implements
     }
 
     public List<String> getSelectedStrings() {
+        String[] _itemsEng = new String[] {"select","dog", "cat", "rabbit", "hedgehog", "chinchilla", "iguana", "turtle"};
+
         List<String> selection = new LinkedList<>();
         for (int i = 0; i < _items.length; ++i) {
             if (mSelection[i]) {
-                selection.add(_items[i]);
+                selection.add(_itemsEng[i]);
             }
         }
         if (selection.isEmpty()){
-            Collections.addAll(selection, _items);
+            Collections.addAll(selection, _itemsEng);
         }
         return selection;
     }

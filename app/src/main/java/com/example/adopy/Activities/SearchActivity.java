@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.adopy.R;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
+import com.example.adopy.Utilities.Dialogs;
 import com.example.adopy.Utilities.FileSystemMemory;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.Models.SearchPreferences;
@@ -49,9 +50,7 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -81,12 +80,15 @@ public class SearchActivity extends AppCompatActivity {
     private FirebaseUser fuser;
     DatabaseReference mDatabaseReference;
 
+    Dialogs dialogs;
+
     private final static int SELECT_IMAGE = 100;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        dialogs = new Dialogs(this);
 
         mRecyclerView = findViewById(R.id.recycler_search_act);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -96,7 +98,7 @@ public class SearchActivity extends AppCompatActivity {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
         mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
 
-        fab = findViewById(R.id.fabFav);
+        fab = findViewById(R.id.fabAdd);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,15 +106,16 @@ public class SearchActivity extends AppCompatActivity {
                 if (fuser == null) {
                     loginDialog();
                 }
-                else
-                    AddDialog();
+                else {
+                    dialogs.AddPetDialog(mPetModels, mPetAdapter);
+                }
             }
         });
 
         getUserLocation();
     }
 
-    private void loginDialog() {
+    private void loginDialog() {dialogs.showLoginDialog(R.id.fabAdd);
     }
 
     private void AddDialog() {
@@ -163,18 +166,18 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, ''yy");
-                String currentDateAndTime = sdf.format(new Date());
-                Date currentDate= Calendar.getInstance().getTime();
-                long ageOfPet = currentDate.getTime() - petBirthday.getTime();
-                long seconds = ageOfPet / 1000;
-                long minutes = seconds / 60;
-                long hours = minutes / 60;
-                long days = hours / 24;
+//                SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, ''yy");
+//                String currentDateAndTime = sdf.format(new Date());
+//                Date currentDate= Calendar.getInstance().getTime();
+//                long ageOfPet = currentDate.getTime() - petBirthday.getTime();
+//                long seconds = ageOfPet / 1000;
+//                long minutes = seconds / 60;
+//                long hours = minutes / 60;
+//                long days = hours / 24;
 
-                long years = (days>=360) ? days/360 : 0;
-                long months = years >0 ? ((days%360)>= 30 ? (days%360) /30 : 0 ): ((days)>= 30? days/30 : 0 );
-                long leftDays = years > 0 ? (months >0?((days%360)%30) : days%360) : months > 0?(days%30) : days;
+//                long years = (days>=360) ? days/360 : 0;
+//                long months = years >0 ? ((days%360)>= 30 ? (days%360) /30 : 0 ): ((days)>= 30? days/30 : 0 );
+//                long leftDays = years > 0 ? (months >0?((days%360)%30) : days%360) : months > 0?(days%30) : days;
 
                 namePet = name.getText().toString();
 
@@ -193,7 +196,7 @@ public class SearchActivity extends AppCompatActivity {
                 //petModel.setDate(currentDateAndTime);
                 petModel.setLocation(location.getText().toString());
                 //petModel.setImmunized(isImmunized);
-                Double age = (double)years + ((double)months)/12;
+                Double age = 0.0;//(double)years + ((double)months)/12;
                 Log.d(TAG, "onClick: " + age.toString());
                 petModel.setAge(age);
                 petModel.setPrice(price.getText().toString());
