@@ -1,14 +1,11 @@
 package com.example.adopy.Activities;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -185,7 +182,7 @@ public class SearchActivity extends AppCompatActivity {
                 //String Uid=user.getUid();
 
                 petModel.setName(namePet);
-                petModel.setBitmapUrl("https://firebasestorage.googleapis.com/v0/b/adopy-76b55.appspot.com/o/dog.png?alt=media&token=0bf5a729-1e56-4f3d-8ea9-3c0d3c0b4095");
+                petModel.setImageUri("https://firebasestorage.googleapis.com/v0/b/adopy-76b55.appspot.com/o/dog.png?alt=media&token=0bf5a729-1e56-4f3d-8ea9-3c0d3c0b4095"); //TODO change
                 if(about.getText().equals(""))
                 {
                     petModel.setInfo(getResources().getString(R.string.adopt_me_now_and_save_me_from_the_street));
@@ -210,7 +207,7 @@ public class SearchActivity extends AppCompatActivity {
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("id", petId);
                 hashMap.put("age", age);
-                hashMap.put("bitmapUrl", "null");
+                hashMap.put("imageUri", "null");
                 hashMap.put("gender", "Male"); //TODO
                 hashMap.put("kind","dog"); //TODO
                 hashMap.put("name",namePet);

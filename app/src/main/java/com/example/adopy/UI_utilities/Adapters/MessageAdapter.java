@@ -25,14 +25,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     private Context mContext;
     private List<Chat> mChatsList;
-    private String mImageURL;
+    private String mImageUri;
 
     FirebaseUser mFirebaseUser;
 
-    public MessageAdapter(Context mContext, List<Chat> mChatsList, String imageURL) {
+    public MessageAdapter(Context mContext, List<Chat> mChatsList, String imageUri) {
         this.mContext = mContext;
         this.mChatsList = mChatsList;
-        this.mImageURL = imageURL;
+        this.mImageUri = imageUri;
     }
 
     @NonNull
@@ -53,10 +53,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         holder.show_message.setText(chat.getMessage());
 
-        if (mImageURL.equals("default")) {
+        if (mImageUri.equals("default")) {
             holder.profile_image.setImageResource(R.drawable.user_male);
         } else {
-            Glide.with(mContext).load(mImageURL).into(holder.profile_image);
+            Glide.with(mContext).load(mImageUri).into(holder.profile_image);
         }
     }
 

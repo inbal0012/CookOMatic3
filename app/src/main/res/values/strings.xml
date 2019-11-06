@@ -238,9 +238,15 @@
     <string name="delete">delete</string>
     <string name="keep">keep</string>
     <string name="deleting_a_pet">Deleting a Pet</string>
+    <string name="deleting_a_chat">Deleting a Chat</string>
     <string name="delete_pet_dialog_body">Are you sure you want to delete</string>
+    <string name="delete_chat_dialog_body">Are you sure you want to delete your chat with</string>
     <string name="LOCATION_PERMISSION_warning_body">The application must have location permission in order for it to work!</string>
     <string name="LOCATION_PERMISSION_warning_title">Attention</string>
+    <string name="uploading">Uploading</string>
+    <string name="failed">Failed!</string>
+    <string name="no_image_selected">No image selected</string>
+    <string name="upload_in_progress">Upload in progress</string>
 
 
 </resources>

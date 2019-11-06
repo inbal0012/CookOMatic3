@@ -12,8 +12,8 @@ public class PetModel implements Serializable {
     private String Name;
     @SerializedName("kind")
     private String Kind;
-    @SerializedName("bitmapUrl")
-    private String BitmapUrl;
+    @SerializedName("imageUri")
+    private String imageUri;
     @SerializedName("location")
     private String Location;
     @SerializedName("age")
@@ -32,13 +32,13 @@ public class PetModel implements Serializable {
     private String postOwnerId;
 
 
-    public PetModel(String id, String kind, String name, Double age, Gender gender, String bitmapUrl) {
+    public PetModel(String id, String kind, String name, Double age, Gender gender, String imageUri) {
         this.id = id;
         Kind = kind;
         Name = name;
         Age = age;
         Gender = gender;
-        BitmapUrl = bitmapUrl;
+        this.imageUri = imageUri;
     }
 
     public PetModel() {
@@ -61,11 +61,11 @@ public class PetModel implements Serializable {
     }
 
     public String getBitmapUri() {
-        return BitmapUrl;
+        return imageUri;
     }
 
-    public void setBitmapUrl(String bitmapUrl) {
-        BitmapUrl = bitmapUrl;
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
     public String getLocation() {

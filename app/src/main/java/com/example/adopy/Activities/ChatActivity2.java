@@ -116,16 +116,16 @@ public class ChatActivity2 extends AppCompatActivity {
                 username.setText(userName);
 
                 //image
-                if (user.getImageURL().equals("default")) {
+                if (user.getImageUri().equals("default")) {
                     profile_image.setImageResource(R.drawable.user_male);
                     if (user.getGender().equals("Female")) {
                         profile_image.setImageResource(R.drawable.user_female);
                     }
                 } else {
-                    Glide.with(ChatActivity2.this).load(user.getImageURL()).into(profile_image);
+                    Glide.with(ChatActivity2.this).load(user.getImageUri()).into(profile_image);
                 }
 
-                readMessages(mFirebaseUser.getUid(), userId, user.getImageURL());
+                readMessages(mFirebaseUser.getUid(), userId, user.getImageUri());
             }
 
             @Override
@@ -251,7 +251,7 @@ public class ChatActivity2 extends AppCompatActivity {
         });
     }
 
-    private void readMessages(final String i_MyId, final String i_UserId, final String I_ImageURL) {
+    private void readMessages(final String i_MyId, final String i_UserId, final String I_ImageUri) {
         mChatsList = new ArrayList<>();
         mReference = FirebaseDatabase.getInstance().getReference("Chats");
         mReference.addValueEventListener(new ValueEventListener() {
@@ -265,7 +265,7 @@ public class ChatActivity2 extends AppCompatActivity {
                         mChatsList.add(chat);
                     }
 
-                    messageAdapter = new MessageAdapter(ChatActivity2.this, mChatsList, I_ImageURL);
+                    messageAdapter = new MessageAdapter(ChatActivity2.this, mChatsList, I_ImageUri);
                     recyclerView.setAdapter(messageAdapter);
                 }
             }

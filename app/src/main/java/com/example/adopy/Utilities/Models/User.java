@@ -11,17 +11,17 @@ import androidx.annotation.Nullable;
 public class User {
     private String id;
     private String username;
-    private String imageURL;
+    private String imageUri;
     private String age;
     private String gender;
     private String city;
     private String device_token;
     private List<PetModel> favPets;
 
-    public User(String id, String username, String imageURL, String age, String gender, String city, String device_token) {
+    public User(String id, String username, String imageUri, String age, String gender, String city, String device_token) {
         this.id = id;
         this.username = username;
-        this.imageURL = imageURL;
+        this.imageUri = imageUri;
         this.age = age;
         this.gender = gender;
         this.city = city;
@@ -293,12 +293,12 @@ public class User {
         this.username = username;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImageUri() {
+        return imageUri;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
     public String getAge() {

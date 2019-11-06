@@ -1,5 +1,6 @@
 package com.example.adopy.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -37,6 +38,7 @@ public class PetPageActivity extends AppCompatActivity {
     FirebaseUser fuser;
     User user;
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +84,6 @@ public class PetPageActivity extends AppCompatActivity {
         Info.setText(pet.getInfo());
 
         ImageView petImg = findViewById(R.id.pet_image);
-//        petImg.setImageURI(Uri.parse("https://firebasestorage.googleapis.com/v0/b/adopy-76b55.appspot.com/o/dog.png?alt=media&token=0bf5a729-1e56-4f3d-8ea9-3c0d3c0b4095"));
 
         FloatingActionButton fabFav = findViewById(R.id.fabFav);
         FloatingActionButton fabMsg = findViewById(R.id.fabMsg);

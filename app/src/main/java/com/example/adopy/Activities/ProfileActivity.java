@@ -100,13 +100,13 @@ public class ProfileActivity extends AppCompatActivity {
                     userEmailTv.setText(userEmail);
 
                     //image
-                    if (user.getImageURL().equals("default")) {
+                    if (user.getImageUri().equals("default")) {
                         profile_image.setImageResource(R.drawable.user_male);
                         if (user.getGender().equals("Female")) {
                             profile_image.setImageResource(R.drawable.user_female);
                         }
                     } else {
-                        Glide.with(ProfileActivity.this).load(user.getImageURL()).into(profile_image);
+                        Glide.with(ProfileActivity.this).load(user.getImageUri()).into(profile_image);
                     }
                     //----------------------------------------------------------------
                 }

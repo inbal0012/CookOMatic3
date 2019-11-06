@@ -51,13 +51,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         holder.username.setText(user.getUsername());
 
-        if (user.getImageURL().equals("default")) {
+        if (user.getImageUri().equals("default")) {
             holder.profile_image.setImageResource(R.drawable.user_male);
             if (user.getGender().equals("Female")) {
                 holder.profile_image.setImageResource(R.drawable.user_female);
             }
         } else {
-            Glide.with(mContext).load(user.getImageURL()).into(holder.profile_image);
+            Glide.with(mContext).load(user.getImageUri()).into(holder.profile_image);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
