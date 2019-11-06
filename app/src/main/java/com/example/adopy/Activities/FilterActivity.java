@@ -79,7 +79,6 @@ public class FilterActivity extends AppCompatActivity {
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO are you sure Dialog
                 Log.d(TAG, "canceled");
                 FilterActivity.this.finish();
             }

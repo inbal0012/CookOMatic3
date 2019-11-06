@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.adopy.Activities.PetPageActivity;
 import com.example.adopy.R;
 import com.example.adopy.Utilities.Models.PetModel;
@@ -73,13 +74,13 @@ public class PetAdapter2 extends RecyclerView.Adapter<PetAdapter2.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PetModel petModel = petModels.get(position);
         float[] results = new float[1];
-        Log.d(TAG, "onBindViewHolder: \n " + petModel.getName() + ": " + petModel.getLatitude() + " , " + petModel.getLongitude() + "\nuri: " + petModel.getBitmapUri());
+        Log.d(TAG, "onBindViewHolder: \n " + petModel.getName() + ": " + petModel.getLatitude() + " , " + petModel.getLongitude() + "\nuri: " + petModel.getImageUri());
         Location.distanceBetween(userLat, userLng, petModel.getLatitude(), petModel.getLongitude(), results);
         String dist = String.valueOf(Math.round(results[0])/1000);
 //        Log.d(TAG, "onBindViewHolder: " + results[0]/1000);
 
         holder.petName.setText(petModel.getName());
-       // holder.petImage.setImageURI(Uri.parse(petModel.getBitmapUri()));
+        Glide.with(context).load(petModel.getImageUri()).placeholder(R.drawable.foot).into(holder.petImage);
         holder.petAge.setText(String.format(petModel.getAge().toString()));
         holder.petDist.setText(dist);
     }

@@ -23,7 +23,7 @@
             android:layout_alignParentEnd="true"
             android:background="@drawable/background_right"
             android:padding="8dp"
-            android:text="hello"
+            android:text="@string/username"
             android:textColor="#FFF"
             android:textSize="18sp" />
     </RelativeLayout>

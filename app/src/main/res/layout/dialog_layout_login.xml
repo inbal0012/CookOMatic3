@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="250dp"
     android:layout_gravity="center"
@@ -15,7 +14,7 @@
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:orientation="vertical">
-        <!-- TODO hardcoded text -->
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="165dp"
@@ -38,7 +37,7 @@
                 android:gravity="center"
                 android:text="@string/please_login"
                 android:textColor="@android:color/black"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -50,7 +49,7 @@
                 android:layout_marginStart="20dp"
                 android:gravity="center"
                 android:text="@string/msg_owner_dialog_body"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
@@ -61,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/frmLogin"
-        android:layout_marginRight="45dp"
+        android:layout_marginEnd="45dp"
         android:layout_marginTop="75dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -87,7 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/frmExit"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="75dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

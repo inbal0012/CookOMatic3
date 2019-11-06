@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
 import com.example.adopy.R;
 import com.example.adopy.Utilities.Dialogs;
 import com.example.adopy.Utilities.Models.PetModel;
@@ -50,7 +51,7 @@ public class PetPageActivity extends AppCompatActivity {
         TextView Date = findViewById(R.id.Date);
         TextView Location = findViewById(R.id.Location);
         TextView Age = findViewById(R.id.Age);
-        TextView Price = findViewById(R.id.Price);
+        TextView Price = findViewById(R.id.Gender);
         TextView kind = findViewById(R.id.kind);
         ImageView image = findViewById(R.id.image);
 
@@ -82,7 +83,9 @@ public class PetPageActivity extends AppCompatActivity {
         //Date.setText(pet.getDate());
         Info.setText(pet.getInfo());
 
-        ImageView petImg = findViewById(R.id.pet_image);
+        ImageView petImg = findViewById(R.id.petImage);
+        Log.d(TAG, "onCreate: " + pet.getImageUri());
+        Glide.with(this).load(pet.getImageUri()).placeholder(R.drawable.foot).into(petImg);
 
         FloatingActionButton fabFav = findViewById(R.id.fabFav);
         FloatingActionButton fabMsg = findViewById(R.id.fabMsg);

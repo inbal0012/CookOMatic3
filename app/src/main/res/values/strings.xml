@@ -254,6 +254,12 @@
     <string name="use_current_location">use my current location</string>
     <string name="mssOK">select</string>
     <string name="Tap_to_select">Tap to select</string>
+    <string name="Select_pet_gender">Select pet gender</string>
+    <string name="save_new_pet">save pet?</string>
+    <string name="Open_Gallery">Open Gallery</string>
+    <string name="Open_Camera">Open Camera</string>
+    <string name="Select_option">Select option</string>
+    <string name="Select_Picture">Select Picture</string>
 
 
 </resources>

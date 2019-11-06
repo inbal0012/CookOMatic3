@@ -4,23 +4,20 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.AutoCompleteTextView;
-import android.widget.DatePicker;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.adopy.Activities.SearchActivity;
 import com.example.adopy.R;
 import com.example.adopy.Activities.SigninActivity;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
@@ -33,19 +30,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+import com.tsongkha.spinnerdatepicker.DatePickerDialog;
+import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 
-public class Dialogs implements ActivityCompat.OnRequestPermissionsResultCallback {
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+import static com.example.adopy.Utilities.RequestCodes.SELECT_IMAGE_REQUEST;
+
+public class Dialogs {
     Activity activity;
-
-
-    private final static int SELECT_IMAGE = 100;
 
     public Dialogs(Activity activity) {
         this.activity = activity;
@@ -100,73 +102,100 @@ public class Dialogs implements ActivityCompat.OnRequestPermissionsResultCallbac
 
 
     public void AddPetDialog(final ArrayList<PetModel> mPetModels, final PetAdapter2 mPetAdapter) {
+        //id, Name, Kind, imageUri, Location, , Gender, Price, latitude, longitude, Info, postOwnerId
+
+        //var
         final String TAG = "my_AddDialog";
         final Date[] petBirthday = new Date[1];
         final String[] namePet = new String[1];
+        final PetModel petModel = new PetModel();
+
+        //firebase
         final FirebaseUser fuser = FirebaseAuth.getInstance().getCurrentUser();
+
+        //dialogBuilder
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity,R.style.AlertTheme).setCancelable(true);
         final LayoutInflater inflater = activity.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_layout_add_pet, null);
+        final View dialogView = inflater.inflate(R.layout.dialog_layout_add_pet, null);
         dialogBuilder.setView(dialogView);
 
-        Bitmap bitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.foot);
-        TextView Title = dialogView.findViewById(R.id.kind);
-        final TextView btn_cancel = dialogView.findViewById(R.id.btn_cancel);
-        TextView btn_ok = dialogView.findViewById(R.id.btn_ok);
-        ImageView image = dialogView.findViewById(R.id.image);
-        final AutoCompleteTextView name = dialogView.findViewById(R.id.name);
-        RadioGroup radio_group = dialogView.findViewById(R.id.radio_group);
-        final DatePicker age_picker = dialogView.findViewById(R.id.age_picker);
-        final AutoCompleteTextView price = dialogView.findViewById(R.id.price);
-        final AutoCompleteTextView about = dialogView.findViewById(R.id.about);
-        final AutoCompleteTextView location = dialogView.findViewById(R.id.location);
+        //Age
+        Button age = dialogView.findViewById(R.id.Age);
+        age.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                new SpinnerDatePickerDialogBuilder()
+                        .context(activity)
+                        .callback(new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(com.tsongkha.spinnerdatepicker.DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                ageOnDateSet(year, monthOfYear, dayOfMonth);
+                            }
+                        })
+                        .spinnerTheme(R.style.NumberPickerStyle)
+                        .showTitle(true)
+                        .showDaySpinner(true)
+                        .defaultDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+                        .maxDate(2020, 0, 1)
+                        .minDate(2000, 0, 1)
+                        .build()
+                        .show();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            age_picker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
-                @Override
-                public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    petBirthday[0] = new Date(year,monthOfYear,dayOfMonth);
+            }
+
+            private void ageOnDateSet(int year, int month, int dayOfMonth) {
+                Log.d(TAG, String.format("ageOnDateSet: %d, %d, %d", dayOfMonth, month, year));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Period period = Period.between(
+                            LocalDate.of(year , month , dayOfMonth),
+                            LocalDate.now());
+
+                    Log.d(TAG, "ageOnDateSet: " + Double.parseDouble("" + period.getYears()+ "." + (13-period.getMonths())));
+                    petModel.setAge(Double.parseDouble("" + period.getYears()+ "." + (13-period.getMonths())));
                 }
-            });
-        }
+            }
+        });
 
+        ImageView image = dialogView.findViewById(R.id.image);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageOnClickListener();
+                Log.d(TAG, "onClick: " + activity);
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                activity.startActivityForResult(Intent.createChooser(intent, activity.getString(R.string.Select_Picture)), SELECT_IMAGE_REQUEST);
+                //imageOnClickListener();
             }
         });
 
 
-        Title.setText(activity.getResources().getString(R.string.new_pet));
+        //Title.setText(activity.getResources().getString(R.string.new_pet));
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
+
+
+        TextView btn_cancel = dialogView.findViewById(R.id.btn_cancel);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
             }
         });
+
+        TextView btn_ok = dialogView.findViewById(R.id.btn_ok);
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AutoCompleteTextView name = dialogView.findViewById(R.id.name);
+                AutoCompleteTextView price = dialogView.findViewById(R.id.price);
+                AutoCompleteTextView about = dialogView.findViewById(R.id.about);
+                AutoCompleteTextView location = dialogView.findViewById(R.id.location);
 
-//                SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, ''yy");
-//                String currentDateAndTime = sdf.format(new Date());
-//                Date currentDate= Calendar.getInstance().getTime();
-//                long ageOfPet = currentDate.getTime() - petBirthday.getTime();
-//                long seconds = ageOfPet / 1000;
-//                long minutes = seconds / 60;
-//                long hours = minutes / 60;
-//                long days = hours / 24;
-
-//                long years = (days>=360) ? days/360 : 0;
-//                long months = years >0 ? ((days%360)>= 30 ? (days%360) /30 : 0 ): ((days)>= 30? days/30 : 0 );
-//                long leftDays = years > 0 ? (months >0?((days%360)%30) : days%360) : months > 0?(days%30) : days;
 
                 namePet[0] = name.getText().toString();
 
-                PetModel petModel = new PetModel();
                 //String Uid=user.getUid();
 
                 petModel.setName(namePet[0]);
@@ -228,10 +257,10 @@ public class Dialogs implements ActivityCompat.OnRequestPermissionsResultCallbac
     private void imageOnClickListener() {
         android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(activity);
         CharSequence[] options=new CharSequence[]{
-                "Open Gallery",
-                "Open Camera"
+                activity.getString(R.string.Open_Gallery),
+                activity.getString(R.string.Open_Camera)
         };
-        builder.setTitle("Select option");
+        builder.setTitle(activity.getString(R.string.Select_option));
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -239,7 +268,7 @@ public class Dialogs implements ActivityCompat.OnRequestPermissionsResultCallbac
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
-                    activity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
+                    activity.startActivityForResult(Intent.createChooser(intent, activity.getString(R.string.Select_Picture)), SELECT_IMAGE_REQUEST);
                 }
                 else if (which == 1){
                     CropImage.activity()
@@ -253,8 +282,26 @@ public class Dialogs implements ActivityCompat.OnRequestPermissionsResultCallbac
         builder.show();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == SELECT_IMAGE_REQUEST){
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+//
+                    if(data.getData()==null){
+                        Uri uri = (Uri)data.getExtras().get("data");
+                    }else{
+//                        try {
+//                            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+//                    Glide.with(HomeActivity.this).load(bitmap).placeholder(R.drawable.pet_foot).into(image);
+//                    // image.setImageDrawable(Drawable.createFromPath(file.getAbsolutePath()));
+                }
+            } else if (resultCode == RESULT_CANCELED)  {
+                Toast.makeText(activity, activity.getResources().getString(R.string.error), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

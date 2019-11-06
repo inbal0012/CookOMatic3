@@ -31,6 +31,8 @@ public class PetModel implements Serializable {
     @SerializedName("PostOwnerId")
     private String postOwnerId;
 
+    //id, Name, Kind, imageUri, Location, Age, Gender, Price, latitude, longitude, Info, postOwnerId
+
 
     public PetModel(String id, String kind, String name, Double age, Gender gender, String imageUri) {
         this.id = id;
@@ -60,7 +62,7 @@ public class PetModel implements Serializable {
         Kind = kind;
     }
 
-    public String getBitmapUri() {
+    public String getImageUri() {
         return imageUri;
     }
 

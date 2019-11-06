@@ -1,19 +1,26 @@
 package com.example.adopy.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.adopy.R;
+import com.example.adopy.Utilities.Dialogs;
+import com.example.adopy.Utilities.MyImage;
 import com.example.adopy.ui.myPets.MyPetsFragment;
 import com.example.adopy.ui.profile.ProfileFragment;
 import com.example.adopy.ui.favorites.FavoritesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import static com.example.adopy.Utilities.RequestCodes.USER_IMAGE_REQUEST;
+import static com.example.adopy.Utilities.RequestCodes.SELECT_IMAGE_REQUEST;
 
 public class MyPetsActivity extends AppCompatActivity {
 
@@ -66,4 +73,16 @@ public class MyPetsActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG, "onActivityResult: " + requestCode);
+        if (requestCode == USER_IMAGE_REQUEST ) {
+            new MyImage(this, "Users", "user").onActivityResult(requestCode, resultCode, data);
+        }
+        if (requestCode == SELECT_IMAGE_REQUEST) {
+            new Dialogs(this).onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }

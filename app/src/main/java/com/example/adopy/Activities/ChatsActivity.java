@@ -176,7 +176,6 @@ public class ChatsActivity extends AppCompatActivity {
                 mUsersList.remove(viewHolder.getAdapterPosition());
                 userAdapter.notifyDataSetChanged();
                 deleteChatFromDatabase(user);
-                //TODO remove from database
                 alertDialog.dismiss();
             }
         });

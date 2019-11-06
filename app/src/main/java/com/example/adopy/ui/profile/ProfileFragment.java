@@ -28,6 +28,7 @@ import com.example.adopy.Activities.EditProfileActivity;
 import com.example.adopy.R;
 import com.example.adopy.Utilities.Interfaces_and_Emuns.Gender;
 import com.example.adopy.Utilities.Models.User;
+import com.example.adopy.Utilities.MyImage;
 import com.example.adopy.Utilities.MyLocation;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,26 +49,28 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
+import static com.example.adopy.Utilities.RequestCodes.USER_IMAGE_REQUEST;
+
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = "my_ProfileFragment";
     private ProfileViewModel profileViewModel;
 
     //firebase
-    FirebaseUser fuser;
-    StorageReference storageReference;
+    private FirebaseUser fuser;
+    private StorageReference storageReference;
     private StorageTask uploadTask;
 
-    User user;
+    private User user;
 
-    View root;
-    Toolbar toolbar;
-    String nameStr;
+    private View root;
+    private Toolbar toolbar;
+    private String nameStr;
 
-    Handler mainHandler;
+    private Handler mainHandler;
 
-    public static final int IMAGE_REQUEST = 1;
     private Uri imageUri;
+    MyImage myImage;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -165,11 +168,12 @@ public class ProfileFragment extends Fragment {
 
                 //image
                 ImageView profile_image = root.findViewById(R.id.profile_image);
-
                 profile_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openImage();
+                        myImage = new MyImage(getActivity(), "Users", "user");
+                        myImage.openImage();
+                        //openImage();
                     }
                 });
                 if (user.getImageUri().equals("default")) {
@@ -199,7 +203,7 @@ public class ProfileFragment extends Fragment {
                 MyLocation myLocation = new MyLocation(getActivity());
                 Address address = myLocation.getAddress();
                 TextView tvLocation = root.findViewById(R.id.tvLocation);
-                tvLocation.setText(String.format("%s , %s , %s , %s , %s", address.getCountryName(), address.getLocality(), address.getThoroughfare(), address.getSubThoroughfare(), address.getAdminArea()));
+                tvLocation.setText(myLocation.StringFromAddress(address));
             }
 
             @Override
@@ -213,7 +217,7 @@ public class ProfileFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, IMAGE_REQUEST);
+        startActivityForResult(intent, USER_IMAGE_REQUEST);
     }
 
     private String getFileExtension(Uri uri) {
@@ -274,14 +278,17 @@ public class ProfileFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == IMAGE_REQUEST && data != null && data.getData() != null) {
-            imageUri = data.getData();
-
-            if (uploadTask != null && uploadTask.isInProgress()) {
-                Toast.makeText(getContext(), getString(R.string.upload_in_progress), Toast.LENGTH_SHORT).show();
-            } else {
-                uploadImage();
-            }
+        Log.d(TAG, "onActivityResult: " + requestCode);
+        if (requestCode == USER_IMAGE_REQUEST) {
+            myImage.onActivityResult(requestCode, resultCode, data);
+//
+//            imageUri = data.getData();
+//
+//            if (uploadTask != null && uploadTask.isInProgress()) {
+//                Toast.makeText(getContext(), getString(R.string.upload_in_progress), Toast.LENGTH_SHORT).show();
+//            } else {
+//                uploadImage();
+//            }
         }
     }
 }

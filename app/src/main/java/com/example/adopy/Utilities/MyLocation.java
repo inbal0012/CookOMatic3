@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import static android.content.Context.LOCATION_SERVICE;
+import static com.example.adopy.Utilities.RequestCodes.LOCATION_PERMISSION_REQUEST;
 
 public class MyLocation implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -40,7 +41,6 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
     private double lng;
     private Address address;
 
-    private static final int LOCATION_PERMISSION_REQUEST = 102;
 
     public MyLocation(Activity activity) {
         this.activity = activity;
@@ -60,7 +60,6 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
         try {
             List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
             address = addresses.get(0);
-
             Log.d(TAG, "getAddress: run: " + address.getCountryName()
                     + " , " + address.getLocality()
                     + " , " + address.getThoroughfare()
@@ -73,6 +72,26 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
 
 
         return address;
+    }
+
+    public Address getFromLocation(double lat, double lng) {
+        try {
+            List<Address> addresses = null;
+            addresses = geocoder.getFromLocation(lat, lng, 1);
+            return addresses.get(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public  String StringFromAddress(Address address) {
+        String str = address.getCountryName()
+                + " , " + address.getLocality()
+                + " , " + address.getThoroughfare()
+                + " , " + address.getSubThoroughfare()
+                + " , " + address.getAdminArea();
+        return str;
     }
 
     @SuppressLint("NewApi")
@@ -171,14 +190,7 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
             } else {
                 if (activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                         && activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    Activity#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for Activity#requestPermissions for more details.
-                    return;
+                       return;
                 }
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, this);
             }

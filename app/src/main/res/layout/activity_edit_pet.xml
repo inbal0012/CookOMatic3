@@ -78,7 +78,7 @@
 
                     <TextView
 
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:text="@string/kind"
                         android:textColor="@color/colorPrimaryDark"
@@ -104,7 +104,7 @@
                     android:layout_marginTop="5dp">
 
                     <TextView
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:text="@string/location"
                         android:textColor="@color/colorPrimaryDark"
@@ -115,8 +115,7 @@
                         android:id="@+id/Location"
                         android:text="@string/use_current_location"
                         android:textColor="@color/white"
-                        android:clickable="true"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_gravity="center"
                         android:gravity="center"
@@ -132,23 +131,19 @@
                     android:layout_marginTop="5dp">
 
                     <TextView
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:text="@string/age"
                         android:textColor="@color/colorPrimaryDark"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical" />
 
-                    <TextView
+                    <Button
                         android:id="@+id/Age"
-                        android:text="@string/age"
-                        android:textColor="@color/white"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"/>
 
                 </LinearLayout>
 
@@ -164,18 +159,18 @@
                         android:text="@string/gender"
                         android:textColor="@color/colorPrimaryDark"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical" />
 
-                    <TextView
-                        android:id="@+id/Price"
-                        android:text="@string/gender"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
+                    <com.isapanah.awesomespinner.AwesomeSpinner
+                        android:id="@+id/ageSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_marginStart="10dp"
+                        app:spinnerDirection="ltr"
+                        app:spinnerHint="@string/Select_pet_gender"/>
+
 
                 </LinearLayout>
 
@@ -188,24 +183,23 @@
                     <TextView
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:text="@string/date"
+                        android:text="@string/price"
                         android:textColor="@color/colorPrimaryDark"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical" />
 
-                    <TextView
-                        android:id="@+id/Date"
-                        android:text="@string/date"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_gravity="center"
-                        android:gravity="center"
+                    <AutoCompleteTextView
+                        android:id="@+id/price"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/back_text"
+                        android:layout_marginStart="10dp"
+                        android:padding="10dp"
+                        android:hint="@string/price" />
+
 
                 </LinearLayout>
-
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -221,24 +215,62 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/Info"
-                        android:text="@string/adopt_me_now_and_save_me_from_the_street"
-                        android:textColor="@color/white"
-                        android:textSize="30sp"
-                        android:textStyle="bold"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
+                    <AutoCompleteTextView
+                        android:id="@+id/about"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/back_text"
+                        android:hint="@string/describe_your_pet_in_a_few_words"
+                        android:padding="10dp" />
 
                 </LinearLayout>
+
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
     </androidx.core.widget.NestedScrollView>
 
-   <!-- <include layout="@layout/content_pet_page" /> -->
+    <!-- Footer aligned to bottom -->
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/cancelBtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/button"
+                android:layout_marginEnd="10dp"
+                android:text="@string/cancel"/>
+
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/button"
+                android:text="@string/save"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
