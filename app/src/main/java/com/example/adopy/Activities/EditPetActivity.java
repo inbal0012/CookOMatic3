@@ -23,6 +23,7 @@ import com.example.adopy.R;
 import com.example.adopy.Utilities.Interfaces_and_Emuns.Gender;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.MyImage;
+import com.example.adopy.Utilities.MyLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.isapanah.awesomespinner.AwesomeSpinner;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Calendar;
@@ -84,7 +86,6 @@ public class EditPetActivity extends AppCompatActivity {
             public void onClick(View v) {
                 myImage = new MyImage(EditPetActivity.this, "Pets", pet.getId());
                 myImage.openImage();
-                //openImage();
             }
         });
         Glide.with(this).load(pet.getImageUri()).into(petImg);
@@ -182,15 +183,16 @@ public class EditPetActivity extends AppCompatActivity {
             newPet.setPrice(price.getText().toString());
         }
 
-        String PetAns = newPet.getName() +
-                "\n kind: " + newPet.getKind() +
-                "\n imageUri: " + newPet.getImageUri() +
-                "\n age: " + newPet.getAge() +
-                "\n Sex: " + newPet.getGender() +
-                "\n Price: " + newPet.getPrice() +
-                "\n Info: " + newPet.getInfo();
+        String PetAns = String.format("%s\n kind: %s\n imageUri: %s\n age: %s\n Sex: %s\n Price: %s\n Info: %s\n loaction (%s,%s)",
+                newPet.getName(), newPet.getKind(), newPet.getImageUri(), newPet.getAge(), newPet.getGender(), newPet.getPrice(), newPet.getInfo(), pet.getLatitude(), pet.getLongitude());
         Log.d(TAG, "saveChanges: " + PetAns);
 
+        MyLocation myLocation = new MyLocation(this);
+        try {
+            newPet.setLocation(myLocation.StringFromAddress(myLocation.getFromLocation(pet.getLatitude(), pet.getLongitude())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", newPet.getId());

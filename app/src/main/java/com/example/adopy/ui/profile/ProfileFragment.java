@@ -37,6 +37,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+import com.google.gson.Gson;
+
+import java.io.IOException;
 
 import static com.example.adopy.Utilities.RequestCodes.USER_IMAGE_REQUEST;
 
@@ -80,7 +83,13 @@ public class ProfileFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), EditProfileActivity.class));
+
+                Gson gson = new Gson();
+                String gStr = gson.toJson(user);
+                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("user", gStr);
+                startActivity(intent);
             }
         });
 
@@ -175,13 +184,17 @@ public class ProfileFragment extends Fragment {
 
                 //gender
                 ImageView ivGender = root.findViewById(R.id.ivGender);
+                TextView tvGender = root.findViewById(R.id.tvGender);
                 Drawable myDrawable;
-                if (user.getGender().equals(Gender.Male)) {
+                if (user.getGender().equals(Gender.Male.toString())) {
                     myDrawable = getResources().getDrawable(R.drawable.ic_gender_male);
-                } else {
+                } else if (user.getGender().equals(Gender.Female.toString())) {
                     myDrawable = getResources().getDrawable(R.drawable.ic_gender_female);
-                }
+                } else
+                    myDrawable = getResources().getDrawable(R.drawable.ic_gender);
                 ivGender.setImageDrawable(myDrawable);
+                tvGender.setText(user.getGender());
+
 
                 //age
                 TextView tvAge = root.findViewById(R.id.tvUserAge);
@@ -189,7 +202,12 @@ public class ProfileFragment extends Fragment {
 
                 //location
                 MyLocation myLocation = new MyLocation(getActivity());
-                Address address = myLocation.getAddress();
+                Address address = null;
+                try {
+                    address = myLocation.getAddress();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 TextView tvLocation = root.findViewById(R.id.tvLocation);
                 tvLocation.setText(myLocation.StringFromAddress(address));
             }
@@ -199,6 +217,12 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        populateData();
     }
 
     @Override

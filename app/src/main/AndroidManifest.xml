@@ -18,10 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Activities.StartActivity"
+            android:label="@string/title_activity_start"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".Activities.EditPetActivity"
             android:label="@string/edit_pet"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Activities.EditProfileActivity" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.EditProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.MyPetsActivity"
             android:label="@string/title_activity_my_pets"
@@ -38,7 +44,9 @@
         <activity
             android:name=".Activities.ResetPassword"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.SigninActivity" />
+        <activity
+            android:name=".Activities.SigninActivity"
+            android:label="@string/sign_in" />
         <activity
             android:name=".Activities.PetPageActivity"
             android:label="@string/title_activity_pet_page"

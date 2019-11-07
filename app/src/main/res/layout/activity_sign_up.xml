@@ -14,7 +14,7 @@
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/nav_header_circleImageView"
@@ -163,7 +163,6 @@
                 android:id="@+id/distanceSeekBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ageSeekBar"
                 app:rsb_indicator_height="40dp"
                 app:rsb_indicator_margin="10dp"
                 app:rsb_indicator_show_mode="alwaysShow"

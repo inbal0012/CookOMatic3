@@ -2,6 +2,7 @@ package com.example.adopy.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.location.Address;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 public class PetPageActivity extends AppCompatActivity {
 
     private static final String TAG = "my_PetPageActivity";
@@ -41,6 +44,8 @@ public class PetPageActivity extends AppCompatActivity {
     FirebaseUser fuser;
     User user;
 
+    TextView Info, Price, Location, Age, Gender, kind;
+
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +54,12 @@ public class PetPageActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TextView Info = findViewById(R.id.Info);
-        TextView Price = findViewById(R.id.Price);
-        final TextView Location = findViewById(R.id.Location);
-        TextView Age = findViewById(R.id.Age);
-        TextView Gender = findViewById(R.id.Gender);
-        TextView kind = findViewById(R.id.kind);
+        Info = findViewById(R.id.Info);
+        Price = findViewById(R.id.Price);
+        Location = findViewById(R.id.Location);
+        Age = findViewById(R.id.Age);
+        Gender = findViewById(R.id.Gender);
+        kind = findViewById(R.id.kind);
 
         Gson gson = new Gson();
         pet = gson.fromJson(getIntent().getStringExtra("pet"), PetModel.class);
@@ -78,70 +83,30 @@ public class PetPageActivity extends AppCompatActivity {
         //id, Name, Kind, imageUri, Age, Gender, Location, latitude, longitude, Info, Price, postOwnerId
 
         toolbar.setTitle(pet.getName());
-        kind.setText(pet.getKind());
-        Age.setText(pet.getAge().toString());
-        Gender.setText(pet.getGender().toString());
+        populateData();
 
         final Handler handler = new Handler();
         //Location
         final MyLocation myLocation = new MyLocation(this);
         if (pet.getLocation() == null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Location.setText(myLocation.StringFromAddress(myLocation.getFromLocation(pet.getLatitude(), pet.getLongitude())));
-                        }
-                    });
-                }
-            }).start();
+            try {
+                Location.setText(myLocation.StringFromAddress(myLocation.getFromLocation(pet.getLatitude(), pet.getLongitude())));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
-            Location.setText(pet.getInfo());
+            Location.setText(pet.getLocation());
         }
 
-        //Info
-        if (pet.getInfo() == null) {
-            Info.setText(getResources().getString(R.string.adopt_me_now_and_save_me_from_the_street));
-        } else {
-            Info.setText(pet.getInfo());
-        }
-
-        //Price
-        if (pet.getPrice() == null) {
-            Price.setText(getResources().getString(R.string.free));
-        } else {
-            Price.setText(pet.getPrice());
-        }
-
-        //imageUri
-        ImageView petImg = findViewById(R.id.petImage);
-        Log.d(TAG, "onCreate: " + pet.getImageUri());
-        Glide.with(this).load(pet.getImageUri()).placeholder(R.drawable.foot).into(petImg);
-
-
-        FloatingActionButton fabFav = findViewById(R.id.fabFav);
         FloatingActionButton fabMsg = findViewById(R.id.fabMsg);
         FloatingActionButton fabEdit = findViewById(R.id.fabEdit);
 
         if (fuser != null) {
             if (pet.getPostOwnerId().equals(fuser.getUid())) {
                 fabMsg.setVisibility(View.GONE);
-                fabFav.setVisibility(View.GONE);
                 fabEdit.setVisibility(View.VISIBLE);
             }
         }
-        fabFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (fuser != null) {
-                    fabFavOnClickListener(view);
-                } else {
-                    loginDialog(R.id.fabFav);
-                }
-            }
-        });
 
         fabMsg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +140,7 @@ public class PetPageActivity extends AppCompatActivity {
     }
 
     private void fabFavOnClickListener(View view) {
-        user.addToFav(pet);
+        //user.addToFav(pet);
 //TODO            HashMap<String, Object> favPetsUpdates = new HashMap<>();
 //                favPetsUpdates.put("favPets", user.getFavPets());
 //                mUserReference.updateChildren(favPetsUpdates);
@@ -191,7 +156,52 @@ public class PetPageActivity extends AppCompatActivity {
                 }).show();
     }
 
+
+    private void populateData() {
+        kind.setText(pet.getKind());
+        Age.setText(pet.getAge().toString());
+        Gender.setText(pet.getGender().toString());
+
+        //Info
+        if (pet.getInfo() == null) {
+            Info.setText(getResources().getString(R.string.adopt_me_now_and_save_me_from_the_street));
+        } else {
+            Info.setText(pet.getInfo());
+        }
+
+        //Price
+        if (pet.getPrice() == null) {
+            Price.setText(getResources().getString(R.string.free));
+        } else {
+            Price.setText(pet.getPrice());
+        }
+
+        //imageUri
+        ImageView petImg = findViewById(R.id.petImage);
+        Log.d(TAG, "onCreate: " + pet.getImageUri());
+        Glide.with(this).load(pet.getImageUri()).placeholder(R.drawable.foot).into(petImg);
+
+    }
+
     private void loginDialog(int id) {
         new Dialogs(this).showLoginDialog(id);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Pets").child(pet.getId());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                pet = dataSnapshot.getValue(PetModel.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        populateData();
     }
 }

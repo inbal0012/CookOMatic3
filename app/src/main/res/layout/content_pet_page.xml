@@ -169,7 +169,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
                     android:layout_gravity="center"
@@ -184,7 +184,7 @@
                     android:id="@+id/Info"
                     android:text="@string/adopt_me_now_and_save_me_from_the_street"
                     android:textColor="@color/white"
-                    android:textSize="30sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"

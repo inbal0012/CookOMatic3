@@ -262,6 +262,7 @@
     <string name="Select_Picture">Select Picture</string>
     <string name="free">free</string>
     <string name="Select_your_gender">Select your gender</string>
+    <string name="title_activity_start">StartActivity</string>
 
 
 </resources>

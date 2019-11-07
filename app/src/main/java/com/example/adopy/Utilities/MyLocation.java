@@ -56,35 +56,15 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
         return lng;
     }
 
-    public Address getAddress() {
-        try {
-            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
-            address = addresses.get(0);
-            Log.d(TAG, "getAddress: run: " + address.getCountryName()
-                    + " , " + address.getLocality()
-                    + " , " + address.getThoroughfare()
-                    + " , " + address.getSubThoroughfare()
-                    + " , " + address.getAdminArea());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        return address;
+    public Address getAddress() throws IOException {
+        return geocoder.getFromLocation(lat, lng, 1).get(0);
     }
 
-    public Address getFromLocation(double lat, double lng) {
-        try {
-            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
-            return addresses.get(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Address getFromLocation(final double lat, final double lng) throws IOException {
+        return geocoder.getFromLocation(lat, lng, 1).get(0);
     }
 
-    public  String StringFromAddress(Address address) {
+    public String StringFromAddress(Address address) {
         String str = address.getCountryName()
                 + " , " + address.getLocality()
                 + " , " + address.getThoroughfare()
@@ -139,14 +119,11 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
                             + " , " + address.getThoroughfare()
                             + " , " + address.getSubThoroughfare()
                             + " , " + address.getAdminArea());
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         }.start();
-
     }
 
     @Override
@@ -189,7 +166,7 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
             } else {
                 if (activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                         && activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                       return;
+                    return;
                 }
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, this);
             }

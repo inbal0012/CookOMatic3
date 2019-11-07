@@ -38,6 +38,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import com.tsongkha.spinnerdatepicker.DatePickerDialog;
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -265,7 +266,11 @@ public class Dialogs {
                 Double userLng = myLocation.getLongitude();
                 newPet.setLatitude(userLat.toString());
                 newPet.setLongitude(userLng.toString());
-                newPet.setLocation(myLocation.StringFromAddress(myLocation.getFromLocation(userLat, userLng)));
+                try {
+                    newPet.setLocation(myLocation.StringFromAddress(myLocation.getFromLocation(userLat, userLng)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 //postOwnerId
                 newPet.setPostOwnerId(fuser.getUid());
@@ -295,6 +300,7 @@ public class Dialogs {
                 hashMap.put("location", newPet.getLocation());
                 hashMap.put("latitude", newPet.getLatitude().toString());
                 hashMap.put("longitude", newPet.getLongitude().toString());
+                hashMap.put("price", newPet.getPrice());
                 hashMap.put("info", newPet.getInfo());
                 hashMap.put("postOwnerId", fuser.getUid());
 
