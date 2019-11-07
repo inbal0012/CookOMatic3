@@ -73,7 +73,7 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
-        Button cancelBtn = findViewById(R.id.cancelBtnEdit);
+        Button cancelBtn = findViewById(R.id.cancelBtn);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

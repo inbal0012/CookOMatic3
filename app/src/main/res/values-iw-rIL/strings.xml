@@ -112,4 +112,14 @@
     <string name="yes_happy">כן :)</string>
     <string name="yes_sad">כן :(</string>
     <string name="menu_logout">התנתק</string>
+    <string name="Open_Camera">פתח מצלמה</string>
+    <string name="Open_Gallery">פתח גלריה</string>
+    <string name="Select_Picture">בחר תמונה</string>
+    <string name="Select_option">בחר אופציה</string>
+    <string name="Select_pet_gender">בחר את מין החיה</string>
+    <string name="Tap_to_select">לחץ כדי לבחור</string>
+    <string name="add_pet_dialog_body">על מנת להוסיף חיה עליך להרשם תחילה</string>
+    <string name="free">חינם</string>
+    <string name="mssOK">בחר</string>
+    <string name="save_new_pet">שמור את החיה?</string>
 </resources>

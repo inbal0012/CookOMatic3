@@ -196,137 +196,136 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             radioButton = findViewById(radioId);
                             UserGender=radioButton.getText().toString();
 
-
                             HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("id", userId);
                             hashMap.put("username", i_userName);
                             hashMap.put("imageUri", "default");
+                            hashMap.put("email", i_email);
 
                             hashMap.put("age",String.valueOf(Progress));
-                            hashMap.put("city","");
                             hashMap.put("gender",UserGender);
-                            List<PetModel> favs = new List<PetModel>() {
-                                @Override
-                                public int size() {
-                                    return 1;
-                                }
-
-                                @Override
-                                public boolean isEmpty() {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean contains(@Nullable Object o) {
-                                    return false;
-                                }
-
-                                @NonNull
-                                @Override
-                                public Iterator<PetModel> iterator() {
-                                    return null;
-                                }
-
-                                @Nullable
-                                @Override
-                                public Object[] toArray() {
-                                    return new Object[0];
-                                }
-
-                                @Override
-                                public <T> T[] toArray(@Nullable T[] a) {
-                                    return null;
-                                }
-
-                                @Override
-                                public boolean add(PetModel petModel) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean remove(@Nullable Object o) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean containsAll(@NonNull Collection<?> c) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean addAll(@NonNull Collection<? extends PetModel> c) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean addAll(int index, @NonNull Collection<? extends PetModel> c) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean removeAll(@NonNull Collection<?> c) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean retainAll(@NonNull Collection<?> c) {
-                                    return false;
-                                }
-
-                                @Override
-                                public void clear() {
-
-                                }
-
-                                @Override
-                                public PetModel get(int index) {
-                                    return null;
-                                }
-
-                                @Override
-                                public PetModel set(int index, PetModel element) {
-                                    return null;
-                                }
-
-                                @Override
-                                public void add(int index, PetModel element) {
-
-                                }
-
-                                @Override
-                                public PetModel remove(int index) {
-                                    return null;
-                                }
-
-                                @Override
-                                public int indexOf(@Nullable Object o) {
-                                    return 0;
-                                }
-
-                                @Override
-                                public int lastIndexOf(@Nullable Object o) {
-                                    return 0;
-                                }
-
-                                @NonNull
-                                @Override
-                                public ListIterator<PetModel> listIterator() {
-                                    return null;
-                                }
-
-                                @NonNull
-                                @Override
-                                public ListIterator<PetModel> listIterator(int index) {
-                                    return null;
-                                }
-
-                                @NonNull
-                                @Override
-                                public List<PetModel> subList(int fromIndex, int toIndex) {
-                                    return null;
-                                }
-                            };
-                            hashMap.put("favPets", favs);
+//                            List<PetModel> favs = new List<PetModel>() {
+//                                @Override
+//                                public int size() {
+//                                    return 1;
+//                                }
+//
+//                                @Override
+//                                public boolean isEmpty() {
+//                                    return false;
+//                                }
+//
+//                                @Override
+//                                public boolean contains(@Nullable Object o) {
+//                                    return false;
+//                                }
+//
+//                                @NonNull
+//                                @Override
+//                                public Iterator<PetModel> iterator() {
+//                                    return null;
+//                                }
+//
+//                                @Nullable
+//                                @Override
+//                                public Object[] toArray() {
+//                                    return new Object[0];
+//                                }
+//
+//                                @Override
+//                                public <T> T[] toArray(@Nullable T[] a) {
+//                                    return null;
+//                                }
+//
+//                                @Override
+//                                public boolean add(PetModel petModel) {
+//                                    return false;
+//                                }
+//
+//                                @Override
+//                                public boolean remove(@Nullable Object o) {
+//                                    return false;
+//                                }
+//
+//                                @Override
+//                                public boolean containsAll(@NonNull Collection<?> c) {
+//                                    return false;
+//                                }
+//
+//                                @Override
+//                                public boolean addAll(@NonNull Collection<? extends PetModel> c) {
+//                                    return false;
+//                                }
+//
+//                                @Override
+//                                public boolean addAll(int index, @NonNull Collection<? extends PetModel> c) {
+//                                    return false;
+//                                }
+//
+//                                @Override
+//                                public boolean removeAll(@NonNull Collection<?> c) {
+//                                    return false;
+//                                }
+//
+//                                @Override
+//                                public boolean retainAll(@NonNull Collection<?> c) {
+//                                    return false;
+//                                }
+//
+//                                @Override
+//                                public void clear() {
+//
+//                                }
+//
+//                                @Override
+//                                public PetModel get(int index) {
+//                                    return null;
+//                                }
+//
+//                                @Override
+//                                public PetModel set(int index, PetModel element) {
+//                                    return null;
+//                                }
+//
+//                                @Override
+//                                public void add(int index, PetModel element) {
+//
+//                                }
+//
+//                                @Override
+//                                public PetModel remove(int index) {
+//                                    return null;
+//                                }
+//
+//                                @Override
+//                                public int indexOf(@Nullable Object o) {
+//                                    return 0;
+//                                }
+//
+//                                @Override
+//                                public int lastIndexOf(@Nullable Object o) {
+//                                    return 0;
+//                                }
+//
+//                                @NonNull
+//                                @Override
+//                                public ListIterator<PetModel> listIterator() {
+//                                    return null;
+//                                }
+//
+//                                @NonNull
+//                                @Override
+//                                public ListIterator<PetModel> listIterator(int index) {
+//                                    return null;
+//                                }
+//
+//                                @NonNull
+//                                @Override
+//                                public List<PetModel> subList(int fromIndex, int toIndex) {
+//                                    return null;
+//                                }
+//                            };
+//                            hashMap.put("favPets", favs);
 
                             String currUserId = mAuth.getCurrentUser().getUid();
                             String deviceToken = FirebaseInstanceId.getInstance().getToken();
