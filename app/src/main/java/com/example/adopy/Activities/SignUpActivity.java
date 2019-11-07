@@ -1,7 +1,6 @@
 package com.example.adopy.Activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,12 +11,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adopy.R;
-import com.example.adopy.Utilities.Models.PetModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,12 +22,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.jaygoo.widget.RangeSeekBar;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "my_SignUpActivity";
@@ -44,9 +37,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private String UserGender;
     private String UserAge;
 
-    private SeekBar seekBar_Age;
-    private TextView progressAge;
-    private int Progress;
+    RangeSeekBar ageSeekbar;
+//    private TextView progressAge;
+//    private int Progress;
 
     //facebook
    // private LoginButton loginButton;
@@ -73,32 +66,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         UserGender="Male";
         UserAge="";
 
-        progressAge=findViewById(R.id.progressAge);
-        seekBar_Age=findViewById(R.id.seekBar_Age);
-
-        Progress=24;
-
-        seekBar_Age.setMax(100);
-        seekBar_Age.setProgress(Progress);
-
-        seekBar_Age.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Progress=progress;
-                seekBar_Age.setProgress(Progress);
-                progressAge.setText("" + Progress );
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
+        ageSeekbar = findViewById(R.id.distanceSeekBar);
+        ageSeekbar.setIndicatorTextDecimalFormat("0");
+        ageSeekbar.setProgress(20);
 
         signUp.setOnClickListener(this);
 
@@ -119,64 +89,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                 break;
         }
-    }
-
-
-    private void signupUser(String i_userName, final String i_email, final String i_pass) {
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.createUserWithEmailAndPassword(i_email,i_pass)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d(TAG, "onComplete: ");
-                if(!task.isSuccessful()){
-                    if(i_pass.length() < 6 ) {
-                        Log.d(TAG, "onComplete: pass " + i_pass + " length " + i_pass.length());
-                        Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error_invalid_password) + i_pass,Toast.LENGTH_SHORT).show();
-                    }
-                    if(!i_email.contains("@")){
-                        Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error_invalid_email),Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                        Toast.makeText(SignUpActivity.this, getResources().getString(R.string.error), Toast.LENGTH_SHORT).show();
-                } else {
-//if person didn't add gender
-
-                    int radioId = radio_group.getCheckedRadioButtonId();
-                    radioButton = findViewById(radioId);
-
-                    UserGender=radioButton.getText().toString();
-
-                    Toast.makeText(SignUpActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
-
-                    mUser = task.getResult().getUser();
-
-                    String Uid= mUser.getUid();
-
-
-                    HashMap<String,String> hashMapUsr=new HashMap<>();
-                    hashMapUsr.put("Image"," ");
-                    hashMapUsr.put("Email", mUser.getEmail());
-                    hashMapUsr.put("Id", mUser.getUid() );
-                    hashMapUsr.put("UserName",UserNameText.getText().toString());
-                    hashMapUsr.put("UserAge",String.valueOf(Progress));
-                    hashMapUsr.put("UserCity","");
-                    hashMapUsr.put("UserGender",UserGender);
-
-
-                    mReference = FirebaseDatabase.getInstance().getReference().child("Users").child(Uid);
-                    mReference.setValue(hashMapUsr).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-
-                            Toast.makeText(SignUpActivity.this,"Entered with Success ",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(SignUpActivity.this,MainActivity.class));
-
-                        }
-                    });
-                }
-            }
-        });
     }
 
     private void register(final String i_userName, final String i_email, final String i_pass) {
@@ -201,8 +113,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             hashMap.put("username", i_userName);
                             hashMap.put("imageUri", "default");
                             hashMap.put("email", i_email);
-
-                            hashMap.put("age",String.valueOf(Progress));
+                            hashMap.put("age",String.valueOf(Math.round(ageSeekbar.getLeftSeekBar().getProgress())));
                             hashMap.put("gender",UserGender);
 //                            List<PetModel> favs = new List<PetModel>() {
 //                                @Override
