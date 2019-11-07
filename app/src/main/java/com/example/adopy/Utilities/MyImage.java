@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
@@ -90,6 +91,8 @@ public class MyImage {
                     return fileReference.getDownloadUrl();
                 }
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                private static final String TAG = "my_uploadImage";
+
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
@@ -105,7 +108,12 @@ public class MyImage {
                         }
                         HashMap<String, Object> map = new HashMap<>();
                         map.put("imageUri", mUri);
-                        reference.updateChildren(map);
+                        reference.updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Log.d(TAG, "onComplete: "+ task.isSuccessful());
+                            }
+                        });
 
                         pd.dismiss();
                     } else {

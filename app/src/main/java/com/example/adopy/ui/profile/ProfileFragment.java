@@ -1,7 +1,5 @@
 package com.example.adopy.ui.profile;
 
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
@@ -12,10 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,10 +26,6 @@ import com.example.adopy.Utilities.Interfaces_and_Emuns.Gender;
 import com.example.adopy.Utilities.Models.User;
 import com.example.adopy.Utilities.MyImage;
 import com.example.adopy.Utilities.MyLocation;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,9 +37,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
-
-import java.util.HashMap;
 
 import static com.example.adopy.Utilities.RequestCodes.USER_IMAGE_REQUEST;
 
@@ -67,7 +56,7 @@ public class ProfileFragment extends Fragment {
     private Toolbar toolbar;
     private String nameStr;
 
-    private Handler mainHandler;
+    private Handler handler;
 
     private Uri imageUri;
     MyImage myImage;
@@ -81,7 +70,7 @@ public class ProfileFragment extends Fragment {
         toolbar.setTitle(nameStr);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mainHandler = new Handler(getContext().getMainLooper());
+        handler = new Handler(getContext().getMainLooper());
         Log.d(TAG, "onCreateView: " + ((AppCompatActivity) getActivity()).getSupportActionBar());
 
         //storage
@@ -109,7 +98,7 @@ public class ProfileFragment extends Fragment {
 
         }
 
-        mainHandler = new Handler(getContext().getMainLooper());
+        handler = new Handler();
         return root;
     }
 
@@ -135,7 +124,7 @@ public class ProfileFragment extends Fragment {
         } else {
             Log.d(TAG, "updateToolbar: else");
 
-            mainHandler.post(new Runnable() {
+            handler.post(new Runnable() {
                 @Override
                 public void run() {
                     Log.d(TAG, "updateToolbar: handler " + ((AppCompatActivity) getActivity()).getSupportActionBar());
@@ -173,7 +162,6 @@ public class ProfileFragment extends Fragment {
                     public void onClick(View v) {
                         myImage = new MyImage(getActivity(), "Users", "user");
                         myImage.openImage();
-                        //openImage();
                     }
                 });
                 if (user.getImageUri().equals("default")) {
@@ -213,67 +201,6 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void openImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, USER_IMAGE_REQUEST);
-    }
-
-    private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContext().getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    private void uploadImage() {
-        final ProgressDialog pd = new ProgressDialog(getContext());
-        pd.setMessage(getString(R.string.uploading));
-        pd.show();
-
-        if (imageUri != null) {
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()
-                    +"."+getFileExtension(imageUri));
-
-            uploadTask = fileReference.putFile(imageUri);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    return fileReference.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        String mUri = downloadUri.toString();
-
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
-                        HashMap<String, Object> map = new HashMap<>();
-                        map.put("imageUri", mUri);
-                        reference.updateChildren(map);
-
-                        pd.dismiss();
-                    } else {
-                        Toast.makeText(getContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    pd.dismiss();
-                }
-            });
-        } else {
-            Toast.makeText(getContext(), getString(R.string.no_image_selected), Toast.LENGTH_SHORT).show();
-        }
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -281,14 +208,6 @@ public class ProfileFragment extends Fragment {
         Log.d(TAG, "onActivityResult: " + requestCode);
         if (requestCode == USER_IMAGE_REQUEST) {
             myImage.onActivityResult(requestCode, resultCode, data);
-//
-//            imageUri = data.getData();
-//
-//            if (uploadTask != null && uploadTask.isInProgress()) {
-//                Toast.makeText(getContext(), getString(R.string.upload_in_progress), Toast.LENGTH_SHORT).show();
-//            } else {
-//                uploadImage();
-//            }
         }
     }
 }

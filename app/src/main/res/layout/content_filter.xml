@@ -23,13 +23,13 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_toEndOf="@id/tv_types">
             <!-- name should be same as class of multiple selection spinner -->
             <com.example.adopy.UI_utilities.MultipleSelectionSpinner
                 android:id="@+id/typeSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp" />
         </RelativeLayout>
 

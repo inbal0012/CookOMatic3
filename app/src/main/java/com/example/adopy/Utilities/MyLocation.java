@@ -76,8 +76,7 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
 
     public Address getFromLocation(double lat, double lng) {
         try {
-            List<Address> addresses = null;
-            addresses = geocoder.getFromLocation(lat, lng, 1);
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
             return addresses.get(0);
         } catch (IOException e) {
             e.printStackTrace();

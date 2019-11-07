@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -18,9 +19,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adopy.Activities.EditPetActivity;
 import com.example.adopy.R;
 import com.example.adopy.Activities.SigninActivity;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
+import com.example.adopy.UI_utilities.MultipleSelectionSpinner;
+import com.example.adopy.Utilities.Interfaces_and_Emuns.Gender;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.isapanah.awesomespinner.AwesomeSpinner;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.tsongkha.spinnerdatepicker.DatePickerDialog;
@@ -36,9 +41,11 @@ import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 
@@ -102,25 +109,36 @@ public class Dialogs {
 
 
     public void AddPetDialog(final ArrayList<PetModel> mPetModels, final PetAdapter2 mPetAdapter) {
-        //id, Name, Kind, imageUri, Location, , Gender, Price, latitude, longitude, Info, postOwnerId
 
         //var
         final String TAG = "my_AddDialog";
         final Date[] petBirthday = new Date[1];
-        final String[] namePet = new String[1];
-        final PetModel petModel = new PetModel();
+        final PetModel newPet = new PetModel();
 
         //firebase
         final FirebaseUser fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         //dialogBuilder
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity,R.style.AlertTheme).setCancelable(true);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity, R.style.AlertTheme).setCancelable(true);
         final LayoutInflater inflater = activity.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.dialog_layout_add_pet, null);
         dialogBuilder.setView(dialogView);
 
+        //kind
+        AwesomeSpinner kindSpinner = dialogView.findViewById(R.id.kindSpinner);
+        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(activity, R.array.type_array, android.R.layout.simple_spinner_item);
+        kindSpinner.setAdapter(typeAdapter, 0);
+        kindSpinner.setOnSpinnerItemClickListener(new AwesomeSpinner.onSpinnerItemClickListener<String>() {
+            @Override
+            public void onItemSelected(int position, String itemAtPosition) {
+                String[] _itemsEng = new String[]{"dog", "cat", "rabbit", "hedgehog", "chinchilla", "iguana", "turtle"};
+                newPet.setKind(_itemsEng[position]);
+                Toast.makeText(activity, _itemsEng[position] + " selected", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         //Age
-        Button age = dialogView.findViewById(R.id.Age);
+        final Button age = dialogView.findViewById(R.id.Age);
         age.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,18 +163,34 @@ public class Dialogs {
             }
 
             private void ageOnDateSet(int year, int month, int dayOfMonth) {
-                Log.d(TAG, String.format("ageOnDateSet: %d, %d, %d", dayOfMonth, month, year));
+                int Month = month + 1;
+                Log.d(TAG, String.format("ageOnDateSet: %d/%d/%d", dayOfMonth, Month, year));
+                age.setText(String.format("%d/%d/%d", dayOfMonth, Month, year));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     Period period = Period.between(
-                            LocalDate.of(year , month , dayOfMonth),
+                            LocalDate.of(year, Month, dayOfMonth),
                             LocalDate.now());
 
-                    Log.d(TAG, "ageOnDateSet: " + Double.parseDouble("" + period.getYears()+ "." + (13-period.getMonths())));
-                    petModel.setAge(Double.parseDouble("" + period.getYears()+ "." + (13-period.getMonths())));
+                    Log.d(TAG, "ageOnDateSet: " + Double.parseDouble("" + period.getYears() + "." + period.getMonths()));
+                    newPet.setAge(Double.parseDouble("" + period.getYears() + "." + period.getMonths()));
                 }
             }
         });
 
+        //gender
+        AwesomeSpinner genderSpinner = dialogView.findViewById(R.id.genderSpinner);
+        ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(activity, R.array.gender_array, android.R.layout.simple_spinner_item);
+        genderSpinner.setAdapter(genderAdapter, 0);
+        genderSpinner.setOnSpinnerItemClickListener(new AwesomeSpinner.onSpinnerItemClickListener<String>() {
+            @Override
+            public void onItemSelected(int position, String itemAtPosition) {
+                String[] _itemsEng = new String[]{"Male", "Female"};
+                newPet.setGender(Gender.valueOf(_itemsEng[position]));
+                Toast.makeText(activity, _itemsEng[position] + " selected", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //imageUri
         ImageView image = dialogView.findViewById(R.id.image);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,11 +204,8 @@ public class Dialogs {
             }
         });
 
-
-        //Title.setText(activity.getResources().getString(R.string.new_pet));
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
-
 
         TextView btn_cancel = dialogView.findViewById(R.id.btn_cancel);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -193,58 +224,90 @@ public class Dialogs {
                 AutoCompleteTextView about = dialogView.findViewById(R.id.about);
                 AutoCompleteTextView location = dialogView.findViewById(R.id.location);
 
-
-                namePet[0] = name.getText().toString();
-
-                //String Uid=user.getUid();
-
-                petModel.setName(namePet[0]);
-                petModel.setImageUri("https://firebasestorage.googleapis.com/v0/b/adopy-76b55.appspot.com/o/dog.png?alt=media&token=0bf5a729-1e56-4f3d-8ea9-3c0d3c0b4095"); //TODO change
-                if(about.getText().equals(""))
-                {
-                    petModel.setInfo(activity.getResources().getString(R.string.adopt_me_now_and_save_me_from_the_street));
+                //Name
+                String petName = name.getText().toString();
+                if (petName.isEmpty()) {
+                    Toast.makeText(activity, "Name can't be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    newPet.setName(petName);
                 }
-                else{
-                    petModel.setInfo(about.getText().toString());
+
+                //Age
+                if (newPet.getAge() == null) {
+                    Toast.makeText(activity, "Please select pet's age", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-                //petModel.setDate(currentDateAndTime);
-                petModel.setLocation(location.getText().toString());
-                //petModel.setImmunized(isImmunized);
-                Double age = 0.0;//(double)years + ((double)months)/12;
-                Log.d(TAG, "onClick: " + age.toString());
-                petModel.setAge(age);
-                petModel.setPrice(price.getText().toString());
+
+                //Gender
+                if (newPet.getGender() == null) {
+                    Toast.makeText(activity, "Please select pet's gender", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //Price
+                if (price.getText().toString().isEmpty()) {
+                    newPet.setPrice(activity.getResources().getString(R.string.free));
+                } else {
+                    newPet.setPrice(price.getText().toString());
+                }
+
+                //Info
+                if (about.getText().toString().isEmpty()) {
+                    newPet.setInfo(activity.getResources().getString(R.string.adopt_me_now_and_save_me_from_the_street));
+                } else {
+                    newPet.setInfo(about.getText().toString());
+                }
+
+                //Location, latitude, longitude
                 MyLocation myLocation = new MyLocation(activity);
                 Double userLat = myLocation.getLatitude();
                 Double userLng = myLocation.getLongitude();
-                petModel.setLatitude(userLat.toString());
-                petModel.setLongitude(userLng.toString());
-                petModel.setPostOwnerId(fuser.getUid());
+                newPet.setLatitude(userLat.toString());
+                newPet.setLongitude(userLng.toString());
+                newPet.setLocation(myLocation.StringFromAddress(myLocation.getFromLocation(userLat, userLng)));
+
+                //postOwnerId
+                newPet.setPostOwnerId(fuser.getUid());
+
+                String PetAns = newPet.getName() +
+                        "\n kind: " + newPet.getKind() +
+                        "\n imageUri: " + newPet.getImageUri() +
+                        "\n age: " + newPet.getAge() +
+                        "\n Sex: " + newPet.getGender() +
+                        "\n Price: " + newPet.getPrice() +
+                        "\n Info: " + newPet.getInfo();
+                Log.d(TAG, "saveChanges: " + PetAns);
+
 
                 DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Pets").push();
                 String petId = mReference.getKey();
 
+                //+id, +Name, Kind, imageUri, +Age, Gender, +Price, Location, +latitude, +longitude, +Info, +postOwnerId
+
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("id", petId);
-                hashMap.put("age", age);
-                hashMap.put("imageUri", "null");
-                hashMap.put("gender", "Male"); //TODO
-                hashMap.put("kind","dog"); //TODO
-                hashMap.put("name", namePet[0]);
-                hashMap.put("latitude",userLat.toString());
-                hashMap.put("longitude",userLng.toString());
-                hashMap.put("postOwnerId",fuser.getUid());
+                hashMap.put("name", petName);
+                hashMap.put("kind", newPet.getKind());
+                hashMap.put("imageUri", "default"); //TODO
+                hashMap.put("age", newPet.getAge());
+                hashMap.put("gender", newPet.getGender());
+                hashMap.put("location", newPet.getLocation());
+                hashMap.put("latitude", newPet.getLatitude().toString());
+                hashMap.put("longitude", newPet.getLongitude().toString());
+                hashMap.put("info", newPet.getInfo());
+                hashMap.put("postOwnerId", fuser.getUid());
 
                 mReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(activity,"pet added to database ",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "pet added to database ", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
-                mPetModels.add(petModel);
+                mPetModels.add(newPet);
                 mPetAdapter.notifyDataSetChanged();
 
                 FileSystemMemory.SaveToFile(mPetModels, activity);
@@ -255,8 +318,8 @@ public class Dialogs {
 
 
     private void imageOnClickListener() {
-        android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(activity);
-        CharSequence[] options=new CharSequence[]{
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+        CharSequence[] options = new CharSequence[]{
                 activity.getString(R.string.Open_Gallery),
                 activity.getString(R.string.Open_Camera)
         };
@@ -264,13 +327,12 @@ public class Dialogs {
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(which == 0){
+                if (which == 0) {
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     activity.startActivityForResult(Intent.createChooser(intent, activity.getString(R.string.Select_Picture)), SELECT_IMAGE_REQUEST);
-                }
-                else if (which == 1){
+                } else if (which == 1) {
                     CropImage.activity()
                             .setGuidelines(CropImageView.Guidelines.ON)
                             .start(activity);
@@ -283,13 +345,13 @@ public class Dialogs {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == SELECT_IMAGE_REQUEST){
+        if (requestCode == SELECT_IMAGE_REQUEST) {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
 //
-                    if(data.getData()==null){
-                        Uri uri = (Uri)data.getExtras().get("data");
-                    }else{
+                    if (data.getData() == null) {
+                        Uri uri = (Uri) data.getExtras().get("data");
+                    } else {
 //                        try {
 //                            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
 //                        } catch (IOException e) {
@@ -299,7 +361,7 @@ public class Dialogs {
 //                    Glide.with(HomeActivity.this).load(bitmap).placeholder(R.drawable.pet_foot).into(image);
 //                    // image.setImageDrawable(Drawable.createFromPath(file.getAbsolutePath()));
                 }
-            } else if (resultCode == RESULT_CANCELED)  {
+            } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(activity, activity.getResources().getString(R.string.error), Toast.LENGTH_SHORT).show();
             }
         }

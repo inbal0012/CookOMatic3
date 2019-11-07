@@ -14,24 +14,24 @@ public class PetModel implements Serializable {
     private String Kind;
     @SerializedName("imageUri")
     private String imageUri;
-    @SerializedName("location")
-    private String Location;
     @SerializedName("age")
     private Double Age;
     @SerializedName("gender")
     private com.example.adopy.Utilities.Interfaces_and_Emuns.Gender Gender;
-    @SerializedName("price")
-    private String Price;
+    @SerializedName("location")
+    private String Location;
     @SerializedName("latitude")
     private Double latitude;
     @SerializedName("longitude")
     private Double longitude;
     @SerializedName("Info")
     private String Info;
+    @SerializedName("price")
+    private String Price;
     @SerializedName("PostOwnerId")
     private String postOwnerId;
 
-    //id, Name, Kind, imageUri, Location, Age, Gender, Price, latitude, longitude, Info, postOwnerId
+    //id, Name, Kind, imageUri, Age, Gender, Location, latitude, longitude, Info, Price, postOwnerId
 
 
     public PetModel(String id, String kind, String name, Double age, Gender gender, String imageUri) {

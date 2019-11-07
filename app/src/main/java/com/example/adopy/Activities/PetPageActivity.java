@@ -9,6 +9,7 @@ import com.example.adopy.R;
 import com.example.adopy.Utilities.Dialogs;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.Models.User;
+import com.example.adopy.Utilities.MyLocation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -48,12 +50,11 @@ public class PetPageActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TextView Info = findViewById(R.id.Info);
-        TextView Date = findViewById(R.id.Date);
-        TextView Location = findViewById(R.id.Location);
+        TextView Price = findViewById(R.id.Price);
+        final TextView Location = findViewById(R.id.Location);
         TextView Age = findViewById(R.id.Age);
-        TextView Price = findViewById(R.id.Gender);
+        TextView Gender = findViewById(R.id.Gender);
         TextView kind = findViewById(R.id.kind);
-        ImageView image = findViewById(R.id.image);
 
         Gson gson = new Gson();
         pet = gson.fromJson(getIntent().getStringExtra("pet"), PetModel.class);
@@ -73,19 +74,52 @@ public class PetPageActivity extends AppCompatActivity {
                 }
             });
         }
+        //, , , , Location, , , Price, latitude, longitude, ,
+        //id, Name, Kind, imageUri, Age, Gender, Location, latitude, longitude, Info, Price, postOwnerId
 
         toolbar.setTitle(pet.getName());
         kind.setText(pet.getKind());
-        Price.setText(pet.getPrice());
         Age.setText(pet.getAge().toString());
-        //Immunized.setText(pet.getImmunized() +"");
-        Location.setText(pet.getLocation());
-        //Date.setText(pet.getDate());
-        Info.setText(pet.getInfo());
+        Gender.setText(pet.getGender().toString());
 
+        final Handler handler = new Handler();
+        //Location
+        final MyLocation myLocation = new MyLocation(this);
+        if (pet.getLocation() == null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Location.setText(myLocation.StringFromAddress(myLocation.getFromLocation(pet.getLatitude(), pet.getLongitude())));
+                        }
+                    });
+                }
+            }).start();
+        } else {
+            Location.setText(pet.getInfo());
+        }
+
+        //Info
+        if (pet.getInfo() == null) {
+            Info.setText(getResources().getString(R.string.adopt_me_now_and_save_me_from_the_street));
+        } else {
+            Info.setText(pet.getInfo());
+        }
+
+        //Price
+        if (pet.getPrice() == null) {
+            Price.setText(getResources().getString(R.string.free));
+        } else {
+            Price.setText(pet.getPrice());
+        }
+
+        //imageUri
         ImageView petImg = findViewById(R.id.petImage);
         Log.d(TAG, "onCreate: " + pet.getImageUri());
         Glide.with(this).load(pet.getImageUri()).placeholder(R.drawable.foot).into(petImg);
+
 
         FloatingActionButton fabFav = findViewById(R.id.fabFav);
         FloatingActionButton fabMsg = findViewById(R.id.fabMsg);
@@ -103,25 +137,21 @@ public class PetPageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (fuser != null) {
                     fabFavOnClickListener(view);
-                }
-                else {
+                } else {
                     loginDialog(R.id.fabFav);
                 }
-
             }
         });
 
         fabMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (fuser != null) {
                     Intent intent = new Intent(getApplicationContext(), ChatActivity2.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("userid", pet.getPostOwnerId());
                     startActivity(intent);
-                }
-                else {
+                } else {
                     loginDialog(R.id.fabMsg);
                 }
             }
@@ -130,7 +160,6 @@ public class PetPageActivity extends AppCompatActivity {
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (fuser != null) {
                     Gson gson = new Gson();
                     Intent intent = new Intent(getApplicationContext(), EditPetActivity.class);
@@ -138,8 +167,7 @@ public class PetPageActivity extends AppCompatActivity {
                     String gStr = gson.toJson(pet);
                     intent.putExtra("pet", gStr);
                     startActivity(intent);
-                }
-                else {
+                } else {
                     loginDialog(R.id.fabMsg);
                 }
             }

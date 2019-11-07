@@ -66,33 +66,6 @@
                 <TextView
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:text="@string/location"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/Location"
-                    android:text="@string/location"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:textSize="20sp"
-                    android:textStyle="bold"
                     android:text="@string/age"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_width="wrap_content"
@@ -147,14 +120,41 @@
                 <TextView
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:text="@string/date"
+                    android:text="@string/price"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:id="@+id/Date"
-                    android:text="@string/date"
+                    android:id="@+id/Price"
+                    android:text="@string/price"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="@string/location"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/Location"
+                    android:text="@string/location"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"

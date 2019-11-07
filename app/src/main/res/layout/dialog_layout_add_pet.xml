@@ -77,6 +77,24 @@
 
                 </LinearLayout>
 
+                <com.isapanah.awesomespinner.AwesomeSpinner
+                    android:id="@+id/kindSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    app:spinnerDirection="ltr"
+                    app:spinnerHint="@string/Select_pet_species" />
+
+                <com.isapanah.awesomespinner.AwesomeSpinner
+                    android:id="@+id/genderSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    app:spinnerDirection="ltr"
+                    app:spinnerHint="@string/Select_pet_gender" />
+
                 <AutoCompleteTextView
                     android:id="@+id/price"
                     android:layout_width="match_parent"

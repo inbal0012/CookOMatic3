@@ -181,7 +181,7 @@
 
     //add pet act
     <string name="new_pet">New Pet</string>
-    <string name="what_is_her_his_age">What is her/his age?</string>
+    <string name="what_is_her_his_age">What it\'s age?</string>
     <string name="describe_your_pet_in_a_few_words">Describe your pet in a few words..</string>
 
     //chat act
@@ -190,7 +190,7 @@
 
     //pet features
     <string name="kind">Kind</string>
-    <string name="location">Location</string>
+    <string name="location">Location: </string>
     <string name="age">Age</string>
     <string name="gender">Gender</string>
     <string name="info">Info</string>
@@ -260,6 +260,7 @@
     <string name="Open_Camera">Open Camera</string>
     <string name="Select_option">Select option</string>
     <string name="Select_Picture">Select Picture</string>
+    <string name="free">free</string>
 
 
 </resources>

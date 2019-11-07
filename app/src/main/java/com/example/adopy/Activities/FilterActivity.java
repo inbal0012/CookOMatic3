@@ -1,6 +1,5 @@
 package com.example.adopy.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,7 +21,6 @@ import org.honorato.multistatetogglebutton.MultiStateToggleButton;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 public class FilterActivity extends AppCompatActivity {
 
@@ -75,7 +73,7 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
-        Button cancelBtn = findViewById(R.id.cancelBtn);
+        Button cancelBtn = findViewById(R.id.cancelBtnEdit);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
