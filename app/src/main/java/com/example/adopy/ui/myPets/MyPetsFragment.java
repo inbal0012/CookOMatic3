@@ -59,6 +59,7 @@ public class MyPetsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_my_pets, container, false);
+//        getActivity().setTitle(getString(R.string.title_my_pets));
 
         dialogs = new Dialogs(getActivity());
 

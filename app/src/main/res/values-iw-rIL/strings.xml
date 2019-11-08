@@ -122,4 +122,6 @@
     <string name="free">חינם</string>
     <string name="mssOK">בחר</string>
     <string name="save_new_pet">שמור את החיה?</string>
+    <string name="Select_your_gender">בחר את מינך</string>
+    <string name="menu_chats">שיחות</string>
 </resources>

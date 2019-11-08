@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.adopy.R;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
@@ -30,16 +32,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import static android.app.Activity.RESULT_OK;
 import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_FILTER;
 import static com.example.adopy.Utilities.RequestCodes.SELECT_IMAGE_REQUEST;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchFragment extends Fragment {
     private static final String TAG = "my_SearchActivity";
+    private View root;
+
     private RecyclerView mRecyclerView;
     private ArrayList<PetModel> mPetModels;
     private PetAdapter2 mPetAdapter;
@@ -57,21 +63,22 @@ public class SearchActivity extends AppCompatActivity {
 
     Dialogs dialogs;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-        dialogs = new Dialogs(this);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.activity_search, container, false);
 
-        mRecyclerView = findViewById(R.id.recycler_search_act);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        setHasOptionsMenu(true);
+
+        mRecyclerView = root.findViewById(R.id.recycler_search_act);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mPetModels = new ArrayList<>();
-        mPetAdapter = new PetAdapter2(SearchActivity.this, mPetModels);
+        mPetAdapter = new PetAdapter2(getContext(), mPetModels);
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
         mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
 
-        fab = findViewById(R.id.fabAdd);
+        fab = root.findViewById(R.id.fabAdd);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +93,40 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         getUserLocation();
+
+        return root;
     }
+
+    //    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_search);
+//        dialogs = new Dialogs(this);
+//
+//        mRecyclerView = findViewById(R.id.recycler_search_act);
+//        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+//        mPetModels = new ArrayList<>();
+//        mPetAdapter = new PetAdapter2(SearchFragment.this, mPetModels);
+//
+//        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
+//        mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
+//
+//        fab = findViewById(R.id.fabAdd);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                fuser = FirebaseAuth.getInstance().getCurrentUser();
+//                if (fuser == null) {
+//                    loginDialog();
+//                }
+//                else {
+//                    dialogs.AddPetDialog(mPetModels, mPetAdapter);
+//                }
+//            }
+//        });
+//
+//        getUserLocation();
+//    }
 
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
@@ -95,7 +135,7 @@ public class SearchActivity extends AppCompatActivity {
                 PetModel petModel = dataSnapshot1.getValue(PetModel.class);
                 mPetModels.add(petModel);
             }
-            //mPetAdapter = new PetAdapter2(SearchActivity.this, mPetModels);
+            //mPetAdapter = new PetAdapter2(SearchFragment.this, mPetModels);
             mRecyclerView.setAdapter(mPetAdapter);
         }
 
@@ -136,7 +176,7 @@ public class SearchActivity extends AppCompatActivity {
                 } else
                     mPetModels.add(petModel);
             }
-            mPetAdapter = new PetAdapter2(SearchActivity.this, mPetModels);
+            mPetAdapter = new PetAdapter2(getContext(), mPetModels);
             mRecyclerView.setAdapter(mPetAdapter);
         }
 
@@ -158,7 +198,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void getUserLocation() {
-        MyLocation myLocation = new MyLocation(this);
+        MyLocation myLocation = new MyLocation(getActivity());
         userLat = myLocation.getLatitude();
         userLng = myLocation.getLongitude();
     }
@@ -175,30 +215,38 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search, menu);
         Log.d(TAG, "onCreateOptionsMenu: ");
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-
-
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "searchView.setOnSearchClickListener: ");
-                Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_FILTER);
-
-            }
-        });
-
-        return true;
     }
 
+
+
+    //    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_search, menu);
+//        Log.d(TAG, "onCreateOptionsMenu: ");
+//
+//        MenuItem searchItem = menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+//
+//
+//        searchView.setOnSearchClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(TAG, "searchView.setOnSearchClickListener: ");
+//                Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
+//                startActivityForResult(intent, REQUEST_CODE_FILTER);
+//
+//            }
+//        });
+//
+//        return true;
+//    }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
 
             if (requestCode == REQUEST_CODE_FILTER && resultCode == RESULT_OK) {

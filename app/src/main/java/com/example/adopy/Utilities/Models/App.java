@@ -56,7 +56,7 @@ public class App extends Application {
 //                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
 //
 //
-//        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+//        Intent intent = new Intent(getApplicationContext(), SearchFragment.class);
 //        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 //        builder.setContentIntent(pendingIntent);
 //

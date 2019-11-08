@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.adopy.Activities.EditPetActivity;
 import com.example.adopy.Activities.EditProfileActivity;
 import com.example.adopy.R;
 import com.example.adopy.Utilities.Interfaces_and_Emuns.Gender;
@@ -68,11 +69,12 @@ public class ProfileFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_profile, container, false);
 
+//        getActivity().setTitle(getString(R.string.title_profile));
+
         nameStr = "hello";
         toolbar = root.findViewById(R.id.toolbar);
         toolbar.setTitle(nameStr);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         handler = new Handler(getContext().getMainLooper());
         Log.d(TAG, "onCreateView: " + ((AppCompatActivity) getActivity()).getSupportActionBar());
 
@@ -100,10 +102,9 @@ public class ProfileFragment extends Fragment {
 //            nameStr = user.getUsername();
             toolbar = root.findViewById(R.id.toolbar);
             toolbar.setTitle("test");
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("test");
             Log.d(TAG, "onIf: " + ((AppCompatActivity) getActivity()).getSupportActionBar());
-            updateToolbar();
+            //updateToolbar();
 
         }
 

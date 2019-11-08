@@ -1,7 +1,9 @@
 package com.example.adopy.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -35,29 +38,32 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatsActivity extends AppCompatActivity {
+public class ChatsFragment extends Fragment {
 
     private static final String TAG = "my_ChatsActivity";
-    private RecyclerView recyclerView;
+    private View root;
 
-    private UserAdapter userAdapter;
+    private RecyclerView recyclerView;
     private List<User> mUsersList;
+    private UserAdapter userAdapter;
 
     FirebaseUser mFirebaseUser;
     DatabaseReference reference;
 
     private List<String> userList;
 
-
+    @Nullable
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chats);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.activity_chats, container, false);
 
-        recyclerView = findViewById(R.id.chats_recycler_view);
+        recyclerView = root.findViewById(R.id.chats_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+        mUsersList = new ArrayList<>();
+        userAdapter = new UserAdapter(getContext(), mUsersList);
+        recyclerView.setAdapter(userAdapter);
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -79,7 +85,7 @@ public class ChatsActivity extends AppCompatActivity {
                         userList.add(chat.getSender());
                     }
                 }
-                
+
                 readChats();
             }
 
@@ -88,7 +94,50 @@ public class ChatsActivity extends AppCompatActivity {
 
             }
         });
+
+        return root;
     }
+
+//    @Override
+//     public void onCreate(final Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_chats);
+//
+//        recyclerView = findViewById(R.id.chats_recycler_view);
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+//        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+//
+//        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//        userList = new ArrayList<>();
+//
+//        reference = FirebaseDatabase.getInstance().getReference("Chats");
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                userList.clear();
+//
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Chat chat = snapshot.getValue(Chat.class);
+//
+//                    if(chat.getSender().equals(mFirebaseUser.getUid())) {
+//                        userList.add(chat.getReceiver());
+//                    }
+//                    if(chat.getReceiver().equals(mFirebaseUser.getUid())) {
+//                        userList.add(chat.getSender());
+//                    }
+//                }
+//
+//                readChats();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
     private void readChats() {
         mUsersList = new ArrayList<>();
@@ -122,7 +171,7 @@ public class ChatsActivity extends AppCompatActivity {
                     }
                 }
 
-                userAdapter = new UserAdapter(getApplicationContext(), mUsersList);
+                userAdapter = new UserAdapter(getContext(), mUsersList);
                 recyclerView.setAdapter(userAdapter);
             }
 
@@ -150,7 +199,7 @@ public class ChatsActivity extends AppCompatActivity {
 
 
     public void showDeleteDialog(final RecyclerView.ViewHolder viewHolder, final User user) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.AlertTheme).setCancelable(true);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext(), R.style.AlertTheme).setCancelable(true);
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_delete_pet, null);
         dialogBuilder.setView(dialogView);

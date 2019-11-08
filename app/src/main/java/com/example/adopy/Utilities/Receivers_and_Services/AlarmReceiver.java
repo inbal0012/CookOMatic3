@@ -11,7 +11,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.example.adopy.R;
-import com.example.adopy.Activities.SearchActivity;
+import com.example.adopy.Activities.SearchFragment;
 
 import static com.example.adopy.Utilities.Models.App.WEEKLY_UPDATES_CHANNEL_ID;
 
@@ -21,7 +21,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Log.d("my_AlarmReceiver", "onReceive: ");
 
-        Intent taoIntent = new Intent(context, SearchActivity.class);
+        Intent taoIntent = new Intent(context, SearchFragment.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,taoIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification.Builder builder = new Notification.Builder(context);

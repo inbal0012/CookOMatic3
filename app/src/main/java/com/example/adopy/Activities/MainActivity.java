@@ -4,24 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import android.Manifest;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,9 +26,7 @@ import com.example.adopy.Utilities.Receivers_and_Services.AlarmReceiver;
 import com.example.adopy.Utilities.Receivers_and_Services.BootRegisterService;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.io.IOException;
 import java.util.Calendar;
-import java.util.List;
 
 import static com.example.adopy.Utilities.Models.App.ON_BOOT_CHANNEL_ID;
 import static com.example.adopy.Utilities.RequestCodes.FOREGROUND_SERVICE_PERMISSION_REQUEST;
@@ -69,22 +58,6 @@ public class MainActivity extends AppCompatActivity {
         else
             userTV.setText("no user connected");
 
-        Button mtPets = findViewById(R.id.myPetsBtn);
-        mtPets.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MyPetsActivity.class));
-            }
-        });
-
-        Button search = findViewById(R.id.searchBtn);
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SearchActivity.class));
-            }
-        });
-
         Button saveUpdates = findViewById(R.id.reminderRepeatSave_btn);
         saveUpdates.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button mtPets = findViewById(R.id.myPetsBtn);
+        mtPets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MyPetsActivity.class));
+            }
+        });
+
         Button loginBtn = findViewById(R.id.signinBtn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,11 +92,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button profileBtn = findViewById(R.id.profileBtn);
-        profileBtn.setOnClickListener(new View.OnClickListener() {
+        Button startBtn = findViewById(R.id.startBtn);
+        startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                startActivity(new Intent(MainActivity.this, StartActivity.class));
             }
         });
 
@@ -123,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ChatsActivity.class);
+                Intent intent = new Intent(MainActivity.this, ChatsFragment.class);
                 //intent.putExtra("userid", "Zf0DLpaCtHSP9vEMWly4KQ1bdlU2");
                 startActivity(intent);
             }
@@ -184,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE);
 
 
-        Intent intent = new Intent(MainActivity.this,SearchActivity.class);
+        Intent intent = new Intent(MainActivity.this, SearchFragment.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
 
