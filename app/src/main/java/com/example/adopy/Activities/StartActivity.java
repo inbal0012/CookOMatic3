@@ -30,6 +30,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 
+import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_FILTER;
 import static com.example.adopy.Utilities.RequestCodes.SELECT_IMAGE_REQUEST;
 import static com.example.adopy.Utilities.RequestCodes.USER_IMAGE_REQUEST;
 
@@ -43,6 +44,8 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
     Toolbar toolbar;
 
     Menu menu;
+
+    SearchFragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +107,7 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
         if (currentFragment instanceof SearchFragment) {
             inflater.inflate(R.menu.menu_search, menu);
             Log.d(TAG, "onCreateOptionsMenu: menu_search");
-        }
-        else {
+        } else {
             inflater.inflate(R.menu.start, menu);
         }
         return true;
@@ -136,8 +138,9 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
                 getSupportActionBar().setTitle(getString(R.string.title_my_pets));
                 break;
             case R.id.nav_search:
+                searchFragment = new SearchFragment();
                 getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
-                        new SearchFragment(), "SearchFragment").commit();
+                        searchFragment, "SearchFragment").commit();
                 getSupportActionBar().setTitle(getString(R.string.title_activity_search));
                 onCreateOptionsMenu(menu);
                 break;
@@ -167,6 +170,9 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
         }
         if (requestCode == SELECT_IMAGE_REQUEST) {
             new Dialogs(this).onActivityResult(requestCode, resultCode, data);
+        }
+        if (requestCode == REQUEST_CODE_FILTER && resultCode == RESULT_OK) {
+            searchFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

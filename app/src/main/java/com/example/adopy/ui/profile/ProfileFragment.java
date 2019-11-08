@@ -157,7 +157,7 @@ public class ProfileFragment extends Fragment {
 
                 //user name
                 //getActivity().setTitle(user.getUsername());   //TODO
-                Log.d(TAG, "onDataChange: " + ((AppCompatActivity) getActivity()).getSupportActionBar());
+//                Log.d(TAG, "onDataChange: " + ((AppCompatActivity) getActivity()).getSupportActionBar());
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("boo");
 
                 //email

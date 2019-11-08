@@ -16,7 +16,10 @@ import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
 import com.example.adopy.Utilities.Dialogs;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.Models.SearchPreferences;
+import com.example.adopy.Utilities.Models.User;
 import com.example.adopy.Utilities.MyLocation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,6 +40,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_FILTER;
@@ -75,20 +79,48 @@ public class SearchFragment extends Fragment {
         mPetModels = new ArrayList<>();
         mPetAdapter = new PetAdapter2(getContext(), mPetModels);
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
-        mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d(TAG, "onCreateView: " + fuser);
+        if (fuser==null) {
+            mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
+            mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
+        } else {
+            DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+            mReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Log.d(TAG, "onDataChange: ");
+                    User user = dataSnapshot.getValue(User.class);
+                    sp = user.getSearchPreferences();
+                    firebaseSearch();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
 
         fab = root.findViewById(R.id.fabAdd);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fuser = FirebaseAuth.getInstance().getCurrentUser();
                 if (fuser == null) {
                     loginDialog();
                 }
                 else {
                     dialogs.AddPetDialog(mPetModels, mPetAdapter);
                 }
+            }
+        });
+
+        FloatingActionButton fabFilter = root.findViewById(R.id.fabFilter);
+        fabFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FilterActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_FILTER);
             }
         });
 
@@ -160,7 +192,7 @@ public class SearchFragment extends Fragment {
                             "\nkind filter " + sp.getTypes().contains(petModel.getKind()) +
                             "\nAge filter " + (sp.getAgeMin() <= petModel.getAge() && petModel.getAge() <= sp.getAgeMax()) +
                             "\nDistance filter " + (petDistance(petModel) <= sp.getDistance()) +
-                            "\nGender filter " + petModel.getGender().equals(sp.getSex()));
+                            "\nGender filter " + petModel.getGender().toString().equals(sp.getSex()));
                     if (sp.getTypes().contains(petModel.getKind())) {                                    //Kind filter
                         if (sp.getAgeMin() <= petModel.getAge() && petModel.getAge() <= sp.getAgeMax()) {  //Age filter
                             if (petDistance(petModel) <= sp.getDistance()) {                              //Distance filter
@@ -204,7 +236,7 @@ public class SearchFragment extends Fragment {
     }
 
     //search data
-    private void firebaseSearch(String i_searchText) {
+    private void firebaseSearch() {
         mPetModels.clear();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
 
@@ -257,11 +289,28 @@ public class SearchFragment extends Fragment {
                         "\nSex: " + sp.getSex() +
                         "\nDistance: " + sp.getDistance();
                 Log.d(TAG, "savePreferences: \n" + SPans);
-                firebaseSearch("");
+                if (fuser != null) {
+                    Log.d(TAG, "onActivityResult: " + fuser.getUid());
+                    updateSearchPreferences();
+                }
+                firebaseSearch();
 
             }
             if (requestCode == SELECT_IMAGE_REQUEST) {
 
             }
+    }
+
+    private void updateSearchPreferences() {
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("sp", sp);
+        reference.updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d(TAG, "onComplete: "+ task.isSuccessful());
+            }
+        });
     }
 }
