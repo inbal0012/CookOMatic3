@@ -10,10 +10,12 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.adopy.Activities.AddPetActivity;
 import com.example.adopy.Activities.FilterActivity;
 import com.example.adopy.R;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
 import com.example.adopy.Utilities.Dialogs;
+import com.example.adopy.Utilities.FileSystemMemory;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.Models.SearchPreferences;
 import com.example.adopy.Utilities.Models.User;
@@ -29,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +43,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_ADD_PET;
 import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_FILTER;
 import static com.example.adopy.Utilities.RequestCodes.SELECT_IMAGE_REQUEST;
 
@@ -78,7 +82,7 @@ public class SearchFragment extends Fragment {
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         Log.d(TAG, "onCreateView: " + fuser);
-        if (fuser==null) {
+        if (fuser == null) {
             mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
             mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
         } else {
@@ -105,9 +109,9 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
                 if (fuser == null) {
                     loginDialog();
-                }
-                else {
-                    dialogs.AddPetDialog(mPetModels, mPetAdapter);
+                } else {
+                    Intent intent = new Intent(getContext(), AddPetActivity.class);
+                    startActivityForResult(intent, REQUEST_CODE_ADD_PET);
                 }
             }
         });
@@ -194,8 +198,8 @@ public class SearchFragment extends Fragment {
             getUserLocation();
         }
         Location.distanceBetween(userLat, userLng, petModel.getLatitude(), petModel.getLongitude(), results);
-        Log.d(TAG, petModel.getName() + "petDistance: " + results[0]/1000);
-        return results[0]/1000;
+        Log.d(TAG, petModel.getName() + "petDistance: " + results[0] / 1000);
+        return results[0] / 1000;
     }
 
     private void getUserLocation() {
@@ -224,7 +228,6 @@ public class SearchFragment extends Fragment {
     }
 
 
-
     //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        MenuInflater inflater = getMenuInflater();
@@ -250,37 +253,46 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
-            if (requestCode == REQUEST_CODE_FILTER && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_FILTER && resultCode == RESULT_OK) {
 
-                sp = (SearchPreferences) data.getSerializableExtra("key");
-                SPans = "types:" + sp.getTypes() +
-                        "\nage: " + sp.getAgeMin() + " - " + sp.getAgeMax() +
-                        "\nSex: " + sp.getSex() +
-                        "\nDistance: " + sp.getDistance();
-                Log.d(TAG, "savePreferences: \n" + SPans);
-                if (fuser != null) {
-                    Log.d(TAG, "onActivityResult: " + fuser.getUid());
-                    updateSearchPreferences();
-                }
-                firebaseSearch();
-
+            sp = (SearchPreferences) data.getSerializableExtra("key");
+            SPans = "types:" + sp.getTypes() +
+                    "\nage: " + sp.getAgeMin() + " - " + sp.getAgeMax() +
+                    "\nSex: " + sp.getSex() +
+                    "\nDistance: " + sp.getDistance();
+            Log.d(TAG, "savePreferences: \n" + SPans);
+            if (fuser != null) {
+                Log.d(TAG, "onActivityResult: " + fuser.getUid());
+                updateSearchPreferences();
             }
-            if (requestCode == SELECT_IMAGE_REQUEST) {
+            firebaseSearch();
 
-            }
+        }
+        if (requestCode == SELECT_IMAGE_REQUEST) {
+
+        }
+
+        if (requestCode == REQUEST_CODE_ADD_PET && resultCode == RESULT_OK) {
+            PetModel newPet = (PetModel) data.getSerializableExtra("pet");
+
+            mPetModels.add(newPet);
+            mPetAdapter.notifyDataSetChanged();
+
+            FileSystemMemory.SaveToFile(mPetModels, getContext());
+        }
     }
 
     private void updateSearchPreferences() {
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("sp", sp);
         reference.updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Log.d(TAG, "onComplete: "+ task.isSuccessful());
+                Log.d(TAG, "onComplete: " + task.isSuccessful());
             }
         });
     }

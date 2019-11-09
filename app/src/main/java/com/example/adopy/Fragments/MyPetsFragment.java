@@ -1,6 +1,7 @@
 package com.example.adopy.Fragments;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,14 +13,17 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.adopy.Activities.AddPetActivity;
 import com.example.adopy.R;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
 import com.example.adopy.Utilities.Dialogs;
+import com.example.adopy.Utilities.FileSystemMemory;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,8 +36,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
+import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_ADD_PET;
 
 public class MyPetsFragment extends Fragment {
 
@@ -91,7 +99,8 @@ public class MyPetsFragment extends Fragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        dialogs.AddPetDialog(mPetModels, mPetAdapter);
+                    Intent intent = new Intent(getContext(), AddPetActivity.class);
+                    startActivityForResult(intent, REQUEST_CODE_ADD_PET);
                 }
             });
         }
@@ -186,4 +195,20 @@ public class MyPetsFragment extends Fragment {
             }
         });
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_ADD_PET && resultCode == RESULT_OK) {
+            PetModel newPet = (PetModel) data.getSerializableExtra("pet");
+
+            mPetModels.add(newPet);
+            mPetAdapter.notifyDataSetChanged();
+
+            FileSystemMemory.SaveToFile(mPetModels, getContext());
+        }
+    }
+
 }

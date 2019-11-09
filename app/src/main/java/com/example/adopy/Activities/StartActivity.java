@@ -43,6 +43,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_ADD_PET;
 import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_FILTER;
 import static com.example.adopy.Utilities.RequestCodes.SELECT_IMAGE_REQUEST;
 import static com.example.adopy.Utilities.RequestCodes.USER_IMAGE_REQUEST;
@@ -224,6 +225,15 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
         }
         if (requestCode == REQUEST_CODE_FILTER && resultCode == RESULT_OK) {
             new SearchFragment().onActivityResult(requestCode, resultCode, data);
+        }
+        if (requestCode == REQUEST_CODE_ADD_PET && resultCode == RESULT_OK) {
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+            if (currentFragment instanceof SearchFragment) {
+                new SearchFragment().onActivityResult(requestCode, resultCode, data);
+            }
+            else if (currentFragment instanceof MyPetsFragment) {
+                new MyPetsFragment().onActivityResult(requestCode, resultCode, data);
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ public final class RequestCodes {
     public static final int USER_IMAGE_REQUEST = 103;
     public static final int PET_IMAGE_REQUEST = 104;
     public static final int REQUEST_CODE_FILTER = 105;
+    public static final int REQUEST_CODE_ADD_PET = 106;
 
 
 }

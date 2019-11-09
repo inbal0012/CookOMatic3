@@ -45,6 +45,7 @@ public class PetPageActivity extends AppCompatActivity {
     TextView Info, Price, Location, Age, Gender, kind;
     FloatingActionButton fabMsg, fabEdit;
     Toolbar toolbar;
+    ImageView petImg;
 
     Handler handler;
 
@@ -80,7 +81,8 @@ public class PetPageActivity extends AppCompatActivity {
         setOnClickListener();
     }
 
-    private void setOnClickListener() {fabMsg.setOnClickListener(new View.OnClickListener() {
+    private void setOnClickListener() {
+        fabMsg.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (fUser != null) {
@@ -141,7 +143,7 @@ public class PetPageActivity extends AppCompatActivity {
         }
 
         //imageUri
-        ImageView petImg = findViewById(R.id.petImage);
+        petImg = findViewById(R.id.petImage);
         Log.d(TAG, "onCreate: " + pet.getImageUri());
         Glide.with(this).load(pet.getImageUri()).placeholder(R.drawable.foot).into(petImg);
 
