@@ -98,6 +98,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/back_text"
                     android:hint="@string/price"
+                    android:inputType="number"
                     android:padding="10dp" />
 
                 <AutoCompleteTextView
