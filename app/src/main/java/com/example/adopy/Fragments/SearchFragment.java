@@ -1,4 +1,4 @@
-package com.example.adopy.Activities;
+package com.example.adopy.Fragments;
 
 import android.content.Intent;
 import android.location.Location;
@@ -7,10 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.adopy.Activities.FilterActivity;
 import com.example.adopy.R;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
 import com.example.adopy.Utilities.Dialogs;
@@ -32,9 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,7 +67,7 @@ public class SearchFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.activity_search, container, false);
+        root = inflater.inflate(R.layout.fragment_search, container, false);
 
         setHasOptionsMenu(true);
 
@@ -132,7 +129,7 @@ public class SearchFragment extends Fragment {
     //    @Override
 //    public void onCreate(@Nullable Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_search);
+//        setContentView(R.layout.fragment_search);
 //        dialogs = new Dialogs(this);
 //
 //        mRecyclerView = findViewById(R.id.recycler_search_act);
@@ -147,8 +144,8 @@ public class SearchFragment extends Fragment {
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                fuser = FirebaseAuth.getInstance().getCurrentUser();
-//                if (fuser == null) {
+//                fUser = FirebaseAuth.getInstance().getCurrentUser();
+//                if (fUser == null) {
 //                    loginDialog();
 //                }
 //                else {
@@ -224,6 +221,9 @@ public class SearchFragment extends Fragment {
 
     private float petDistance(PetModel petModel) {
         float[] results = new float[1];
+        if (userLat == null || userLng == null) {
+            getUserLocation();
+        }
         Location.distanceBetween(userLat, userLng, petModel.getLatitude(), petModel.getLongitude(), results);
         Log.d(TAG, petModel.getName() + "petDistance: " + results[0]/1000);
         return results[0]/1000;
@@ -237,7 +237,9 @@ public class SearchFragment extends Fragment {
 
     //search data
     private void firebaseSearch() {
-        mPetModels.clear();
+        if (mPetModels != null) {
+            mPetModels.clear();
+        }
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
 
         Query firebaseSearchQuery = mDatabaseReference;

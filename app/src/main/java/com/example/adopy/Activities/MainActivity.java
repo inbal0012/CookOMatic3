@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adopy.Fragments.ChatsFragment;
+import com.example.adopy.Fragments.SearchFragment;
 import com.example.adopy.R;
 import com.example.adopy.Utilities.MyLocation;
 import com.example.adopy.Utilities.Receivers_and_Services.AlarmReceiver;
@@ -76,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button mtPets = findViewById(R.id.myPetsBtn);
+        Button mtPets = findViewById(R.id.startBotBtn);
         mtPets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MyPetsActivity.class));
+                startActivity(new Intent(MainActivity.this, StartBottomActivity.class));
             }
         });
 

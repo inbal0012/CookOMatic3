@@ -87,4 +87,14 @@ public class User {
     public void setSearchPreferences(SearchPreferences sp) {
         this.sp = sp;
     }
+
+    public SearchPreferences getSp() {
+        return sp;
+    }
+
+    public void setSp(SearchPreferences sp) {
+        this.sp = sp;
+    }
+
+
 }

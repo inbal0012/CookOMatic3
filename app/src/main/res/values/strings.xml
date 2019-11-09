@@ -198,7 +198,6 @@
     //unknown
 
 
-    <string name="My_Pets_Page">My Pets Page</string>
     <string name="Search_page">Search Page</string>
     <string name="Profile_Page">Profile Page</string>
 
@@ -232,7 +231,7 @@
     <string name="add_fav_dialog_body">To save your favorite pets you need to login</string>
     <string name="add_pet_dialog_body">To add a pet you need to login</string>
 
-    <string name="title_activity_my_pets">MyPetsActivity</string>
+    <string name="title_activity_start_bottom">StartBottomActivity</string>
     <string name="title_profile">Profile</string>
     <string name="title_my_pets">My Pets</string>
     <string name="title_my_fav">My Favorites</string>
@@ -264,6 +263,7 @@
     <string name="Select_your_gender">Select your gender</string>
     <string name="title_activity_start">StartActivity</string>
     <string name="menu_chats">Chats</string>
+    <string name="location_updated">location updated</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

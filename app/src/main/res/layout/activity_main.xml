@@ -45,19 +45,19 @@
         android:text="@string/title_activity_start"/>
 
     <Button
-        android:id="@+id/myPetsBtn"
+        android:id="@+id/startBotBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/startBtn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/My_Pets_Page"/>
+        android:text="@string/title_activity_start_bottom"/>
 
     <Button
         android:id="@+id/chatBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/myPetsBtn"
+        app:layout_constraintTop_toBottomOf="@id/startBotBtn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:text="@string/Chat_page"/>

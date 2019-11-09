@@ -1,7 +1,6 @@
-package com.example.adopy.ui.myPets;
+package com.example.adopy.Fragments;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -40,7 +38,6 @@ import java.util.ArrayList;
 public class MyPetsFragment extends Fragment {
 
     private static final String TAG = "MyPetsFragment";
-    private MyPetsViewModel myPetsViewModel;
 
     private RecyclerView mRecyclerView;
     private ArrayList<PetModel> mPetModels;

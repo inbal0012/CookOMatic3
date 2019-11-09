@@ -40,9 +40,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     MyImage myImage;
 
-    MaterialEditText nameEt;
-    MaterialEditText genderEt;
-    MaterialEditText ageEt;
+    MaterialEditText nameEt, genderEt, ageEt;
+    ImageView profile_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,7 @@ public class EditProfileActivity extends AppCompatActivity {
         ageEt.setText(user.getAge());
 
         //image
-        ImageView profile_image = findViewById(R.id.profile_image);
+        profile_image = findViewById(R.id.profile_image);
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +134,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         Log.d(TAG, "onActivityResult: " + requestCode);
         if (requestCode == USER_IMAGE_REQUEST ) {
-            myImage.onActivityResult(requestCode, resultCode, data);
+            myImage.onActivityResult(requestCode, resultCode, data, profile_image);
         }
     }
 }

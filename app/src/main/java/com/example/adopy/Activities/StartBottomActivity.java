@@ -7,9 +7,8 @@ import android.view.MenuItem;
 
 import com.example.adopy.R;
 import com.example.adopy.Utilities.Dialogs;
-import com.example.adopy.Utilities.MyImage;
-import com.example.adopy.ui.myPets.MyPetsFragment;
-import com.example.adopy.ui.profile.ProfileFragment;
+import com.example.adopy.Fragments.MyPetsFragment;
+import com.example.adopy.Fragments.ProfileFragment;
 import com.example.adopy.ui.favorites.FavoritesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -22,14 +21,14 @@ import androidx.fragment.app.FragmentManager;
 import static com.example.adopy.Utilities.RequestCodes.USER_IMAGE_REQUEST;
 import static com.example.adopy.Utilities.RequestCodes.SELECT_IMAGE_REQUEST;
 
-public class MyPetsActivity extends AppCompatActivity {
+public class StartBottomActivity extends AppCompatActivity {
 
-    private static final String TAG = "MyPetsActivity";
+    private static final String TAG = "StartBottomActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_pets);
+        setContentView(R.layout.activity_start_bottom);
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         navView.setOnNavigationItemSelectedListener(navLister);
@@ -79,7 +78,7 @@ public class MyPetsActivity extends AppCompatActivity {
 
         Log.d(TAG, "onActivityResult: " + requestCode);
         if (requestCode == USER_IMAGE_REQUEST ) {
-            new MyImage(this, "Users", "user").onActivityResult(requestCode, resultCode, data);
+            //new MyImage(this, "Users", "user").onActivityResult(requestCode, resultCode, data);
         }
         if (requestCode == SELECT_IMAGE_REQUEST) {
             new Dialogs(this).onActivityResult(requestCode, resultCode, data);

@@ -1,9 +1,8 @@
-package com.example.adopy.ui.profile;
+package com.example.adopy.Fragments;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,18 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.adopy.Activities.EditPetActivity;
 import com.example.adopy.Activities.EditProfileActivity;
 import com.example.adopy.R;
 import com.example.adopy.Utilities.Interfaces_and_Emuns.Gender;
 import com.example.adopy.Utilities.Models.User;
-import com.example.adopy.Utilities.MyImage;
 import com.example.adopy.Utilities.MyLocation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,12 +38,9 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
-import static com.example.adopy.Utilities.RequestCodes.USER_IMAGE_REQUEST;
-
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = "my_ProfileFragment";
-    private ProfileViewModel profileViewModel;
 
     //firebase
     private FirebaseUser fuser;
@@ -58,21 +51,16 @@ public class ProfileFragment extends Fragment {
 
     private View root;
     private Toolbar toolbar;
-    private String nameStr;
+    private ImageView profile_image;
 
     private Handler handler;
-
-    private Uri imageUri;
-    MyImage myImage;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_profile, container, false);
 
-//        getActivity().setTitle(getString(R.string.title_profile));
-
-        nameStr = "hello";
         toolbar = root.findViewById(R.id.toolbar);
+        String nameStr = "hello";
         toolbar.setTitle(nameStr);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         handler = new Handler(getContext().getMainLooper());
@@ -85,7 +73,6 @@ public class ProfileFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Gson gson = new Gson();
                 String gStr = gson.toJson(user);
                 Intent intent = new Intent(getContext(), EditProfileActivity.class);
@@ -98,8 +85,6 @@ public class ProfileFragment extends Fragment {
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         if (fuser != null) {
             populateData();
-//            Log.d(TAG, "onCreateView: " + user.getUsername());
-//            nameStr = user.getUsername();
             toolbar = root.findViewById(R.id.toolbar);
             toolbar.setTitle("test");
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("test");
@@ -166,14 +151,7 @@ public class ProfileFragment extends Fragment {
                 userEmailTv.setText(userEmail);
 
                 //image
-                ImageView profile_image = root.findViewById(R.id.profile_image);
-                profile_image.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        myImage = new MyImage(getActivity(), "Users", "user");
-                        myImage.openImage();
-                    }
-                });
+                profile_image = root.findViewById(R.id.profile_image);
                 if (user.getImageUri().equals("default")) {
                     profile_image.setImageResource(R.drawable.user_male);
                     if (user.getGender().equals("Female")) {
@@ -224,15 +202,5 @@ public class ProfileFragment extends Fragment {
     public void onResume() {
         super.onResume();
         populateData();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        Log.d(TAG, "onActivityResult: " + requestCode);
-        if (requestCode == USER_IMAGE_REQUEST) {
-            myImage.onActivityResult(requestCode, resultCode, data);
-        }
     }
 }

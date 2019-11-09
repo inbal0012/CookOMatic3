@@ -48,11 +48,11 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
         updateLocation();
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return lat;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return lng;
     }
 

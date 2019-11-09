@@ -28,7 +28,6 @@
     <string name="Chat_page">עמוד שיחה</string>
     <string name="LOCATION_PERMISSION_warning_body">האפליקציה חייבת הרשאות מיקום על מנת לעבוד כהלכה!</string>
     <string name="LOCATION_PERMISSION_warning_title">שים לב</string>
-    <string name="My_Pets_Page">עמוד החיות שלי</string>
     <string name="Profile_Page">עמוד פרופיל</string>
     <string name="Search_page">עמוד חיפוש</string>
     <string name="Select_pet_species">בחר את סוג החיה</string>
@@ -91,7 +90,7 @@
     <string name="success">התחברת בהצלחה</string>
     <string name="title_activity_chat">שיחה</string>
     <string name="title_activity_filter">סנן</string>
-    <string name="title_activity_my_pets">החיות שלי</string>
+    <string name="title_activity_start_bottom">החיות שלי</string>
     <string name="title_activity_pet_page">חיה</string>
     <string name="title_activity_profile">פרופיל</string>
     <string name="title_activity_search">חפש</string>

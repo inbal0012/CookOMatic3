@@ -42,12 +42,14 @@ import static com.example.adopy.Utilities.RequestCodes.PET_IMAGE_REQUEST;
 public class EditPetActivity extends AppCompatActivity {
 
     private static final String TAG = "my_EditPetActivity";
-    private PetModel pet;
-    private PetModel newPet;
-    MyImage myImage;
 
-    AutoCompleteTextView about;
-    AutoCompleteTextView price;
+    private PetModel pet, newPet;
+
+    AutoCompleteTextView about, price;
+    ImageView petImg;
+
+    MyLocation myLocation;
+    MyImage myImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class EditPetActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        myLocation = new MyLocation(this);
         Gson gson = new Gson();
         pet = gson.fromJson(getIntent().getStringExtra("pet"), PetModel.class);
 
@@ -79,7 +82,7 @@ public class EditPetActivity extends AppCompatActivity {
         });
 
         //imageUri
-        ImageView petImg = findViewById(R.id.petImage);
+        petImg = findViewById(R.id.petImage);
         Glide.with(this).load(pet.getImageUri()).placeholder(R.drawable.foot).into(petImg);
         petImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +151,30 @@ public class EditPetActivity extends AppCompatActivity {
         about = findViewById(R.id.about);
         about.setText(pet.getInfo());
 
+        //location
+        Button useMyLoc = findViewById(R.id.LocationBtn);
+        useMyLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myLocation.updateLocation();
+                Double lat = myLocation.getLatitude();
+                Double lon = myLocation.getLongitude();
+                newPet.setLatitude(lat.toString());
+                newPet.setLongitude(lon.toString());
+                try {
+                    newPet.setLocation(myLocation.StringFromAddress(myLocation.getFromLocation(lat, lon)));
+                    Toast.makeText(EditPetActivity.this, getString(R.string.location_updated), Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        try {
+            newPet.setLocation(myLocation.StringFromAddress(myLocation.getFromLocation(pet.getLatitude(), pet.getLongitude())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Button saveBtn = findViewById(R.id.saveBtn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,12 +214,6 @@ public class EditPetActivity extends AppCompatActivity {
                 newPet.getName(), newPet.getKind(), newPet.getImageUri(), newPet.getAge(), newPet.getGender(), newPet.getPrice(), newPet.getInfo(), pet.getLatitude(), pet.getLongitude());
         Log.d(TAG, "saveChanges: " + PetAns);
 
-        MyLocation myLocation = new MyLocation(this);
-        try {
-            newPet.setLocation(myLocation.StringFromAddress(myLocation.getFromLocation(pet.getLatitude(), pet.getLongitude())));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", newPet.getId());
@@ -224,7 +245,7 @@ public class EditPetActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult: " + requestCode);
         if (requestCode == PET_IMAGE_REQUEST) {
-            myImage.onActivityResult(requestCode, resultCode, data);
+            myImage.onActivityResult(requestCode, resultCode, data, petImg);
         }
     }
 }

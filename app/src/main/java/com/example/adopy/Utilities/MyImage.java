@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.adopy.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -71,7 +73,7 @@ public class MyImage {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    private void uploadImage() {
+    private void uploadImage(final ImageView destImageView) {
         final ProgressDialog pd = new ProgressDialog(activity);
         pd.setMessage(activity.getString(R.string.uploading));
         pd.show();
@@ -97,7 +99,7 @@ public class MyImage {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
-                        String mUri = downloadUri.toString();
+                        final String mUri = downloadUri.toString();
 
                         DatabaseReference reference;
                         if (path.equals("Users")) {
@@ -112,6 +114,7 @@ public class MyImage {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Log.d(TAG, "onComplete: "+ task.isSuccessful());
+                                Glide.with(activity).load(mUri).into(destImageView);
                             }
                         });
 
@@ -132,7 +135,7 @@ public class MyImage {
         }
     }
 
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data, ImageView destImageView) {
         //super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == USER_IMAGE_REQUEST || requestCode == PET_IMAGE_REQUEST && data != null && data.getData() != null) {
@@ -141,7 +144,7 @@ public class MyImage {
             if (uploadTask != null && uploadTask.isInProgress()) {
                 Toast.makeText(activity, activity.getString(R.string.upload_in_progress), Toast.LENGTH_SHORT).show();
             } else {
-                uploadImage();
+                uploadImage(destImageView);
             }
         }
     }

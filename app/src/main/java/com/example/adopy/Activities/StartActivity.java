@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.adopy.Fragments.ChatsFragment;
+import com.example.adopy.Fragments.SearchFragment;
 import com.example.adopy.R;
 import com.example.adopy.Utilities.Dialogs;
-import com.example.adopy.Utilities.MyImage;
-import com.example.adopy.ui.myPets.MyPetsFragment;
-import com.example.adopy.ui.profile.ProfileFragment;
+import com.example.adopy.Fragments.MyPetsFragment;
+import com.example.adopy.Fragments.ProfileFragment;
 
 import android.util.Log;
 import android.view.MenuInflater;
@@ -44,8 +45,6 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
     Toolbar toolbar;
 
     Menu menu;
-
-    SearchFragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +114,13 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_filter) {
+            Log.d(TAG, "searchView.onOptionsItemSelected: ");
+            Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_FILTER);
+            Log.d("Option", "2");
+
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -122,29 +128,27 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         switch (menuItem.getItemId()) {
-            case R.id.nav_profile:
+            case R.id.nav_search:
                 getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
-                        new ProfileFragment(), "ProfileFragment").commit();
-                getSupportActionBar().setTitle(getString(R.string.title_profile));
+                        new SearchFragment(), "SearchFragment").commit();
+                getSupportActionBar().setTitle(getString(R.string.title_activity_search));
+                onCreateOptionsMenu(menu);
                 break;
             case R.id.nav_chats:
                 getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
                         new ChatsFragment(), "ChatsFragment").commit();
                 getSupportActionBar().setTitle(getString(R.string.menu_chats));
                 break;
+            case R.id.nav_profile:
+                getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
+                        new ProfileFragment(), "ProfileFragment").commit();
+                getSupportActionBar().setTitle(getString(R.string.title_profile));
+                break;
             case R.id.nav_my_pets:
                 getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
                         new MyPetsFragment(), "MyPetsFragment").commit();
                 getSupportActionBar().setTitle(getString(R.string.title_my_pets));
                 break;
-            case R.id.nav_search:
-                searchFragment = new SearchFragment();
-                getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
-                        searchFragment, "SearchFragment").commit();
-                getSupportActionBar().setTitle(getString(R.string.title_activity_search));
-                onCreateOptionsMenu(menu);
-                break;
-
             case R.id.nav_share:
 
                 break;
@@ -166,13 +170,13 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
 
         Log.d(TAG, "onActivityResult: " + requestCode);
         if (requestCode == USER_IMAGE_REQUEST) {
-            new MyImage(this, "Users", "user").onActivityResult(requestCode, resultCode, data);
+            //new MyImage(this, "Users", "user").onActivityResult(requestCode, resultCode, data);
         }
         if (requestCode == SELECT_IMAGE_REQUEST) {
             new Dialogs(this).onActivityResult(requestCode, resultCode, data);
         }
         if (requestCode == REQUEST_CODE_FILTER && resultCode == RESULT_OK) {
-            searchFragment.onActivityResult(requestCode, resultCode, data);
+            new SearchFragment().onActivityResult(requestCode, resultCode, data);
         }
     }
 }

@@ -30,10 +30,10 @@
             android:name=".Activities.EditProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.MyPetsActivity"
-            android:label="@string/title_activity_my_pets"
+            android:name=".Activities.StartBottomActivity"
+            android:label="@string/title_activity_start_bottom"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.ChatsFragment" />
+        <activity android:name=".Fragments.ChatsFragment" />
         <activity
             android:name=".Activities.ChatActivity2"
             android:theme="@style/AppTheme.NoActionBar" />

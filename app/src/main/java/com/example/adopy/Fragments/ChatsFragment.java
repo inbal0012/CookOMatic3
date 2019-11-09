@@ -1,8 +1,7 @@
-package com.example.adopy.Activities;
+package com.example.adopy.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,10 +19,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.adopy.R;
-import com.example.adopy.UI_utilities.Adapters.MessageAdapter;
 import com.example.adopy.UI_utilities.Adapters.UserAdapter;
 import com.example.adopy.Utilities.Models.Chat;
-import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,7 +52,7 @@ public class ChatsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.activity_chats, container, false);
+        root = inflater.inflate(R.layout.fragment_chats, container, false);
 
         recyclerView = root.findViewById(R.id.chats_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -101,7 +98,7 @@ public class ChatsFragment extends Fragment {
 //    @Override
 //     public void onCreate(final Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_chats);
+//        setContentView(R.layout.fragment_chats);
 //
 //        recyclerView = findViewById(R.id.chats_recycler_view);
 //        recyclerView.setHasFixedSize(true);

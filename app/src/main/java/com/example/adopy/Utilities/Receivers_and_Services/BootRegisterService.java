@@ -12,7 +12,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.example.adopy.R;
-import com.example.adopy.Activities.SearchFragment;
+import com.example.adopy.Fragments.SearchFragment;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
