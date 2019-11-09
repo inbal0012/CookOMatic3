@@ -90,9 +90,7 @@
     <string name="success">התחברת בהצלחה</string>
     <string name="title_activity_chat">שיחה</string>
     <string name="title_activity_filter">סנן</string>
-    <string name="title_activity_start_bottom">החיות שלי</string>
     <string name="title_activity_pet_page">חיה</string>
-    <string name="title_activity_profile">פרופיל</string>
     <string name="title_activity_search">חפש</string>
     <string name="title_my_fav">המועדפים שלי</string>
     <string name="title_my_pets">החיות שלי</string>
@@ -123,4 +121,7 @@
     <string name="save_new_pet">שמור את החיה?</string>
     <string name="Select_your_gender">בחר את מינך</string>
     <string name="menu_chats">שיחות</string>
+    <string name="navigation_drawer_close">סגור מגירת ניווט</string>
+    <string name="navigation_drawer_open">פתח מגירת ניווט</string>
+    <string name="location_updated">מיקום עודכן</string>
 </resources>

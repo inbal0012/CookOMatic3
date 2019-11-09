@@ -21,8 +21,9 @@
             android:layout_width="386dp"
             android:layout_height="228dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:contentDescription="@string/logo_IV_contentDescription"
-            android:src="@drawable/adopy_logo" />
+            android:src="@mipmap/ic_launcher_round" />
 
 
         <com.google.android.material.textfield.TextInputLayout

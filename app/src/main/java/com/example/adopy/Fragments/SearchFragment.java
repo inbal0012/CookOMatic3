@@ -112,50 +112,19 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        FloatingActionButton fabFilter = root.findViewById(R.id.fabFilter);
-        fabFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), FilterActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_FILTER);
-            }
-        });
+//        FloatingActionButton fabFilter = root.findViewById(R.id.fabFilter);
+//        fabFilter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getContext(), FilterActivity.class);
+//                startActivityForResult(intent, REQUEST_CODE_FILTER);
+//            }
+//        });
 
         getUserLocation();
 
         return root;
     }
-
-    //    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.fragment_search);
-//        dialogs = new Dialogs(this);
-//
-//        mRecyclerView = findViewById(R.id.recycler_search_act);
-//        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-//        mPetModels = new ArrayList<>();
-//        mPetAdapter = new PetAdapter2(SearchFragment.this, mPetModels);
-//
-//        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
-//        mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
-//
-//        fab = findViewById(R.id.fabAdd);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                fUser = FirebaseAuth.getInstance().getCurrentUser();
-//                if (fUser == null) {
-//                    loginDialog();
-//                }
-//                else {
-//                    dialogs.AddPetDialog(mPetModels, mPetAdapter);
-//                }
-//            }
-//        });
-//
-//        getUserLocation();
-//    }
 
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override

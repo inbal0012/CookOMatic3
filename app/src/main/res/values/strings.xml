@@ -131,7 +131,6 @@
     <string name="title_activity_filter">FilterActivity</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_pet_page">PetPageActivity</string>
-    <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_chat">ChatActivity</string>
 
     //pet card
@@ -211,14 +210,9 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
     <string name="menu_logout">logout</string>
-    <string name="menu_communicate">Communicate</string>
 
     <string name="Chat_page">Chat Page</string>
     <string name="type_a_message">Type a message...</string>
@@ -231,7 +225,7 @@
     <string name="add_fav_dialog_body">To save your favorite pets you need to login</string>
     <string name="add_pet_dialog_body">To add a pet you need to login</string>
 
-    <string name="title_activity_start_bottom">StartBottomActivity</string>
+    <string name="title_activity_start_bottom" translatable="false">StartBottomActivity</string>
     <string name="title_profile">Profile</string>
     <string name="title_my_pets">My Pets</string>
     <string name="title_my_fav">My Favorites</string>
@@ -261,7 +255,7 @@
     <string name="Select_Picture">Select Picture</string>
     <string name="free">free</string>
     <string name="Select_your_gender">Select your gender</string>
-    <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_start" translatable="false">StartActivity</string>
     <string name="menu_chats">Chats</string>
     <string name="location_updated">location updated</string>
 

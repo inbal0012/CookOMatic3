@@ -68,16 +68,6 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
 //                    new ProfileFragment()).commit();
 //            navigationView.setCheckedItem(R.id.nav_profile);
 //        }
-//        // Passing each menu ID as a set of Ids because each
-//        // menu should be considered as top level destinations.
-//        mAppBarConfiguration = new AppBarConfiguration.Builder(
-//                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-//                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
-//                .setDrawerLayout(drawer)
-//                .build();
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-//        NavigationUI.setupWithNavController(navigationView, navController);
     }
 
 //    @Override
@@ -100,15 +90,14 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
-        this.menu = menu;
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         Log.d(TAG, "onCreateOptionsMenu: " + currentFragment);
-        if (currentFragment instanceof SearchFragment) {
-            inflater.inflate(R.menu.menu_search, menu);
-            Log.d(TAG, "onCreateOptionsMenu: menu_search");
-        } else {
+//        if (currentFragment instanceof SearchFragment) {
+//            inflater.inflate(R.menu.menu_search, menu);
+//            Log.d(TAG, "onCreateOptionsMenu: menu_search");
+//        } else {
             inflater.inflate(R.menu.start, menu);
-        }
+//        }
         return true;
     }
 
@@ -132,7 +121,7 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
                 getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
                         new SearchFragment(), "SearchFragment").commit();
                 getSupportActionBar().setTitle(getString(R.string.title_activity_search));
-                onCreateOptionsMenu(menu);
+                //onCreateOptionsMenu(menu);
                 break;
             case R.id.nav_chats:
                 getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
