@@ -10,4 +10,6 @@
 
     <color name="text_color_secondary">#01103C</color>
     <color name="light_ish_blue"> #4DB6AC </color>
+    <color name="white_50percent">#80ffffff</color>
+    <color name="black_50percent">#80000000</color>
 </resources>
