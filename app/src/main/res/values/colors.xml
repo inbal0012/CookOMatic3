@@ -3,13 +3,21 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#1D4960</color>
+    <color name="colorAccent01">#3668FF</color>
     <color name="back_text_solid">#E7EBEB</color>
     <color name="white">#FFFFFF</color>
     <color name="pink">#FF90BA</color>
+
+    <color name="colorAdopyPrimary">#797b7d</color>
+    <color name="colorAdopyPrimaryDark">#212529</color>
+    <color name="colorAdopyAccent">#7C011F</color>
+    <color name="colorAccent02">#D81B60</color>
 
 
     <color name="text_color_secondary">#01103C</color>
     <color name="light_ish_blue"> #4DB6AC </color>
     <color name="white_50percent">#80ffffff</color>
     <color name="black_50percent">#80000000</color>
+    <color name="fabOffline"> #D81B60 </color>
+    <color name="fabOnline">#4CAF50</color>
 </resources>
