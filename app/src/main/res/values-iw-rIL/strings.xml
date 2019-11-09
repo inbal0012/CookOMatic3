@@ -24,7 +24,7 @@
     </string-array>
 
 
-    <string name="app_name">adopy</string>
+    <string name="app_name">Adopy</string>
     <string name="Chat_page">עמוד שיחה</string>
     <string name="LOCATION_PERMISSION_warning_body">האפליקציה חייבת הרשאות מיקום על מנת לעבוד כהלכה!</string>
     <string name="LOCATION_PERMISSION_warning_title">שים לב</string>

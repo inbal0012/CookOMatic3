@@ -80,8 +80,10 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
             return;
         }
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        lat = location.getLatitude();
-        lng = location.getLongitude();
+        if (location != null) {
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+        }
     }
 
     public void getLocation() {
