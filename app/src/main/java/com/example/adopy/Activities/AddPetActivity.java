@@ -177,7 +177,10 @@ public class AddPetActivity extends AppCompatActivity {
         }
 
         //Location, latitude, longitude
-        MyLocation myLocation = new MyLocation(AddPetActivity.this);
+        MyLocation myLocation = MyLocation.getInstance();
+        if (myLocation == null) {
+            myLocation = MyLocation.getInstance(this);
+        }
         Double userLat = myLocation.getLatitude();
         Double userLng = myLocation.getLongitude();
         newPet.setLatitude(userLat.toString());

@@ -20,7 +20,13 @@
         <activity
             android:name=".Activities.StartActivity"
             android:label="@string/title_activity_start"
-            android:theme="@style/AppTheme.Launcher"></activity>
+            android:theme="@style/AppTheme.Launcher">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activities.EditPetActivity"
             android:label="@string/edit_pet"
@@ -63,11 +69,6 @@
         <activity
             android:name=".Activities.MainActivity"
             android:theme="@style/AppTheme.Launcher">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

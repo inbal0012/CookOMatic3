@@ -2,13 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
- <!--   <item
+  <item
         android:id="@+id/action_filter"
         android:title="@string/action_search"
         android:icon="@drawable/ic_filter_filled_tool_symbol_svgrepo_com"
         app:showAsAction= "always"/>
 
-    <!-
+    <!--
         app:actionViewClass="androidx.appcompat.widget.SearchView" -->
 
     <item

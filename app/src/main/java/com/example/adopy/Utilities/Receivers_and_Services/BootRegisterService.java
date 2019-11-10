@@ -17,7 +17,7 @@ import com.example.adopy.Fragments.SearchFragment;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import static com.example.adopy.Utilities.Models.App.ON_BOOT_CHANNEL_ID;
+import static com.example.adopy.Utilities.RequestCodes.ON_BOOT_CHANNEL_ID;
 
 public class BootRegisterService extends Service {
     BootReceiver receiver;

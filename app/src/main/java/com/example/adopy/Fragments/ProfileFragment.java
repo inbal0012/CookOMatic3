@@ -60,8 +60,6 @@ public class ProfileFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_profile, container, false);
 
         toolbar = root.findViewById(R.id.toolbar);
-        String nameStr = "hello";
-        toolbar.setTitle(nameStr);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         handler = new Handler(getContext().getMainLooper());
         Log.d(TAG, "onCreateView: " + ((AppCompatActivity) getActivity()).getSupportActionBar());
@@ -86,8 +84,6 @@ public class ProfileFragment extends Fragment {
         if (fuser != null) {
             populateData();
             toolbar = root.findViewById(R.id.toolbar);
-            toolbar.setTitle(" ");
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(" ");
             Log.d(TAG, "onIf: " + ((AppCompatActivity) getActivity()).getSupportActionBar());
             //updateToolbar();
 
@@ -180,7 +176,7 @@ public class ProfileFragment extends Fragment {
                 tvAge.setText(user.getAge());
 
                 //location
-                MyLocation myLocation = new MyLocation(getActivity());
+                MyLocation myLocation = MyLocation.getInstance();
                 Address address = null;
                 try {
                     address = myLocation.getAddress();

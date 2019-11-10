@@ -1,13 +1,23 @@
 package com.example.adopy.Activities;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +28,7 @@ import com.example.adopy.Utilities.Dialogs;
 import com.example.adopy.Fragments.MyPetsFragment;
 import com.example.adopy.Fragments.ProfileFragment;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,6 +40,7 @@ import androidx.core.view.GravityCompat;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.adopy.Utilities.Models.User;
+import com.example.adopy.Utilities.MyLocation;
 import com.example.adopy.Utilities.Receivers_and_Services.AlarmReceiver;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,13 +61,16 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
+import static com.example.adopy.Utilities.RequestCodes.LOCATION_PERMISSION_REQUEST;
 import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_ADD_PET;
 import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_FILTER;
 import static com.example.adopy.Utilities.RequestCodes.USER_IMAGE_REQUEST;
 
-public class StartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class StartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
     private static final String TAG = "my_StartActivity";
     private AppBarConfiguration mAppBarConfiguration;
@@ -71,6 +86,11 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
     Dialogs dialogs;
     SearchFragment searchFragment;
 
+    //Location
+    LocationManager locationManager;
+    Geocoder geocoder;
+    Double lat , lng;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +98,8 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
         setContentView(R.layout.activity_start);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        MyLocation.getInstance(this);
 
         drawer = findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.nav_app_bar_open_drawer_description, R.string.navigation_drawer_close);
@@ -341,4 +363,110 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
             }
         }
     }
+
+
+    //Location funcs
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    public String StringFromAddress(Address address) {
+        String str = "";
+        if (address != null) {
+            str = address.getCountryName()
+                    + " , " + address.getLocality()
+                    + " , " + address.getThoroughfare()
+                    + " , " + address.getSubThoroughfare()
+                    + " , " + address.getAdminArea();
+        }
+        return str;
+    }
+
+    public void getLocation() {
+        Log.d(TAG, "getLocation: ");
+        geocoder = new Geocoder(this);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            int hasLocationPermission = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+            if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST);
+            } else {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, this);
+            }
+        } else
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, this);
+    }
+
+
+    @Override
+    public void onLocationChanged(android.location.Location location) {
+        lat = location.getLatitude();
+        lng = location.getLongitude();
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+                    Address address = addresses.get(0);
+
+                    Log.d(TAG, "onLocationChanged: run: " + address.getCountryName()
+                            + " , " + address.getLocality()
+                            + " , " + address.getThoroughfare()
+                            + " , " + address.getSubThoroughfare()
+                            + " , " + address.getAdminArea());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == LOCATION_PERMISSION_REQUEST) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(getString(R.string.LOCATION_PERMISSION_warning_title)).setMessage(getString(R.string.LOCATION_PERMISSION_warning_body))
+                        .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                intent.setData(Uri.parse("package:" + getPackageName()));
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        }).setCancelable(false).show();
+            } else {
+                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, this);
+            }
+
+        }
+    }
+    //Location funcs END
 }

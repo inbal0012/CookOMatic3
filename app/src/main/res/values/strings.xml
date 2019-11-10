@@ -265,7 +265,7 @@
     <string name="reset_pass_toast_msg">A new password was sent to your mail:</string>
     <string name="empty_email">Please enter your email</string>
     <string name="exit_msg">Do you want to exit?</string>
-    <string name="reset_pass_toast_error">we couldn\'t send you a new password. the error:</string>
+    <string name="reset_pass_toast_error">"we couldn't send you a new password. the error: "</string>
     <string name="empty_name">Name can\'t be empty</string>
     <string name="empty_kind">Please select pet\'s kind</string>
     <string name="empty_age">Please select pet\'s age</string>

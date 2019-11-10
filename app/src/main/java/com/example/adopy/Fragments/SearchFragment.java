@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -81,7 +82,7 @@ public class SearchFragment extends Fragment {
         mRecyclerView = root.findViewById(R.id.recycler_search_act);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mPetModels = new ArrayList<>();
-        mPetAdapter = new PetAdapter2(getContext(), mPetModels);
+        mPetAdapter = new PetAdapter2(mRecyclerView, getContext(), mPetModels);
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         Log.d(TAG, "onCreateView: " + fuser);
@@ -162,7 +163,7 @@ public class SearchFragment extends Fragment {
                 } else
                     mPetModels.add(petModel);
             }
-            mPetAdapter = new PetAdapter2(getContext(), mPetModels);
+            mPetAdapter = new PetAdapter2(mRecyclerView, getContext(), mPetModels);
             mRecyclerView.setAdapter(mPetAdapter);
         }
 
@@ -187,8 +188,8 @@ public class SearchFragment extends Fragment {
     }
 
     private void getUserLocation() {
-        if(myLocation == null) {
-            myLocation = new MyLocation(getActivity());
+        if (myLocation == null) {
+            myLocation = MyLocation.getInstance();
         }
         userLat = myLocation.getLatitude();
         userLng = myLocation.getLongitude();
@@ -240,6 +241,14 @@ public class SearchFragment extends Fragment {
         Log.d(TAG, "onCreateOptionsMenu: ");
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_filter) {
+            Intent intent = new Intent(getContext(), FilterActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_FILTER);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {

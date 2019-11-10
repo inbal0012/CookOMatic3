@@ -75,7 +75,7 @@ public class MyPetsFragment extends Fragment {
             mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(mRecyclerView);
             mPetModels = new ArrayList<>();
-            mPetAdapter = new PetAdapter2(getContext(), mPetModels);
+            mPetAdapter = new PetAdapter2(mRecyclerView, getContext(), mPetModels);
 
             mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
             mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);

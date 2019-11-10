@@ -30,8 +30,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;
 
-import static com.example.adopy.Utilities.Models.App.ON_BOOT_CHANNEL_ID;
 import static com.example.adopy.Utilities.RequestCodes.FOREGROUND_SERVICE_PERMISSION_REQUEST;
+import static com.example.adopy.Utilities.RequestCodes.ON_BOOT_CHANNEL_ID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -121,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //location permission
-        MyLocation myLocation = new MyLocation(this);
-        myLocation.getLocation();
+//        MyLocation myLocation = new MyLocation(this);
+//        myLocation.getLocation();
     }
 
     private void SaveUpdates() {
