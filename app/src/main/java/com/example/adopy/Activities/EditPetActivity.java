@@ -221,7 +221,7 @@ public class EditPetActivity extends AppCompatActivity implements LocationListen
             newPet.setPrice(price.getText().toString());
         }
 
-        String PetAns = String.format("%s\n kind: %s\n imageUri: %s\n age: %s\n Sex: %s\n Price: %s\n Info: %s\n loaction (%s,%s)",
+        String PetAns = String.format("%s\n kind: %s\n imageUri: %s\n age: %s\n Sex: %s\n Price: %s\n Info: %s\n location (%s,%s)",
                 newPet.getName(), newPet.getKind(), newPet.getImageUri(), newPet.getAge(), newPet.getGender(), newPet.getPrice(), newPet.getInfo(), pet.getLatitude(), pet.getLongitude());
         Log.d(TAG, "saveChanges: " + PetAns);
 
