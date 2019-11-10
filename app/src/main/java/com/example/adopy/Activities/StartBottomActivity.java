@@ -80,8 +80,5 @@ public class StartBottomActivity extends AppCompatActivity {
         if (requestCode == USER_IMAGE_REQUEST ) {
             //new MyImage(this, "Users", "user").onActivityResult(requestCode, resultCode, data);
         }
-        if (requestCode == SELECT_IMAGE_REQUEST) {
-            new Dialogs(this).onActivityResult(requestCode, resultCode, data);
-        }
     }
 }

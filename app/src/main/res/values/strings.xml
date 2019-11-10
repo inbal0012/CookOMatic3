@@ -261,6 +261,7 @@
     <string name="profile_dialog_body">to view your profile please create one first</string>
     <string name="chats_dialog_body">to have chats please login first</string>
     <string name="signup">Sign Up</string>
+    <string name="no_user_connected">no user connected</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

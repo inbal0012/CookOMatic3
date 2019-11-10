@@ -157,7 +157,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
                                         }
                                     });
 
-                            Intent intent = new Intent(SigninActivity.this, MainActivity.class);
+                            Intent intent = new Intent(SigninActivity.this, StartActivity.class);
                             intent.putExtra("publisherId", mAuth.getCurrentUser().getUid());
                             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(intent);
@@ -167,12 +167,10 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
                             // If sign in fails, display a message to the user.
 
                             if (i_Pass.length() < 6) {
-                                Toast toast = Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_invalid_password), Toast.LENGTH_SHORT);
-                                toast.show();
+                                Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_invalid_password), Toast.LENGTH_SHORT).show();
                             }
                             if (!i_Email.contains("@")) {
-                                Toast toast = Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_invalid_email), Toast.LENGTH_SHORT);
-                                toast.show();
+                                Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_invalid_email), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(SigninActivity.this, getResources().getString(R.string.error) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 Log.d(TAG, "onComplete: unsucceessfull attempt " + task.getException().getMessage());
