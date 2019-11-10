@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:activity=".Activities.ChatActivity2">
+    tools:activity=".Activities.ChatActivity2"
+    android:background="@drawable/cats_chat_sml"
+    >
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar_layout"

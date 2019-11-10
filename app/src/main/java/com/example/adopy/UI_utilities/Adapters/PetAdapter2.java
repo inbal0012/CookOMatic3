@@ -44,9 +44,13 @@ public class PetAdapter2 extends RecyclerView.Adapter<PetAdapter2.ViewHolder> {
         this.petModels = petModels;
 
         MyLocation myLocation = new MyLocation((Activity) context);
-        userLat = myLocation.getLatitude();
-        userLng = myLocation.getLongitude();
-        Log.d(TAG, "getLastKnownLocation: " + userLat + " , " + userLng);
+
+        if(myLocation!=null) {
+            userLat = myLocation.getLatitude();
+            userLng = myLocation.getLongitude();
+            Log.d(TAG, "getLastKnownLocation: " + userLat + " , " + userLng);
+        }
+
     }
 
     @NonNull

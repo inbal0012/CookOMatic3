@@ -4,124 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.AddPetActivity">
+    tools:context=".Activities.AddPetActivity"
+    android:background="@drawable/paw_in_snow_bg"
+    >
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="@string/new_pet"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+    <!-- Header aligned to top -->
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        >
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/body_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/title"
-            android:layout_above="@id/footer"
-            android:layout_margin="15dp"
-            android:clipToPadding="false"
-            android:elevation="10dp"
-            android:padding="5dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_width="match_parent"
-                    android:layout_height="170dp"
-                    android:contentDescription="@string/add_pet_IV_contentDescription"
-                    android:src="@drawable/ic_add_pic" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/back_text"
-                    android:hint="@string/pet_s_name"
-                    android:padding="10dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:text="@string/what_is_her_his_age"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/Age"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <com.isapanah.awesomespinner.AwesomeSpinner
-                    android:id="@+id/kindSpinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    app:spinnerDirection="ltr"
-                    app:spinnerHint="@string/Select_pet_species" />
-
-                <com.isapanah.awesomespinner.AwesomeSpinner
-                    android:id="@+id/genderSpinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    app:spinnerDirection="ltr"
-                    app:spinnerHint="@string/Select_pet_gender" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/back_text"
-                    android:hint="@string/price"
-                    android:inputType="number"
-                    android:padding="10dp" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/back_text"
-                    android:hint="@string/location"
-                    android:padding="10dp" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/about"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/back_text"
-                    android:hint="@string/describe_your_pet_in_a_few_words"
-                    android:padding="10dp" />
-
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 
     <!-- Footer aligned to bottom -->
     <RelativeLayout
@@ -130,8 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:layout_margin="10dp"
-        android:background="@color/white"
+        android:layout_margin="5dp"
+        android:background="@color/white_50percent"
         android:gravity="center">
 
         <LinearLayout
@@ -157,7 +54,10 @@
                 android:background="@drawable/button_ok"
                 android:text="@string/no_sad"
                 android:textColor="#FFFF"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                />
 
             <Button
                 android:id="@+id/btn_ok"
@@ -166,10 +66,164 @@
                 android:background="@drawable/button_cancel"
                 android:text="@string/yes_happy"
                 android:textColor="#FFFF"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                />
 
         </LinearLayout>
 
     </RelativeLayout>
+
+
+    <!-- Main between footer & bottom -->
+
+    <ScrollView
+        android:id="@+id/main_sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/footer"
+        android:layout_below="@id/header"
+
+        android:layout_margin="10dp"
+
+        android:gravity="center"
+        android:background="@color/white_50percent"
+        >
+
+        <!-- android:background="@color/white_50percent" -->
+
+        <RelativeLayout
+            android:id="@+id/main_frame_ly"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/footer"
+            android:layout_below="@id/header"
+            android:gravity="center"
+
+
+            >
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/new_pet"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/body_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/title"
+
+                android:clipToPadding="false"
+                android:elevation="10dp"
+                android:padding="5dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/image"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:contentDescription="@string/add_pet_IV_contentDescription"
+                        app:srcCompat="@drawable/ic_add_image" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/back_text"
+                        android:hint="@string/pet_s_name"
+                        android:padding="10dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:text="@string/what_is_her_his_age"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/Age"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <com.isapanah.awesomespinner.AwesomeSpinner
+                        android:id="@+id/kindSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        app:spinnerDirection="ltr"
+                        app:spinnerHint="@string/Select_pet_species"
+                        android:background="@color/white_50percent"
+                        />
+
+                    <com.isapanah.awesomespinner.AwesomeSpinner
+                        android:id="@+id/genderSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        app:spinnerDirection="ltr"
+                        app:spinnerHint="@string/Select_pet_gender"
+                        android:background="@color/white_50percent"
+                        />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/back_text"
+                        android:hint="@string/price"
+                        android:inputType="number"
+                        android:padding="10dp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/back_text"
+                        android:hint="@string/location"
+                        android:padding="10dp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/about"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/back_text"
+                        android:hint="@string/describe_your_pet_in_a_few_words"
+                        android:padding="10dp" />
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </RelativeLayout>
+    </ScrollView>
+
 
 </RelativeLayout>

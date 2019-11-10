@@ -86,8 +86,8 @@ public class ProfileFragment extends Fragment {
         if (fuser != null) {
             populateData();
             toolbar = root.findViewById(R.id.toolbar);
-            toolbar.setTitle("test");
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("test");
+            toolbar.setTitle(" ");
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(" ");
             Log.d(TAG, "onIf: " + ((AppCompatActivity) getActivity()).getSupportActionBar());
             //updateToolbar();
 
