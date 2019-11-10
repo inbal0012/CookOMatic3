@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wood_paw"
+    android:background="@drawable/paw_on_wood"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:activity=".Activities.SignUpActivity">
@@ -12,17 +12,21 @@
     <LinearLayout
         android:id="@+id/signUp_activity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_height="match_parent"
+
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+
+        android:background="@color/white_50percent"
+        android:layout_margin="10dp"
+        >
 
         <ImageView
             android:id="@+id/nav_header_circleImageView"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="150dp"
             android:contentDescription="@string/logo_IV_contentDescription"
+            android:layout_marginTop="10dp"
             android:src="@drawable/logo_wb" />
 
 
@@ -30,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:background="@color/white_50percent"
             android:paddingTop="10dp"
             android:orientation="vertical">
 

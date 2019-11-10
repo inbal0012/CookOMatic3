@@ -14,20 +14,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white_50percent"
+        android:layout_margin="8dp"
+        android:paddingBottom="90dp"
+        android:paddingTop="10dp"
+        >
 
         <ImageView
             android:id="@+id/nav_header_circleImageView"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="150dp"
             android:contentDescription="@string/logo_IV_contentDescription"
-            android:src="@drawable/logo_wb" />
+            android:src="@drawable/logo_wb"
+            android:layout_marginBottom="20dp"
+            />
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white_50percent"
+            android:layout_height="match_parent"
+
             android:gravity="center_horizontal"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -43,7 +50,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
-                    android:layout_width="311dp"
+                    android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
@@ -59,12 +66,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/back_text">
 
                 <AutoCompleteTextView
                     android:id="@+id/password"
-                    android:layout_width="311dp"
+                    android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
@@ -87,30 +95,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/button"
-                android:paddingTop="20dp"
+                android:paddingTop="10dp"
                 android:text="@string/sign_in"
                 android:textColor="#ffff"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                />
 
             <TextView
                 android:id="@+id/btn_forgot_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
+
                 android:clickable="true"
                 android:text="@string/forgotPass"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginBottom="15dp"
+                />
 
             <LinearLayout
                 android:id="@+id/login_layout_or"
                 android:layout_width="match_parent"
                 android:layout_height="26dp"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp"
+                >
 
                 <View
 
