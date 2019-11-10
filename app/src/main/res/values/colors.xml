@@ -7,6 +7,7 @@
     <color name="back_text_solid">#E7EBEB</color>
     <color name="white">#FFFFFF</color>
     <color name="pink">#FF90BA</color>
+    <color name="pink_50percent">#80FF90BA</color>
 
     <color name="colorPrimary">#28497C</color>
     <color name="colorPrimaryDark">#01183A</color>
@@ -22,6 +23,7 @@
     <color name="light_ish_blue"> #4DB6AC </color>
     <color name="white_50percent">#80ffffff</color>
     <color name="black_50percent">#80000000</color>
+    <color name="black">#000000</color>
     <color name="fabOffline"> #D81B60 </color>
     <color name="fabOnline">#4CAF50</color>
 </resources>

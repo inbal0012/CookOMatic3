@@ -23,8 +23,10 @@
             android:layout_marginBottom="10dp"
             android:elevation="30dp"
             android:padding="10dp"
-            app:cardBackgroundColor="@color/pink"
-            app:cardCornerRadius="30dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/white_50percent"
+
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -209,7 +211,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"
                 android:layout_marginEnd="10dp"
-                android:text="@string/cancel"/>
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                />
 
             <Button
                 android:id="@+id/saveBtn"
@@ -217,7 +221,9 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"
-                android:text="@string/save"/>
+                android:text="@string/save"
+                android:textColor="@color/white"
+                />
 
         </LinearLayout>
 

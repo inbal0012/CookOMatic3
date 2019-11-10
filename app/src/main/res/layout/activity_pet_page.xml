@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:activity=".Activities.PetPageActivity">
+    tools:activity=".Activities.PetPageActivity"
+    android:background="@drawable/paw_in_snow_bg"
+    >
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"

@@ -134,7 +134,9 @@
                 android:layout_marginStart="20dp"
                 android:background="@drawable/button"
                 android:layout_marginEnd="10dp"
-                android:text="@string/cancel"/>
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                />
 
             <Button
                 android:id="@+id/saveBtn"
@@ -143,7 +145,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/button"
-                android:text="@string/save"/>
+                android:text="@string/save"
+                android:textColor="@color/white"
+                />
 
         </LinearLayout>
 
