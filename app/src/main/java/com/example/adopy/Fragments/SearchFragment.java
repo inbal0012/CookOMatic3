@@ -85,26 +85,6 @@ public class SearchFragment extends Fragment {
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         Log.d(TAG, "onCreateView: " + fuser);
-        if (fuser == null) {
-            mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
-            mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
-        } else {
-            DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
-            mReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Log.d(TAG, "onDataChange: ");
-                    User user = dataSnapshot.getValue(User.class);
-                    sp = user.getSearchPreferences();
-                    firebaseSearch();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
 
         fab = root.findViewById(R.id.fabAdd);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -218,7 +198,26 @@ public class SearchFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getUserLocation();
+        if (fuser == null) {
+            mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
+            mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
+        } else {
+            DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+            mReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Log.d(TAG, "onDataChange: ");
+                    User user = dataSnapshot.getValue(User.class);
+                    sp = user.getSearchPreferences();
+                    firebaseSearch();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
         Log.d(TAG, "onResume: userLat:" + userLat + " userLng:" + userLng);
     }
 
@@ -269,7 +268,6 @@ public class SearchFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult: " + getActivity());
-        getUserLocation();
         if (requestCode == REQUEST_CODE_FILTER && resultCode == RESULT_OK) {
 
             sp = (SearchPreferences) data.getSerializableExtra("key");
