@@ -84,7 +84,6 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
     FirebaseUser mFirebaseUser;
 
     Dialogs dialogs;
-    SearchFragment searchFragment;
 
     //Location
     LocationManager locationManager;
