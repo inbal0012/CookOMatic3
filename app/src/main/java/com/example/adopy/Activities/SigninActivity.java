@@ -173,7 +173,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
                                 Toast.makeText(SigninActivity.this, getResources().getString(R.string.error_invalid_email), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(SigninActivity.this, getResources().getString(R.string.error) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                Log.d(TAG, "onComplete: unsucceessfull attempt " + task.getException().getMessage());
+                                Log.d(TAG, "onComplete: unsuccessful attempt " + task.getException().getMessage());
                             }
 
                             updateUI(null);

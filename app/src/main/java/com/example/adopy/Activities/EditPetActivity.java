@@ -77,7 +77,7 @@ public class EditPetActivity extends AppCompatActivity {
             public void onItemSelected(int position, String itemAtPosition) {
                 String[] _itemsEng = new String[]{"dog", "cat", "rabbit", "hedgehog", "chinchilla", "iguana", "turtle"};
                 newPet.setKind(_itemsEng[position]);
-                Toast.makeText(EditPetActivity.this, _itemsEng[position] + " selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(EditPetActivity.this, _itemsEng[position] + " selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -138,7 +138,7 @@ public class EditPetActivity extends AppCompatActivity {
             public void onItemSelected(int position, String itemAtPosition) {
                 String[] _itemsEng = new String[]{"Male", "Female"};
                 newPet.setGender(Gender.valueOf(_itemsEng[position]));
-                Toast.makeText(EditPetActivity.this, _itemsEng[position] + " selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(EditPetActivity.this, _itemsEng[position] + " selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -234,7 +234,7 @@ public class EditPetActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "pet updated in database ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.pet_updated_in_database), Toast.LENGTH_SHORT).show();
                 }
             }
         });

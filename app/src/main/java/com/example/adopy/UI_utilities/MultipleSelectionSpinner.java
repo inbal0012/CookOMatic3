@@ -68,10 +68,6 @@ public class MultipleSelectionSpinner extends AppCompatSpinner implements
             }
 
         });
-        /*if (mSelection.length > 3){
-            Toast.makeText(getContext(), "Cannot select more than 3", Toast.LENGTH_SHORT).show();
-            return false;
-        }*/
         builder.show();
         return true;
     }
@@ -136,13 +132,6 @@ public class MultipleSelectionSpinner extends AppCompatSpinner implements
         }
         simple_adapter.clear();
         simple_adapter.add(buildSelectedItemString());
-        /*if (sbLength>0){
-            Toast.makeText(getContext(), "Length greater than zero", Toast.LENGTH_SHORT).show();
-            simple_adapter.add(buildSelectedItemString());
-        }else{
-            Toast.makeText(getContext(), "Length shorter", Toast.LENGTH_SHORT).show();
-            simple_adapter.add("Tap to select");
-        }*/
     }
 
     public void setSelection(int[] selectedIndicies) {

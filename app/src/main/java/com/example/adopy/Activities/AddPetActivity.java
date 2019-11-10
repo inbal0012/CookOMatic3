@@ -212,7 +212,7 @@ public class AddPetActivity extends AppCompatActivity {
         //Name
         String petName = name.getText().toString();
         if (petName.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Name can't be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.empty_name), Toast.LENGTH_SHORT).show();
             return false;
         } else {
             newPet.setName(petName);
@@ -220,25 +220,25 @@ public class AddPetActivity extends AppCompatActivity {
 
         //Age
         if (newPet.getKind() == null) {
-            Toast.makeText(getApplicationContext(), "Please select pet's king", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.empty_kind), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         //Age
         if (newPet.getAge() == null) {
-            Toast.makeText(getApplicationContext(), "Please select pet's age", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.empty_age), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         //Gender
         if (newPet.getGender() == null) {
-            Toast.makeText(getApplicationContext(), "Please select pet's gender", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.empty_gender), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         //image
         if (uri == null) {
-            Toast.makeText(getApplicationContext(), "Please add an image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.no_image), Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -273,7 +273,7 @@ public class AddPetActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "pet added to database ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.pet_added_to_database), Toast.LENGTH_SHORT).show();
                 }
             }
         });

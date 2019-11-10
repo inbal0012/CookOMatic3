@@ -87,6 +87,7 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
     }
 
     public void getLocation() {
+        Log.d(TAG, "getLocation: " + activity);
         geocoder = new Geocoder(activity);
         locationManager = (LocationManager) activity.getSystemService(LOCATION_SERVICE);
 

@@ -231,7 +231,7 @@ public class ChatActivity2 extends AppCompatActivity {
                                 public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                                     if (response.code() == 200) {
                                         if (response.body().success != 1) {
-                                            Toast.makeText(ChatActivity2.this, "Failed!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ChatActivity2.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }

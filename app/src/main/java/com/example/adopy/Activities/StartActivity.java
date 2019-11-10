@@ -2,6 +2,11 @@ package com.example.adopy.Activities;
 
 import androidx.fragment.app.Fragment;
 
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -24,6 +29,7 @@ import androidx.core.view.GravityCompat;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.adopy.Utilities.Models.User;
+import com.example.adopy.Utilities.Receivers_and_Services.AlarmReceiver;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,6 +48,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.Calendar;
 
 import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_ADD_PET;
 import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_FILTER;
@@ -100,7 +108,36 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            AlertDialog.Builder builder = new AlertDialog.Builder(StartActivity.this);
+            builder.setTitle(R.string.app_name);
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setMessage(getString(R.string.exit_msg))
+                    .setCancelable(false)
+                    .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                            Intent intent = new Intent(StartActivity.this, AlarmReceiver.class);
+                            PendingIntent alarmIntent = PendingIntent.getBroadcast(StartActivity.this, 0, intent, 0);
+
+                            // Set the alarm to start now
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTimeInMillis(System.currentTimeMillis());
+
+                            // setRepeating() lets you specify a precise custom interval--in this case,
+                            // user choice in minutes.
+                            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                                    86400000 * 7 , alarmIntent);
+                            StartActivity.super.onBackPressed();
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
     }
 
@@ -125,9 +162,10 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
 //            Log.d(TAG, "searchView.onOptionsItemSelected: ");
 //            Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
 //            startActivityForResult(intent, REQUEST_CODE_FILTER);
-//            Log.d("Option", "2");
-//
 //        }
+        if (item.getItemId() == R.id.action_settings) {
+
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -279,7 +317,6 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
             nav_Menu.findItem(R.id.nav_logout).setVisible(true);
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

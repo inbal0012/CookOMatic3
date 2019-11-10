@@ -56,7 +56,7 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
 
     private void resetPassword(final String i_Email) {
         if (i_Email.isEmpty()) {
-            Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.empty_email), Toast.LENGTH_SHORT).show();
             return;
         }
         mAuth.sendPasswordResetEmail(i_Email)
@@ -65,9 +65,9 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<Void> task) {
 
                         if (task.isSuccessful()) {
-                            Toast.makeText(ResetPassword.this, "We sent a new password to your mail:" + i_Email, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ResetPassword.this, getString(R.string.reset_pass_toast_msg) + i_Email, Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(ResetPassword.this, "An error occurred while we tried to send you the new password. ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ResetPassword.this, getString(R.string.reset_pass_toast_error) + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
