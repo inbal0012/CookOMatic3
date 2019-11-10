@@ -45,7 +45,6 @@ import android.widget.TextView;
 
 import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_ADD_PET;
 import static com.example.adopy.Utilities.RequestCodes.REQUEST_CODE_FILTER;
-import static com.example.adopy.Utilities.RequestCodes.SELECT_IMAGE_REQUEST;
 import static com.example.adopy.Utilities.RequestCodes.USER_IMAGE_REQUEST;
 
 public class StartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
