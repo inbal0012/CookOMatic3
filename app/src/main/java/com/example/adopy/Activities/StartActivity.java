@@ -61,9 +61,13 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
 
     FirebaseUser mFirebaseUser;
 
+    Dialogs dialogs;
+    SearchFragment searchFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme_NoActionBar);     //return from splash
         setContentView(R.layout.activity_start);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,9 +82,146 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        dialogs = new Dialogs(this);
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
-        if (mFirebaseUser != null) {
+        updateUI();
+    }
+
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+//                || super.onSupportNavigateUp();
+//    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        Log.d(TAG, "onCreateOptionsMenu: " + currentFragment);
+//        if (currentFragment instanceof SearchFragment) {
+//            inflater.inflate(R.menu.menu_search, menu);
+//            Log.d(TAG, "onCreateOptionsMenu: menu_search");
+//        } else {
+            inflater.inflate(R.menu.start, menu);
+//        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == R.id.action_filter) {
+//            Log.d(TAG, "searchView.onOptionsItemSelected: ");
+//            Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
+//            startActivityForResult(intent, REQUEST_CODE_FILTER);
+//            Log.d("Option", "2");
+//
+//        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        switch (menuItem.getItemId()) {
+            case R.id.nav_search:
+                getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
+                        new SearchFragment(), "SearchFragment").commit();
+                getSupportActionBar().setTitle(getString(R.string.title_activity_search));
+                //onCreateOptionsMenu(menu);
+                break;
+            case R.id.nav_chats:
+                if (mFirebaseUser == null) {
+                    navigationView.setCheckedItem(R.id.nav_search);
+                    dialogs.showLoginDialog(R.id.nav_chats);
+                    break;
+                }
+                getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
+                        new ChatsFragment(), "ChatsFragment").commit();
+                getSupportActionBar().setTitle(getString(R.string.menu_chats));
+                break;
+            case R.id.nav_profile:
+                if (mFirebaseUser == null) {
+                    navigationView.setCheckedItem(R.id.nav_search);
+                    dialogs.showLoginDialog(R.id.nav_profile);
+                    break;
+                }
+                getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
+                        new ProfileFragment(), "ProfileFragment").commit();
+                getSupportActionBar().setTitle(getString(R.string.title_profile));
+                break;
+            case R.id.nav_my_pets:
+                if (mFirebaseUser == null) {
+                    navigationView.setCheckedItem(R.id.nav_search);
+                    dialogs.showLoginDialog(R.id.nav_my_pets);
+                    break;
+                }
+                getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
+                        new MyPetsFragment(), "MyPetsFragment").commit();
+                getSupportActionBar().setTitle(getString(R.string.title_my_pets));
+                break;
+
+                //TODO login logout
+            case R.id.nav_logout:
+                FirebaseAuth.getInstance().signOut();
+                mFirebaseUser = null;
+                updateUI();
+                break;
+            case R.id.nav_login:
+                startActivity(new Intent(StartActivity.this, SigninActivity.class));
+
+                break;
+            case R.id.nav_send:
+
+                break;
+
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+
+    private void updateUI() {
+
+        if (mFirebaseUser==null) {
+            Log.d(TAG, "updateUI: no user");
+            //Header of Navigation Drawer
+            //----------------------------------------------------------------
+            View headerView = navigationView.getHeaderView(0);
+
+            TextView userNameTv = headerView.findViewById(R.id.nav_header_user_name);
+            TextView userEmailTv = headerView.findViewById(R.id.nav_header_user_email);
+            CircleImageView profile_image = headerView.findViewById(R.id.nav_header_circleImageView);
+
+            //user name
+            userNameTv.setText(getString(R.string.no_user_connected));
+
+            //email
+            userEmailTv.setVisibility(View.GONE);
+
+            //image
+            profile_image.setImageResource(R.drawable.logo_wb);
+            //Glide.with(StartActivity.this).load(myDrawable).into(profile_image);
+            //----------------------------------------------------------------
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                    new SearchFragment(), "SearchFragment").commit();
+            navigationView.setCheckedItem(R.id.nav_search);
+        } else {
+            Log.d(TAG, "updateUI: user id " + mFirebaseUser.getUid());
             DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Users").child(mFirebaseUser.getUid());
             mReference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -121,94 +262,23 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
                 }
             });
         }
-//
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
-//                    new ProfileFragment()).commit();
-//            navigationView.setCheckedItem(R.id.nav_profile);
-//        }
+        showHideNavItem();
     }
 
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-//                || super.onSupportNavigateUp();
-//    }
+    private void showHideNavItem()
+    {
+        navigationView = findViewById(R.id.nav_view);
+        Menu nav_Menu = navigationView.getMenu();
+        if (mFirebaseUser == null) {
+            nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.nav_login).setVisible(true);
+            nav_Menu.findItem(R.id.nav_logout).setVisible(false);
 
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.nav_login).setVisible(false);
+            nav_Menu.findItem(R.id.nav_logout).setVisible(true);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        MenuInflater inflater = getMenuInflater();
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        Log.d(TAG, "onCreateOptionsMenu: " + currentFragment);
-//        if (currentFragment instanceof SearchFragment) {
-//            inflater.inflate(R.menu.menu_search, menu);
-//            Log.d(TAG, "onCreateOptionsMenu: menu_search");
-//        } else {
-            inflater.inflate(R.menu.start, menu);
-//        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_filter) {
-            Log.d(TAG, "searchView.onOptionsItemSelected: ");
-            Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
-            startActivityForResult(intent, REQUEST_CODE_FILTER);
-            Log.d("Option", "2");
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        switch (menuItem.getItemId()) {
-            case R.id.nav_search:
-                getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
-                        new SearchFragment(), "SearchFragment").commit();
-                getSupportActionBar().setTitle(getString(R.string.title_activity_search));
-                //onCreateOptionsMenu(menu);
-                break;
-            case R.id.nav_chats:
-                getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
-                        new ChatsFragment(), "ChatsFragment").commit();
-                getSupportActionBar().setTitle(getString(R.string.menu_chats));
-                break;
-            case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
-                        new ProfileFragment(), "ProfileFragment").commit();
-                getSupportActionBar().setTitle(getString(R.string.title_profile));
-                break;
-            case R.id.nav_my_pets:
-                getSupportFragmentManager().beginTransaction().remove(currentFragment).replace(R.id.nav_host_fragment,
-                        new MyPetsFragment(), "MyPetsFragment").commit();
-                getSupportActionBar().setTitle(getString(R.string.title_my_pets));
-                break;
-            case R.id.nav_share:
-
-                break;
-            case R.id.nav_send:
-
-                break;
-
-        }
-
-        drawer.closeDrawer(GravityCompat.START);
-
-        return true;
     }
 
 
@@ -220,11 +290,10 @@ public class StartActivity extends AppCompatActivity implements NavigationView.O
         if (requestCode == USER_IMAGE_REQUEST) {
             //new MyImage(this, "Users", "user").onActivityResult(requestCode, resultCode, data);
         }
-        if (requestCode == SELECT_IMAGE_REQUEST) {
-            new Dialogs(this).onActivityResult(requestCode, resultCode, data);
-        }
         if (requestCode == REQUEST_CODE_FILTER && resultCode == RESULT_OK) {
-            new SearchFragment().onActivityResult(requestCode, resultCode, data);
+            Log.d(TAG, "onActivityResult: SearchFragment");
+            Object ojb = getSupportFragmentManager().findFragmentByTag("SearchFragment");
+            ((SearchFragment)ojb).onActivityResult(requestCode, resultCode, data);
         }
         if (requestCode == REQUEST_CODE_ADD_PET && resultCode == RESULT_OK) {
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);

@@ -75,10 +75,10 @@ public class ChatsFragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Chat chat = snapshot.getValue(Chat.class);
 
-                    if(chat.getSender().equals(mFirebaseUser.getUid())) {
+                    if (chat.getSender().equals(mFirebaseUser.getUid())) {
                         userList.add(chat.getReceiver());
                     }
-                    if(chat.getReceiver().equals(mFirebaseUser.getUid())) {
+                    if (chat.getReceiver().equals(mFirebaseUser.getUid())) {
                         userList.add(chat.getSender());
                     }
                 }
@@ -154,7 +154,7 @@ public class ChatsFragment extends Fragment {
                         if (user.getId().equals(id)) {
                             if (mUsersList.size() != 0) {
                                 for (User user1 : mUsersList) {
-                                    if(user.getId().equals(user1.getId())) {
+                                    if (user.getId().equals(user1.getId())) {
                                         uniqueUser = false;
                                     }
                                 }
@@ -193,7 +193,6 @@ public class ChatsFragment extends Fragment {
                     showDeleteDialog(viewHolder, user);
                 }
             };
-
 
     public void showDeleteDialog(final RecyclerView.ViewHolder viewHolder, final User user) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext(), R.style.AlertTheme).setCancelable(true);
@@ -238,7 +237,7 @@ public class ChatsFragment extends Fragment {
         alertDialog.show();
     }
 
-    private void deleteChatFromDatabase(final User user){
+    private void deleteChatFromDatabase(final User user) {
 
         final DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Chats");
         mReference.addValueEventListener(new ValueEventListener() {

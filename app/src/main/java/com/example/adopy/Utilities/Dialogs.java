@@ -81,6 +81,14 @@ public class Dialogs {
             case R.id.fabAdd:
                 body.setText(activity.getString(R.string.add_pet_dialog_body));
                 break;
+            case R.id.nav_profile:
+                body.setText(activity.getString(R.string.profile_dialog_body));
+                break;
+            case R.id.chats_recycler_view:
+            case R.id.nav_chats:
+                body.setText(activity.getString(R.string.chats_dialog_body));
+                break;
+
 
 
         }

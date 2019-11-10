@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.adopy.Activities.AddPetActivity;
 import com.example.adopy.Activities.FilterActivity;
+import com.example.adopy.Activities.StartActivity;
 import com.example.adopy.R;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
 import com.example.adopy.Utilities.Dialogs;
@@ -67,6 +68,7 @@ public class SearchFragment extends Fragment {
     DatabaseReference mDatabaseReference;
 
     Dialogs dialogs;
+    MyLocation myLocation;
 
     @Nullable
     @Override
@@ -74,6 +76,7 @@ public class SearchFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_search, container, false);
 
         setHasOptionsMenu(true);
+        dialogs = new Dialogs(getActivity());
 
         mRecyclerView = root.findViewById(R.id.recycler_search_act);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -150,9 +153,10 @@ public class SearchFragment extends Fragment {
     ValueEventListener valueEventListener2 = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            getUserLocation();
+            Log.d(TAG, "onDataChange: userLat:" + userLat + " userLng:" + userLng);
             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                 PetModel petModel = dataSnapshot1.getValue(PetModel.class);
-
                 if (sp != null) {
                     PetAns = petModel.getName() +
                             "\nkind: " + petModel.getKind() +
@@ -203,9 +207,19 @@ public class SearchFragment extends Fragment {
     }
 
     private void getUserLocation() {
-        MyLocation myLocation = new MyLocation(getActivity());
+        if(myLocation == null) {
+            myLocation = new MyLocation(getActivity());
+        }
         userLat = myLocation.getLatitude();
         userLng = myLocation.getLongitude();
+        Log.d(TAG, String.format("getUserLocation: %s, %s", userLat, userLng));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUserLocation();
+        Log.d(TAG, "onResume: userLat:" + userLat + " userLng:" + userLng);
     }
 
     //search data
@@ -254,7 +268,8 @@ public class SearchFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.d(TAG, "onActivityResult: " + getActivity());
+        getUserLocation();
         if (requestCode == REQUEST_CODE_FILTER && resultCode == RESULT_OK) {
 
             sp = (SearchPreferences) data.getSerializableExtra("key");

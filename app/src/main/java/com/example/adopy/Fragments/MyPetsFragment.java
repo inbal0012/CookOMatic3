@@ -70,8 +70,6 @@ public class MyPetsFragment extends Fragment {
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         if (fuser != null) {
-            TextView loginTV = root.findViewById(R.id.login_TV);
-            loginTV.setVisibility(View.GONE);
 
             mRecyclerView = root.findViewById(R.id.recycler_my_pets);
             mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));

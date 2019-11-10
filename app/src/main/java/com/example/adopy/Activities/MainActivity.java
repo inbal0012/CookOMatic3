@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         if (FirebaseAuth.getInstance().getCurrentUser() != null)
             userTV.setText("hello " + FirebaseAuth.getInstance().getCurrentUser().getEmail());
         else
-            userTV.setText("no user connected");
+            userTV.setText(getString(R.string.no_user_connected));
 
         Button saveUpdates = findViewById(R.id.reminderRepeatSave_btn);
         saveUpdates.setOnClickListener(new View.OnClickListener() {
