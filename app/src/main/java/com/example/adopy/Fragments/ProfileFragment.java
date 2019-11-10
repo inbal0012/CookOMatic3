@@ -137,9 +137,9 @@ public class ProfileFragment extends Fragment {
                 user = dataSnapshot.getValue(User.class);
 
                 //user name
-                //getActivity().setTitle(user.getUsername());   //TODO
-//                Log.d(TAG, "onDataChange: " + ((AppCompatActivity) getActivity()).getSupportActionBar());
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("boo");
+                TextView userNameTv = root.findViewById(R.id.tvName);
+                String userName= fuser.getEmail();
+                userNameTv.setText(userName);
 
                 //email
                 TextView userEmailTv = root.findViewById(R.id.tvEmail);
