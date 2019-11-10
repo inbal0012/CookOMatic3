@@ -95,7 +95,7 @@
     <string name="title_my_fav">המועדפים שלי</string>
     <string name="title_my_pets">החיות שלי</string>
     <string name="title_profile">פרופיל</string>
-    <string name="type_a_message">רשום הודעה...</string>
+    <string name="type_a_message">רשום הודעה…</string>
     <string name="types">סוגים</string>
     <string name="upload_in_progress">העלאה בתהליך</string>
     <string name="uploading">מעלה</string>
@@ -124,4 +124,22 @@
     <string name="navigation_drawer_close">סגור מגירת ניווט</string>
     <string name="navigation_drawer_open">פתח מגירת ניווט</string>
     <string name="location_updated">מיקום עודכן</string>
+    <string name="empty_age">אנא בחר את גיל החיה</string>
+    <string name="empty_email">אנא הכנס את המייל שלך</string>
+    <string name="empty_gender">אנא בחר את מין החיה</string>
+    <string name="empty_kind">אנא בחר את סוג החיה</string>
+    <string name="empty_name">שם לא יכול להיות ריק</string>
+    <string name="exit_msg">האם אתה רוצה לצאת?</string>
+    <string name="logo_IV_contentDescription">לוגו האפליקציה</string>
+    <string name="menu_send">שלח</string>
+    <string name="menu_share">שתף</string>
+    <string name="no_image">אנא הוסף תמונה</string>
+    <string name="no_user_connected">לא מחובר משתמש</string>
+    <string name="pet_added_to_database">חיה נוספה לשרת</string>
+    <string name="pet_updated_in_database">חיה עודכנה בשרת</string>
+    <string name="profile_dialog_body">על מנת לצפות בפרופיל עליך ליצור אחד תחילה</string>
+    <string name="reset_pass_toast_msg">"נשלחה אליך סיסמא חדשה למיל: "</string>
+    <string name="reset_pass_toast_error">לא הצלחנו שלשלוח לך סיסמא חדשה. השגיאה:</string>
+    <string name="signup">הרשם</string>
+    <string name="chats_dialog_body">על מנת להתכתב אנא התחבר תחילה</string>
 </resources>

@@ -202,13 +202,13 @@
 
 
     <string name="add_pet_IV_contentDescription">add pet image</string>
-    <string name="logo_IV_contentDescription">TODO</string>
+    <string name="logo_IV_contentDescription">Adopy logo</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
 
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
@@ -262,7 +262,7 @@
     <string name="chats_dialog_body">to have chats please login first</string>
     <string name="signup">Sign Up</string>
     <string name="no_user_connected">no user connected</string>
-    <string name="reset_pass_toast_msg">We sent a new password to your mail:</string>
+    <string name="reset_pass_toast_msg">A new password was sent to your mail:</string>
     <string name="empty_email">Please enter your email</string>
     <string name="exit_msg">Do you want to exit?</string>
     <string name="reset_pass_toast_error">we couldn\'t send you a new password. the error:</string>
