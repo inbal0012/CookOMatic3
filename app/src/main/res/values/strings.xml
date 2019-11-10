@@ -215,7 +215,7 @@
     <string name="menu_logout">logout</string>
 
     <string name="Chat_page">Chat Page</string>
-    <string name="type_a_message">Type a message...</string>
+    <string name="type_a_message">Type a message…</string>
     <string name="empty_msg">You can\'t send empty message</string>
     <string name="no_msg">No Message</string>
     <string name="please_login">Please Login</string>
@@ -258,6 +258,9 @@
     <string name="title_activity_start" translatable="false">StartActivity</string>
     <string name="menu_chats">Chats</string>
     <string name="location_updated">location updated</string>
+    <string name="profile_dialog_body">to view your profile please create one first</string>
+    <string name="chats_dialog_body">to have chats please login first</string>
+    <string name="signup">Sign Up</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

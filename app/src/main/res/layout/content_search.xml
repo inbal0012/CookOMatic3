@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:activity=".Activities.SearchActivity"
+    android:background="@color/white_50percent"
+    android:layout_marginTop="20dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
     tools:showIn="@layout/fragment_search">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:paddingTop="20dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:id="@+id/recycler_search_act"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
