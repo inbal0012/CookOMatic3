@@ -34,9 +34,9 @@ public class Dialogs {
         TextView body = dialogView.findViewById(R.id.body);
 
         switch (id) {
-            case R.id.fabFav:
-                body.setText(activity.getString(R.string.add_fav_dialog_body));
-                break;
+//            case R.id.fabFav:
+//                body.setText(activity.getString(R.string.add_fav_dialog_body));
+//                break;
             case R.id.fabAdd:
                 body.setText(activity.getString(R.string.add_pet_dialog_body));
                 break;

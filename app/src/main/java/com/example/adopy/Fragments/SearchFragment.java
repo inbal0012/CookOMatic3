@@ -18,6 +18,7 @@ import com.example.adopy.R;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
 import com.example.adopy.Utilities.Dialogs;
 import com.example.adopy.Utilities.FileSystemMemory;
+import com.example.adopy.Utilities.Interfaces_and_Emuns.ILoadMore;
 import com.example.adopy.Utilities.Models.PetModel;
 import com.example.adopy.Utilities.Models.SearchPreferences;
 import com.example.adopy.Utilities.Models.User;
@@ -84,6 +85,18 @@ public class SearchFragment extends Fragment {
         mPetModels = new ArrayList<>();
         mPetAdapter = new PetAdapter2(mRecyclerView, getContext(), mPetModels);
 
+//        mPetAdapter.setLoadMore(new ILoadMore() {
+//            @Override
+//            public void onLoadMore() {
+//                mPetAdapter.notifyItemInserted(mPetAdapter.getItemCount());
+//                for (int i = mPetAdapter.getItemCount(); i < i + mPetAdapter.getVisibleThreshold(); i++) {
+//                    if (i < mAllPets.size()) {
+//                        mPetModels.add(i, mAllPets.get(i));
+//                    }
+//                }
+//            }
+//        });
+
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         Log.d(TAG, "onCreateView: " + fuser);
 
@@ -122,6 +135,9 @@ public class SearchFragment extends Fragment {
                 mPetModels.add(petModel);
             }
             //mPetAdapter = new PetAdapter2(SearchFragment.this, mPetModels);
+//            for (int i = 0; i < 6; i++) {
+//                mPetModels.add(mAllPets.get(i));
+//            }
             mRecyclerView.setAdapter(mPetAdapter);
         }
 
@@ -154,15 +170,24 @@ public class SearchFragment extends Fragment {
                                 if (!sp.getSex().equals("Doesn't matter")) {
                                     if (petModel.getGender().toString().equals(sp.getSex())) {                      //Gender filter
                                         mPetModels.add(petModel);
+                                        Log.d(TAG, "onDataChange: " + petModel.getName() + " added");
                                     }
-                                } else
+                                } else {
                                     mPetModels.add(petModel);
+                                    Log.d(TAG, "onDataChange: " + petModel.getName() + " added");
+                                }
                             }
                         }
                     }
-                } else
+                } else {
                     mPetModels.add(petModel);
+                    Log.d(TAG, "onDataChange: " + petModel.getName() + " added");
+                }
             }
+
+//            for (int i = 0; i < 6; i++) {
+//                mPetModels.add(mAllPets.get(i));
+//            }
             mPetAdapter = new PetAdapter2(mRecyclerView, getContext(), mPetModels);
             mRecyclerView.setAdapter(mPetAdapter);
         }
@@ -224,7 +249,7 @@ public class SearchFragment extends Fragment {
 
     //search data
     private void firebaseSearch() {
-        if (mPetModels != null) {
+        if (mPetModels.size() > 0) {
             mPetModels.clear();
         }
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
