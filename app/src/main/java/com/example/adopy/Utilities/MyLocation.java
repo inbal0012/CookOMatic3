@@ -41,18 +41,38 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
     private double lng;
     private Address address;
 
+    // static variable single_instance of type Singleton
+    private static MyLocation single_instance = null;
 
-    public MyLocation(Activity activity) {
+    public static MyLocation getInstance(Activity activity) {
+
+        if (single_instance == null)
+            single_instance = new MyLocation(activity);
+
+        return single_instance;
+    }
+
+    public static MyLocation getInstance() {
+
+        if (single_instance == null)
+            return null;
+
+        return single_instance;
+    }
+
+    private MyLocation(Activity activity) {
         this.activity = activity;
         getLocation();
         updateLocation();
     }
 
-    public double getLatitude() {
+
+
+    public Double getLatitude() {
         return lat;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return lng;
     }
 
@@ -65,11 +85,14 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
     }
 
     public String StringFromAddress(Address address) {
-        String str = address.getCountryName()
-                + " , " + address.getLocality()
-                + " , " + address.getThoroughfare()
-                + " , " + address.getSubThoroughfare()
-                + " , " + address.getAdminArea();
+        String str = "";
+        if (address != null) {
+            str = address.getCountryName()
+                    + " , " + address.getLocality()
+                    + " , " + address.getThoroughfare()
+                    + " , " + address.getSubThoroughfare()
+                    + " , " + address.getAdminArea();
+        }
         return str;
     }
 
@@ -80,11 +103,14 @@ public class MyLocation implements LocationListener, ActivityCompat.OnRequestPer
             return;
         }
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        lat = location.getLatitude();
-        lng = location.getLongitude();
+        if (location != null) {
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+        }
     }
 
     public void getLocation() {
+        Log.d(TAG, "getLocation: " + activity);
         geocoder = new Geocoder(activity);
         locationManager = (LocationManager) activity.getSystemService(LOCATION_SERVICE);
 

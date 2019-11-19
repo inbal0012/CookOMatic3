@@ -4,7 +4,7 @@
     style="@style/AppTheme.NoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@drawable/paw_nature_background">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -37,7 +37,7 @@
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/username" />
+                app:title=" " />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -45,6 +45,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white_50percent"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:padding="@dimen/activity_horizontal_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -53,6 +54,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:padding="@dimen/activity_horizontal_margin">
+
+                <ImageView
+                    android:id="@+id/ivName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    app:srcCompat="@drawable/ic_person_black_24dp" />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_toEndOf="@id/ivName"
+                    android:text="@string/username"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#212121" />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -75,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_toEndOf="@id/ivContactItem1"
-                    android:text="@string/username"
+                    android:text="@string/prompt_email"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="#212121" />
 

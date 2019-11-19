@@ -4,98 +4,177 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:activity=".Activities.MainActivity">
+    tools:activity=".Activities.MainActivity"
+    android:background="@drawable/paw_nature_background"
+    >
 
-    <TextView
-        android:id="@+id/user_TV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/username" />
-
-    <Button
-        android:id="@+id/logoutBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/menu_logout"/>
-
-    <Button
-        android:id="@+id/signinBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/user_TV"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/sign_in"/>
-
-    <Button
-        android:id="@+id/startBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/signinBtn"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/title_activity_start"/>
-
-    <Button
-        android:id="@+id/myPetsBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/startBtn"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/My_Pets_Page"/>
-
-    <Button
-        android:id="@+id/chatBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/myPetsBtn"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/Chat_page"/>
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/chatBtn"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent"
 
-        <Button
-            android:id="@+id/reminderRepeatCancel_btn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        >
+
+        <!-- Header aligned to top -->
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            android:layout_marginStart="10dp"/>
+            android:layout_alignParentTop="true"
+            android:gravity="center"
 
-        <EditText
-            android:id="@+id/reminderRepeat_et"
-            android:layout_width="0dp"
-            android:layout_weight="3"
+            android:paddingTop="25dp"
+            >
+
+            <TextView
+                android:id="@+id/user_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white_50percent"
+                android:padding="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/username" />
+
+        </RelativeLayout>
+
+        <!-- Footer aligned to bottom -->
+        <RelativeLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/reminderRepeat_tv_hint"
-            android:inputType="number"
-            android:layout_marginStart="10dp"/>
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            >
 
-        <Button
-            android:id="@+id/reminderRepeatSave_btn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:layout_marginEnd="10dp"/>
+        </RelativeLayout>
 
-    </LinearLayout>
+        <!-- Main between footer & bottom -->
+
+        <ScrollView
+            android:id="@+id/main_sv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/footer"
+            android:layout_below="@id/header"
+
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+
+            android:gravity="center"
+            >
+
+            <!-- android:background="@color/white_50percent" -->
+
+            <RelativeLayout
+                android:id="@+id/main_frame_ly"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/footer"
+                android:layout_below="@id/header"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                >
+
+            <Button
+                android:id="@+id/logoutBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/menu_logout"/>
+
+            <Button
+                android:id="@+id/signinBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/logoutBtn"
+                android:layout_marginTop="10dp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="@string/sign_in"/>
+
+            <Button
+                android:id="@+id/startBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/signinBtn"
+                app:layout_constraintTop_toBottomOf="@id/signinBtn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="@string/title_activity_start"/>
+
+            <Button
+                android:id="@+id/startBotBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/startBtn"
+                app:layout_constraintTop_toBottomOf="@id/startBtn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="@string/title_activity_start_bottom"/>
+
+            <Button
+                android:id="@+id/chatBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/startBotBtn"
+                app:layout_constraintTop_toBottomOf="@id/startBotBtn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="@string/Chat_page"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chatBtn"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/chatBtn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/reminderRepeatCancel_btn"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cancel"
+                    android:layout_marginStart="10dp"/>
+
+                <EditText
+                    android:id="@+id/reminderRepeat_et"
+                    android:background="@color/white_50percent"
+                    android:padding="5dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/reminderRepeat_tv_hint"
+                    android:inputType="number"
+                    android:layout_marginStart="10dp"/>
+
+                <Button
+                    android:id="@+id/reminderRepeatSave_btn"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save"
+                    android:layout_marginEnd="10dp"/>
+
+            </LinearLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

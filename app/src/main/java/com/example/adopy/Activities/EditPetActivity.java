@@ -4,11 +4,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -36,18 +49,26 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
+import static com.example.adopy.Utilities.RequestCodes.LOCATION_PERMISSION_REQUEST;
 import static com.example.adopy.Utilities.RequestCodes.PET_IMAGE_REQUEST;
 
-public class EditPetActivity extends AppCompatActivity {
+public class EditPetActivity extends AppCompatActivity implements LocationListener {
 
     private static final String TAG = "my_EditPetActivity";
-    private PetModel pet;
-    private PetModel newPet;
+
+    private PetModel pet, newPet;
+
+    AutoCompleteTextView about, price;
+    ImageView petImg;
+
     MyImage myImage;
 
-    AutoCompleteTextView about;
-    AutoCompleteTextView price;
+    //Location
+    LocationManager locationManager;
+    Geocoder geocoder;
+    Double lat , lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +77,7 @@ public class EditPetActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getLocation();
         Gson gson = new Gson();
         pet = gson.fromJson(getIntent().getStringExtra("pet"), PetModel.class);
 
@@ -74,12 +96,12 @@ public class EditPetActivity extends AppCompatActivity {
             public void onItemSelected(int position, String itemAtPosition) {
                 String[] _itemsEng = new String[]{"dog", "cat", "rabbit", "hedgehog", "chinchilla", "iguana", "turtle"};
                 newPet.setKind(_itemsEng[position]);
-                Toast.makeText(EditPetActivity.this, _itemsEng[position] + " selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(EditPetActivity.this, _itemsEng[position] + " selected", Toast.LENGTH_SHORT).show();
             }
         });
 
         //imageUri
-        ImageView petImg = findViewById(R.id.petImage);
+        petImg = findViewById(R.id.petImage);
         Glide.with(this).load(pet.getImageUri()).placeholder(R.drawable.foot).into(petImg);
         petImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +157,7 @@ public class EditPetActivity extends AppCompatActivity {
             public void onItemSelected(int position, String itemAtPosition) {
                 String[] _itemsEng = new String[]{"Male", "Female"};
                 newPet.setGender(Gender.valueOf(_itemsEng[position]));
-                Toast.makeText(EditPetActivity.this, _itemsEng[position] + " selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(EditPetActivity.this, _itemsEng[position] + " selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -147,6 +169,22 @@ public class EditPetActivity extends AppCompatActivity {
         //info
         about = findViewById(R.id.about);
         about.setText(pet.getInfo());
+
+        //location
+        Button useMyLoc = findViewById(R.id.LocationBtn);
+        useMyLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newPet.setLatitude(lat.toString());
+                newPet.setLongitude(lng.toString());
+                try {
+                    newPet.setLocation(StringFromAddress(geocoder.getFromLocation(lat, lng, 1).get(0)));
+                    Toast.makeText(EditPetActivity.this, getString(R.string.location_updated), Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         Button saveBtn = findViewById(R.id.saveBtn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -183,16 +221,10 @@ public class EditPetActivity extends AppCompatActivity {
             newPet.setPrice(price.getText().toString());
         }
 
-        String PetAns = String.format("%s\n kind: %s\n imageUri: %s\n age: %s\n Sex: %s\n Price: %s\n Info: %s\n loaction (%s,%s)",
+        String PetAns = String.format("%s\n kind: %s\n imageUri: %s\n age: %s\n Sex: %s\n Price: %s\n Info: %s\n location (%s,%s)",
                 newPet.getName(), newPet.getKind(), newPet.getImageUri(), newPet.getAge(), newPet.getGender(), newPet.getPrice(), newPet.getInfo(), pet.getLatitude(), pet.getLongitude());
         Log.d(TAG, "saveChanges: " + PetAns);
 
-        MyLocation myLocation = new MyLocation(this);
-        try {
-            newPet.setLocation(myLocation.StringFromAddress(myLocation.getFromLocation(pet.getLatitude(), pet.getLongitude())));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", newPet.getId());
@@ -213,7 +245,7 @@ public class EditPetActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "pet updated in database ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.pet_updated_in_database), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -224,7 +256,113 @@ public class EditPetActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult: " + requestCode);
         if (requestCode == PET_IMAGE_REQUEST) {
-            myImage.onActivityResult(requestCode, resultCode, data);
+            myImage.onActivityResult(requestCode, resultCode, data, petImg);
         }
     }
+
+
+    //Location funcs
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    public String StringFromAddress(Address address) {
+        String str = "";
+        if (address != null) {
+            str = address.getCountryName()
+                    + " , " + address.getLocality()
+                    + " , " + address.getThoroughfare()
+                    + " , " + address.getSubThoroughfare()
+                    + " , " + address.getAdminArea();
+        }
+        return str;
+    }
+
+    public void getLocation() {
+        Log.d(TAG, "getLocation: ");
+        geocoder = new Geocoder(this);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            int hasLocationPermission = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+            if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST);
+            } else {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, this);
+            }
+        } else
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, this);
+    }
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        lat = location.getLatitude();
+        lng = location.getLongitude();
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+                    Address address = addresses.get(0);
+
+                    Log.d(TAG, "onLocationChanged: run: " + address.getCountryName()
+                            + " , " + address.getLocality()
+                            + " , " + address.getThoroughfare()
+                            + " , " + address.getSubThoroughfare()
+                            + " , " + address.getAdminArea());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == LOCATION_PERMISSION_REQUEST) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(getString(R.string.LOCATION_PERMISSION_warning_title)).setMessage(getString(R.string.LOCATION_PERMISSION_warning_body))
+                        .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                intent.setData(Uri.parse("package:" + getPackageName()));
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        }).setCancelable(false).show();
+            } else {
+                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, this);
+            }
+
+        }
+    }
+    //Location funcs END
 }

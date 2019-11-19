@@ -6,18 +6,30 @@
     android:layout_gravity="center"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:padding="10dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/main_ly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        >
 
     <LinearLayout
+        android:id="@+id/main_lin_ly"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="165dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
 
             android:layout_marginStart="20dp"
@@ -27,30 +39,50 @@
             android:paddingEnd="40dp"
 
             app:cardCornerRadius="8dp"
-            app:cardElevation="15dp">
+            app:cardElevation="15dp"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="14dp"
-                android:gravity="center"
-                android:text="@string/please_login"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            >
 
-            <TextView
-                android:id="@+id/body"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/rltv_ly_msg"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:text="@string/msg_owner_dialog_body"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:paddingBottom="100dp"
+                >
+
+
+                <TextView
+                    android:id="@+id/login_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginEnd="70dp"
+                    android:layout_marginStart="80dp"
+                    android:gravity="center"
+
+                    android:text="@string/please_login"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/login_msg"
+
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:gravity="center"
+                    android:text="@string/msg_owner_dialog_body"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
 
         </androidx.cardview.widget.CardView>
     </LinearLayout>
@@ -61,13 +93,18 @@
         android:layout_gravity="center"
         android:id="@+id/frmLogin"
         android:layout_marginEnd="45dp"
-        android:layout_marginTop="75dp">
+        android:layout_marginTop="360dp"
+        android:layout_marginStart="80dp"
+        android:layout_alignTop="@id/main_lin_ly"
+        android:paddingBottom="5dp"
+        >
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/button_cancel"
-            app:backgroundTint="@android:color/transparent" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@android:color/transparent"
+            app:backgroundTint="@color/fabOnline"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -86,14 +123,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/frmExit"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="75dp">
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="360dp"
+        android:layout_alignTop="@id/main_lin_ly"
+        android:layout_alignStart="@id/frmLogin"
+        >
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/button_ok"
-            app:backgroundTint="@android:color/transparent" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@android:color/transparent"
+            app:backgroundTint="@color/fabOffline" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -105,4 +145,7 @@
             android:textColor="@android:color/black"
             android:textStyle="bold" />
     </FrameLayout>
+
+    </RelativeLayout>
+
 </FrameLayout>

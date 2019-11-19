@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adopy.Fragments.ChatsFragment;
+import com.example.adopy.Fragments.SearchFragment;
 import com.example.adopy.R;
 import com.example.adopy.Utilities.MyLocation;
 import com.example.adopy.Utilities.Receivers_and_Services.AlarmReceiver;
@@ -28,8 +30,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;
 
-import static com.example.adopy.Utilities.Models.App.ON_BOOT_CHANNEL_ID;
 import static com.example.adopy.Utilities.RequestCodes.FOREGROUND_SERVICE_PERMISSION_REQUEST;
+import static com.example.adopy.Utilities.RequestCodes.ON_BOOT_CHANNEL_ID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         if (FirebaseAuth.getInstance().getCurrentUser() != null)
             userTV.setText("hello " + FirebaseAuth.getInstance().getCurrentUser().getEmail());
         else
-            userTV.setText("no user connected");
+            userTV.setText(getString(R.string.no_user_connected));
 
         Button saveUpdates = findViewById(R.id.reminderRepeatSave_btn);
         saveUpdates.setOnClickListener(new View.OnClickListener() {
@@ -76,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button mtPets = findViewById(R.id.myPetsBtn);
+        Button mtPets = findViewById(R.id.startBotBtn);
         mtPets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MyPetsActivity.class));
+                startActivity(new Intent(MainActivity.this, StartBottomActivity.class));
             }
         });
 
@@ -119,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //location permission
-        MyLocation myLocation = new MyLocation(this);
-        myLocation.getLocation();
+//        MyLocation myLocation = new MyLocation(this);
+//        myLocation.getLocation();
     }
 
     private void SaveUpdates() {

@@ -3,41 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_profile">
+    app:startDestination="@+id/nav_search">
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.example.adopy.ui.profile.ProfileFragment"
-        android:label="@string/menu_home"
+        android:name="com.example.adopy.Fragments.ProfileFragment"
+        android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_chats"
-        android:name="com.example.adopy.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:name="com.example.adopy.Fragments.ChatsFragment"
+        android:label="@string/menu_chats"
+        tools:layout="@layout/fragment_chats" />
 
     <fragment
         android:id="@+id/nav_my_pets"
-        android:name="com.example.adopy.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:name="com.example.adopy.Fragments.MyPetsFragment"
+        android:label="@string/title_my_pets"
+        tools:layout="@layout/fragment_my_pets" />
 
     <fragment
         android:id="@+id/nav_search"
-        android:name="com.example.adopy.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        android:name="com.example.adopy.Fragments.SearchFragment"
+        android:label="@string/title_activity_search"
+        tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/nav_share"
-        android:name="com.example.adopy.ui.share.ShareFragment"
+        android:name="com.example.adopy.Fragments.ProfileFragment"
         android:label="@string/menu_share"
         tools:layout="@layout/fragment_share" />
 
     <fragment
         android:id="@+id/nav_send"
-        android:name="com.example.adopy.ui.send.SendFragment"
+        android:name="com.example.adopy.Fragments.ProfileFragment"
         android:label="@string/menu_send"
         tools:layout="@layout/fragment_send" />
 </navigation>

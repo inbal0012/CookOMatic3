@@ -7,104 +7,145 @@
     android:layout_gravity="center"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:padding="10dp"
+    >
 
-    <LinearLayout
+
+    <RelativeLayout
+        android:id="@+id/main_ly"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        >
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
+            android:id="@+id/main_lin_ly"
             android:layout_width="match_parent"
-            android:layout_height="165dp"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            >
 
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-
-            app:cardCornerRadius="8dp"
-            app:cardElevation="15dp">
-
-            <TextView
-                android:id="@+id/DialogTitle"
-                android:layout_width="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="14dp"
-                android:gravity="center"
-                android:text="@string/deleting_a_pet"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center"
+
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+
+                app:cardCornerRadius="8dp"
+                app:cardElevation="15dp"
+
+                >
+
+                <RelativeLayout
+                    android:id="@+id/rltv_ly_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center"
+                    android:paddingBottom="100dp"
+                    >
+
+
+                    <TextView
+                        android:id="@+id/DialogTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginStart="70dp"
+                        android:gravity="center"
+                        android:text="@string/deleting_a_pet"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/body"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/DialogTitle"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginStart="20dp"
+                        android:gravity="center"
+                        android:text="@string/delete_pet_dialog_body"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/frmKeep"
+            android:layout_marginEnd="45dp"
+            android:layout_marginTop="360dp"
+            android:layout_marginStart="80dp"
+            android:layout_alignTop="@id/main_lin_ly"
+            >
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@android:color/transparent"
+                app:backgroundTint="@color/fabOnline"
+                />
 
             <TextView
-                android:id="@+id/body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
                 android:gravity="center"
-                android:text="@string/delete_pet_dialog_body"
-                android:textSize="18sp"
+                android:elevation="6dp"
+                android:text="@string/keep"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
+        </FrameLayout>
 
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/frmKeep"
-        android:layout_marginEnd="45dp"
-        android:layout_marginTop="75dp">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/button_cancel"
-            app:backgroundTint="@android:color/transparent" />
-
-        <TextView
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:elevation="6dp"
-            android:text="@string/keep"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
-    </FrameLayout>
+            android:id="@+id/frmDelete"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="360dp"
+            android:layout_alignTop="@id/main_lin_ly"
+            android:layout_alignStart="@id/frmKeep"
+            >
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/frmDelete"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="75dp">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@android:color/transparent"
+                app:backgroundTint="@color/fabOffline" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/button_ok"
-            app:backgroundTint="@android:color/transparent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:elevation="6dp"
+                android:text="@string/delete"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+        </FrameLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:elevation="6dp"
-            android:text="@string/delete"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
-    </FrameLayout>
+    </RelativeLayout>
+
 </FrameLayout>
+

@@ -8,8 +8,9 @@ public class User {
     private String age;
     private String gender;
     private String device_token;
+    private SearchPreferences sp;
 
-    public User(String id, String email, String username, String imageUri, String age, String gender, String device_token) {
+    public User(String id, String email, String username, String imageUri, String age, String gender, String device_token, SearchPreferences sp) {
         this.id = id;
         this.email = email;
         this.username = username;
@@ -17,6 +18,7 @@ public class User {
         this.age = age;
         this.gender = gender;
         this.device_token = device_token;
+        this.sp = sp;
     }
 
     public User() {
@@ -77,4 +79,22 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public SearchPreferences getSearchPreferences() {
+        return sp;
+    }
+
+    public void setSearchPreferences(SearchPreferences sp) {
+        this.sp = sp;
+    }
+
+    public SearchPreferences getSp() {
+        return sp;
+    }
+
+    public void setSp(SearchPreferences sp) {
+        this.sp = sp;
+    }
+
+
 }

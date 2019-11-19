@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.EditPetActivity">
+    tools:context=".Activities.EditPetActivity"
+    android:background="@drawable/paw_in_snow_bg"
+    >
 
 
     <com.google.android.material.appbar.AppBarLayout

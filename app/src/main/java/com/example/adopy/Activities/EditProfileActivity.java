@@ -9,15 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.adopy.R;
-import com.example.adopy.Utilities.Dialogs;
-import com.example.adopy.Utilities.Interfaces_and_Emuns.Gender;
 import com.example.adopy.Utilities.Models.User;
 import com.example.adopy.Utilities.MyImage;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,12 +21,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
-import com.isapanah.awesomespinner.AwesomeSpinner;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.HashMap;
 
-import static com.example.adopy.Utilities.RequestCodes.SELECT_IMAGE_REQUEST;
 import static com.example.adopy.Utilities.RequestCodes.USER_IMAGE_REQUEST;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -40,9 +34,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     MyImage myImage;
 
-    MaterialEditText nameEt;
-    MaterialEditText genderEt;
-    MaterialEditText ageEt;
+    MaterialEditText nameEt, genderEt, ageEt;
+    ImageView profile_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +63,7 @@ public class EditProfileActivity extends AppCompatActivity {
         ageEt.setText(user.getAge());
 
         //image
-        ImageView profile_image = findViewById(R.id.profile_image);
+        profile_image = findViewById(R.id.profile_image);
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +128,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         Log.d(TAG, "onActivityResult: " + requestCode);
         if (requestCode == USER_IMAGE_REQUEST ) {
-            myImage.onActivityResult(requestCode, resultCode, data);
+            myImage.onActivityResult(requestCode, resultCode, data, profile_image);
         }
     }
 }

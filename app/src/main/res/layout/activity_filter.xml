@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:activity=".Activities.FilterActivity">
+    tools:activity=".Activities.FilterActivity"
+    android:paddingTop="20dp"
+    android:background="@drawable/paw_on_wood"
+    >
 
     <include layout="@layout/content_filter" />
 
@@ -16,7 +19,7 @@
         android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@color/white_50percent"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         >
@@ -34,7 +37,9 @@
                 android:layout_marginStart="20dp"
                 android:background="@drawable/button"
                 android:layout_marginEnd="10dp"
-                android:text="@string/cancel"/>
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                />
 
             <Button
                 android:id="@+id/saveBtn"
@@ -43,9 +48,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/button"
-                android:text="@string/save"/>
+                android:text="@string/save"
+                android:textColor="@color/white"
+                />
 
         </LinearLayout>
 
     </RelativeLayout>
+
+
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
