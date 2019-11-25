@@ -195,7 +195,7 @@ public class EditPetActivity extends AppCompatActivity implements LocationListen
             }
         });
 
-        Button cancelBtn = findViewById(R.id.cancelBtnEdit);
+        Button cancelBtn = findViewById(R.id.cancelBtn);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

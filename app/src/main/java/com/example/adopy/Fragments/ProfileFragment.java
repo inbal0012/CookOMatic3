@@ -1,5 +1,6 @@
 package com.example.adopy.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
@@ -131,6 +132,7 @@ public class ProfileFragment extends Fragment {
     private void populateData() {
         DatabaseReference mReference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
         mReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -138,7 +140,7 @@ public class ProfileFragment extends Fragment {
 
                 //user name
                 TextView userNameTv = root.findViewById(R.id.tvName);
-                String userName= fuser.getEmail();
+                String userName= user.getUsername();
                 userNameTv.setText(userName);
 
                 //email
@@ -176,15 +178,18 @@ public class ProfileFragment extends Fragment {
                 tvAge.setText(user.getAge());
 
                 //location
+                TextView tvLocation = root.findViewById(R.id.tvLocation);
                 MyLocation myLocation = MyLocation.getInstance();
                 Address address = null;
                 try {
                     address = myLocation.getAddress();
-                } catch (IOException e) {
+                    tvLocation.setText(myLocation.StringFromAddress(address));
+                } catch (IndexOutOfBoundsException ex) {
+                    tvLocation.setText(getString(R.string.Address_unavailable));
+                }
+                catch (IOException e) {
                     e.printStackTrace();
                 }
-                TextView tvLocation = root.findViewById(R.id.tvLocation);
-                tvLocation.setText(myLocation.StringFromAddress(address));
             }
 
             @Override

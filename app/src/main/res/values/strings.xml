@@ -112,13 +112,13 @@
 
     //typeSpinner Types
     <string-array name="type_array">
-        <item name="Dog">dog</item>
-        <item name="Cat">cat</item>
-        <item name="Rabbit">rabbit</item>
-        <item name="Hedgehog">hedgehog</item>
-        <item name="Chinchilla">chinchilla</item>
-        <item name="Iguana">iguana</item>
-        <item name="Turtle">turtle</item>
+        <item name="Dog">Dog</item>
+        <item name="Cat">Cat</item>
+        <item name="Rabbit">Rabbit</item>
+        <item name="Hedgehog">Hedgehog</item>
+        <item name="Chinchilla">Chinchilla</item>
+        <item name="Iguana">Iguana</item>
+        <item name="Turtle">Turtle</item>
     </string-array>
 
 
@@ -149,8 +149,8 @@
     <string name="reminderRepeat_tv_hint">get updates every X minuets</string>
 
     //filter act
-    <string name="distance_in_km">Distance in km:</string>
-    <string name="types">Types:</string>
+    <string name="distance_in_km">Distance in km</string>
+    <string name="types">Types</string>
 
     //forgot pass act
     <string name="prompt_email">Email</string>
@@ -163,7 +163,7 @@
     <string name="signup_press">Don\'t have an account?</string>
     <string name="signUpEmailBTN">Press HERE to Sign Up now</string>
     <string name="blank">One or more details are blank.</string>
-    <string name="success">You entered with Success</string>
+    <string name="success">You entered successfully</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error">Error have been occurred, sorry. Please try again later</string>
@@ -216,7 +216,7 @@
 
     <string name="Chat_page">Chat Page</string>
     <string name="type_a_message">Type a message…</string>
-    <string name="empty_msg">You can\'t send empty message</string>
+    <string name="empty_msg">You can\'t send an empty message</string>
     <string name="no_msg">No Message</string>
     <string name="please_login">Please Login</string>
     <string name="go_back">back</string>
@@ -273,6 +273,7 @@
     <string name="no_image">Please add an image</string>
     <string name="pet_added_to_database">pet added to database</string>
     <string name="pet_updated_in_database">pet updated in database</string>
+    <string name="Address_unavailable">Address unavailable</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

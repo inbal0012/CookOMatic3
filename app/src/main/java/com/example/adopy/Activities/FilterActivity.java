@@ -94,7 +94,7 @@ public class FilterActivity extends AppCompatActivity {
 
         String ans = "types: " + sp.getTypes() + "\nage: " + sp.getAgeMin() + " - " + sp.getAgeMax() + "\nSex: " + sp.getSex() + "\nDistance: " + sp.getDistance();
         Log.d(TAG, "savePreferences: \n" + ans);
-        Toast.makeText(this, "" + ans, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "" + ans, Toast.LENGTH_SHORT).show();
 
         Intent intent = getIntent();
         intent.putExtra("key", sp);

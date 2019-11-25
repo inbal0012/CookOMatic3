@@ -13,6 +13,7 @@ import retrofit2.Response;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -145,7 +146,9 @@ public class ChatActivity2 extends AppCompatActivity {
                 if (!msg.equals("")) {
                     sendMessage(mFirebaseUser.getUid(), userId, msg);
                 } else {
-                    Toast.makeText(ChatActivity2.this, getString(R.string.empty_msg), Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(ChatActivity2.this, getString(R.string.empty_msg), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    toast.show();
                 }
                 text_send.setText("");
             }

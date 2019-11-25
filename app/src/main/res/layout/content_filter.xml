@@ -8,9 +8,6 @@
     tools:activity=".Activities.FilterActivity"
     tools:showIn="@layout/activity_filter">
 
-
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -48,34 +45,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/header"
-
+            style="@style/FilterTextView"
             android:text="@string/types"
 
             />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <!-- name should be same as class of multiple selection spinner -->
+        <com.example.adopy.UI_utilities.MultipleSelectionSpinner
+            android:id="@+id/typeSpinner"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_centerHorizontal="true"
-            android:layout_toEndOf="@id/tv_types"
-            android:layout_alignBaseline="@id/tv_types"
+            android:layout_below="@id/tv_types"
+            android:layout_marginTop="10dp" />
 
-            android:layout_marginBottom="10dp"
-            >
-            <!-- name should be same as class of multiple selection spinner -->
-            <com.example.adopy.UI_utilities.MultipleSelectionSpinner
-                android:id="@+id/typeSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/typeSpinner"
+            style="@style/FilterTextView"
+            android:text="@string/age" />
 
         <com.jaygoo.widget.RangeSeekBar
             android:id="@+id/ageSeekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_types"
+            android:layout_below="@id/tv_age"
             android:layout_marginTop="20dp"
             app:rsb_indicator_height="40dp"
             app:rsb_indicator_margin="10dp"
@@ -89,19 +85,18 @@
             app:rsb_tick_mark_mode="number" />
 
         <TextView
-            android:id="@+id/tv_age"
+            android:id="@+id/tv_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ageSeekBar"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="@string/age" />
+            style="@style/FilterTextView"
+            android:text="@string/distance_in_km" />
 
         <com.jaygoo.widget.RangeSeekBar
             android:id="@+id/distanceSeekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ageSeekBar"
+            android:layout_below="@id/tv_distance"
             android:layout_marginTop="15dp"
             app:rsb_indicator_height="40dp"
             app:rsb_indicator_margin="10dp"
@@ -115,19 +110,18 @@
             app:rsb_tick_mark_mode="number" />
 
         <TextView
-            android:id="@+id/tv_distance"
+            android:id="@+id/tv_sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/distanceSeekBar"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="@string/distance_in_km" />
+            style="@style/FilterTextView"
+            android:text="@string/gender" />
 
         <org.honorato.multistatetogglebutton.MultiStateToggleButton
             android:id="@+id/sex_mstb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_distance"
+            android:layout_below="@id/tv_sex"
             android:layout_marginTop="10dp"
             app:mstbColorNotPressedBackground="@android:color/white"
             app:mstbColorNotPressedText="@android:color/holo_blue_dark"

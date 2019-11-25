@@ -155,6 +155,8 @@ public class SearchFragment extends Fragment {
             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                 PetModel petModel = dataSnapshot1.getValue(PetModel.class);
                 if (sp != null) {
+                    String ans = "types: " + sp.getTypes() + "\nage: " + sp.getAgeMin() + " - " + sp.getAgeMax() + "\nSex: " + sp.getSex() + "\nDistance: " + sp.getDistance();
+                    Log.d(TAG, "savePreferences: \n" + ans);
                     PetAns = petModel.getName() +
                             "\nkind: " + petModel.getKind() +
                             "\nage: " + petModel.getAge() +
