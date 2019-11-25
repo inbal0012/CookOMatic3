@@ -276,6 +276,8 @@
     <string name="Address_unavailable">Address unavailable</string>
     <string name="ageColon">Age:</string>
     <string name="genderColon">Gender:</string>
+    <string name="distance">Distance</string>
+    <string name="km">" km"</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

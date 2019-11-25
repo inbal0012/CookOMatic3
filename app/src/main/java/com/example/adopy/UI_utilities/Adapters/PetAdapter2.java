@@ -1,6 +1,5 @@
 package com.example.adopy.UI_utilities.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -37,8 +36,8 @@ class ItemViewHolder extends RecyclerView.ViewHolder {
 
         petName = itemView.findViewById(R.id.pet_name);
         petImage = itemView.findViewById(R.id.pet_image);
-        petAge = itemView.findViewById(R.id.publish_date);
-        petDist = itemView.findViewById(R.id.pet_price);
+        petAge = itemView.findViewById(R.id.pet_age);
+        petDist = itemView.findViewById(R.id.pet_dist);
     }
 }
 
@@ -145,7 +144,7 @@ public class PetAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewHolder.petName.setText(petModel.getName());
             Glide.with(context).load(petModel.getImageUri()).placeholder(R.drawable.foot).into(viewHolder.petImage);
             viewHolder.petAge.setText(String.format(petModel.getAge().toString()));
-            viewHolder.petDist.setText(dist);
+            viewHolder.petDist.setText(dist + context.getString(R.string.km));
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder)holder;
             loadingViewHolder.progressBar.setIndeterminate(true);

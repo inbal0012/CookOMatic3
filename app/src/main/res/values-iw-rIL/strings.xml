@@ -145,4 +145,6 @@
     <string name="Address_unavailable">כתובת אינה זמינה</string>
     <string name="genderColon">מין:</string>
     <string name="ageColon">גיל:</string>
+    <string name="distance">מרחק</string>
+    <string name="km">" ק\"מ"</string>
 </resources>
