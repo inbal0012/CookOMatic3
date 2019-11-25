@@ -177,7 +177,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
                     app:srcCompat="@drawable/ic_location_black_24dp" />
 
                 <TextView
