@@ -74,11 +74,9 @@
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_toEndOf="@id/ivName"
                     android:text="@string/username"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="#212121" />
+                    style="@style/ProfileTextView" />
 
             </RelativeLayout>
 
@@ -101,11 +99,9 @@
                     android:id="@+id/tvEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_toEndOf="@id/ivContactItem1"
                     android:text="@string/prompt_email"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="#212121" />
+                    style="@style/ProfileTextView" />
 
             </RelativeLayout>
 
@@ -135,11 +131,9 @@
                         android:id="@+id/tvGender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:maxLines="1"
                         android:text="@string/gender"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="#212121" />
+                        style="@style/ProfileTextView" />
 
                 </LinearLayout>
 
@@ -159,12 +153,10 @@
                         android:id="@+id/tvUserAge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@string/age"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="#212121" />
+                        style="@style/ProfileTextView"/>
 
                 </LinearLayout>
 
@@ -192,12 +184,10 @@
                     android:id="@+id/tvLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_toEndOf="@id/ivLocation"
                     android:ellipsize="end"
                     android:text="@string/location"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="#212121" />
+                    style="@style/ProfileTextView" />
 
 
             </RelativeLayout>

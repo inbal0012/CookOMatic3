@@ -188,7 +188,7 @@
 
 
     //pet features
-    <string name="kind">Kind</string>
+    <string name="kind">Kind:</string>
     <string name="location">Location: </string>
     <string name="age">Age</string>
     <string name="gender">Gender</string>
@@ -274,6 +274,8 @@
     <string name="pet_added_to_database">pet added to database</string>
     <string name="pet_updated_in_database">pet updated in database</string>
     <string name="Address_unavailable">Address unavailable</string>
+    <string name="ageColon">Age:</string>
+    <string name="genderColon">Gender:</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

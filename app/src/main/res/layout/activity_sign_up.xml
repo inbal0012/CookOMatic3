@@ -185,17 +185,6 @@
                     app:rsb_thumb_drawable="@drawable/rsb_default_thumb"
                     app:rsb_tick_mark_mode="number" />
 
-                <!--   <TextView
-                       android:textColor="@color/colorPrimary"
-                       android:gravity="center_horizontal"
-                       android:id="@+id/progressAge"
-                       android:layout_width="32dp"
-                       android:layout_height="wrap_content"
-                       android:text="@string/age"
-                       android:textSize="18sp"
-                       android:textStyle="bold" /> -->
-
-
             </LinearLayout>
 
             <Button

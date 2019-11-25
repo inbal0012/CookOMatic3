@@ -72,4 +72,12 @@
 
     </style>
 
+
+    <style name="ProfileTextView" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:layout_marginStart">@dimen/activity_horizontal_margin</item>
+        <item name="android:textColor">@color/black</item>
+
+    </style>
+
 </resources>

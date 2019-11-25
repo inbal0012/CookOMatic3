@@ -60,7 +60,7 @@
     <string name="go_back">חזור</string>
     <string name="info">מידע</string>
     <string name="keep">שמור</string>
-    <string name="kind">סוג</string>
+    <string name="kind">סוג:</string>
     <string name="location">מיקום</string>
     <string name="male">זכר</string>
     <string name="msg_owner_dialog_body">על מנת לדבר עם הבעלים עליך להיות מחובר</string>
@@ -142,4 +142,7 @@
     <string name="reset_pass_toast_error">לא הצלחנו שלשלוח לך סיסמא חדשה. השגיאה:</string>
     <string name="signup">הרשם</string>
     <string name="chats_dialog_body">על מנת להתכתב אנא התחבר תחילה</string>
+    <string name="Address_unavailable">כתובת אינה זמינה</string>
+    <string name="genderColon">מין:</string>
+    <string name="ageColon">גיל:</string>
 </resources>

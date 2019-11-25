@@ -71,7 +71,7 @@
                 <TextView
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:text="@string/age"
+                    android:text="@string/ageColon"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -98,7 +98,7 @@
                 <TextView
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:text="@string/gender"
+                    android:text="@string/genderColon"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -153,6 +153,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:text="@string/location"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -178,8 +179,8 @@
 
                 <TextView
                     android:layout_gravity="center"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:textSize="25sp"
+                    android:textStyle="bold|italic"
                     android:text="@string/info"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_width="wrap_content"
