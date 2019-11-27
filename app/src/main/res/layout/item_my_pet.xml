@@ -62,12 +62,27 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/pet_age"
+                    android:id="@+id/tv_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/pet_name"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/ageColon"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/pet_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/pet_name"
+                    android:layout_toEndOf="@id/tv_age"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="10dp"
                     android:gravity="center_horizontal"
