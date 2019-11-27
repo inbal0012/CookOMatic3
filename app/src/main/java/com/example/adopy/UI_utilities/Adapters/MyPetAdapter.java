@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.example.adopy.Activities.PetPageActivity;
 import com.example.adopy.R;
@@ -20,38 +24,26 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-class ItemViewHolder extends RecyclerView.ViewHolder {
-    public final TextView petDist;
+class MyPetViewHolder extends RecyclerView.ViewHolder {
     public TextView petName;
     public CircleImageView petImage;
     public TextView petAge;
+    public TextView petKind;
 
-    public ItemViewHolder(@NonNull View itemView) {
+    public MyPetViewHolder(@NonNull View itemView) {
         super(itemView);
 
         petName = itemView.findViewById(R.id.pet_name);
         petImage = itemView.findViewById(R.id.pet_image);
         petAge = itemView.findViewById(R.id.pet_age);
-        petDist = itemView.findViewById(R.id.pet_dist);
+        petKind = itemView.findViewById(R.id.pet_kind);
     }
 }
 
-class LoadingViewHolder extends RecyclerView.ViewHolder {
-    public ProgressBar progressBar;
-
-    public LoadingViewHolder(@NonNull View itemView) {
-        super(itemView);
-        this.progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
-    }
-}
-
-public class PetAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final String TAG = "my_PetAdapter2";
+public class MyPetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = "MyPetAdapter";
 
     private Context context;
     private ArrayList<PetModel> petModels;
@@ -66,7 +58,7 @@ public class PetAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     int lastVisibleItem, totalItemCount;
 
 
-    public PetAdapter2(RecyclerView recyclerView, Context context, ArrayList<PetModel> petModels) {
+    public MyPetAdapter(RecyclerView recyclerView, Context context, ArrayList<PetModel> petModels) {
         this.context = context;
         this.petModels = petModels;
 
@@ -107,7 +99,7 @@ public class PetAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pet, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_pet, parent, false);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -122,32 +114,24 @@ public class PetAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     context.startActivity(intent);
                 }
             });
-            return new ItemViewHolder(view);
-        } else if (viewType == VIEW_TYPE_LOADING){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
-            return new LoadingViewHolder(view);
+            return new MyPetViewHolder(view);
         }
         return null;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ItemViewHolder) {
+        if (holder instanceof MyPetViewHolder) {
             PetModel petModel = petModels.get(position);
-            ItemViewHolder viewHolder = (ItemViewHolder)holder;
+            MyPetViewHolder viewHolder = (MyPetViewHolder) holder;
             float[] results = new float[1];
 //            Log.d(TAG, "onBindViewHolder: " + petModel.getName() + ": " + petModel.getLatitude() + " , " + petModel.getLongitude());// + "\nuri: " + petModel.getImageUri()
-            Location.distanceBetween(userLat, userLng, petModel.getLatitude(), petModel.getLongitude(), results);
-            String dist = String.valueOf(Math.round(results[0]) / 1000);
 //        Log.d(TAG, "onBindViewHolder: " + results[0]/1000);
 
             viewHolder.petName.setText(petModel.getName());
             Glide.with(context).load(petModel.getImageUri()).placeholder(R.drawable.foot).into(viewHolder.petImage);
             viewHolder.petAge.setText(String.format(petModel.getAge().toString()));
-            viewHolder.petDist.setText(dist + context.getString(R.string.km));
-        } else if (holder instanceof LoadingViewHolder) {
-            LoadingViewHolder loadingViewHolder = (LoadingViewHolder)holder;
-            loadingViewHolder.progressBar.setIndeterminate(true);
+            viewHolder.petKind.setText(petModel.getKind());
         }
     }
 

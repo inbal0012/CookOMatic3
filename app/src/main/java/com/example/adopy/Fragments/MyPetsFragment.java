@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adopy.Activities.AddPetActivity;
 import com.example.adopy.R;
+import com.example.adopy.UI_utilities.Adapters.MyPetAdapter;
 import com.example.adopy.UI_utilities.Adapters.PetAdapter2;
 import com.example.adopy.Utilities.Dialogs;
 import com.example.adopy.Utilities.FileSystemMemory;
@@ -49,7 +50,7 @@ public class MyPetsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private ArrayList<PetModel> mPetModels;
-    private PetAdapter2 mPetAdapter;
+    private MyPetAdapter mPetAdapter;
 
     //firebase
     FirebaseAuth mAuth;
@@ -72,10 +73,10 @@ public class MyPetsFragment extends Fragment {
         if (fuser != null) {
 
             mRecyclerView = root.findViewById(R.id.recycler_my_pets);
-            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
             new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(mRecyclerView);
             mPetModels = new ArrayList<>();
-            mPetAdapter = new PetAdapter2(mRecyclerView, getContext(), mPetModels);
+            mPetAdapter = new MyPetAdapter(mRecyclerView, getContext(), mPetModels);
 
             mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Pets");
             mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);

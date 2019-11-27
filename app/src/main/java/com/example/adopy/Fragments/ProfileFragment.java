@@ -38,6 +38,7 @@ import com.google.firebase.storage.StorageTask;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 
@@ -156,7 +157,7 @@ public class ProfileFragment extends Fragment {
                         profile_image.setImageResource(R.drawable.user_female);
                     }
                 } else {
-                    Glide.with(getActivity()).load(user.getImageUri()).into(profile_image);
+                    Glide.with(Objects.requireNonNull(getActivity())).load(user.getImageUri()).into(profile_image);
                 }
 
                 //gender

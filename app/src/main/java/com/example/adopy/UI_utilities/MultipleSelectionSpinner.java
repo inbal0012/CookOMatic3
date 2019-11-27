@@ -151,7 +151,7 @@ public class MultipleSelectionSpinner extends AppCompatSpinner implements
     }
 
     public List<String> getSelectedStrings() {
-        String[] _itemsEng = new String[] {"select","Dog", "Cat", "Rabbit", "Hedgehog", "Chinchilla", "Iguana", "Turtle"};
+        String[] _itemsEng = new String[] {"Dog", "Cat", "Rabbit", "Hedgehog", "Chinchilla", "Iguana", "Turtle"};
 
         List<String> selection = new LinkedList<>();
         for (int i = 0; i < _items.length; ++i) {

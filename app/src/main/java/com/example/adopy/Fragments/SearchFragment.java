@@ -152,35 +152,12 @@ public class SearchFragment extends Fragment {
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             getUserLocation();
             Log.d(TAG, "onDataChange: userLat:" + userLat + " userLng:" + userLng);
+            String ans = "types: " + sp.getTypes() + "\nage: " + sp.getAgeMin() + " - " + sp.getAgeMax() + "\nSex: " + sp.getSex() + "\nDistance: " + sp.getDistance();
+            Log.d(TAG, "savedPreferences: \n" + ans);
             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                 PetModel petModel = dataSnapshot1.getValue(PetModel.class);
                 if (sp != null) {
-                    String ans = "types: " + sp.getTypes() + "\nage: " + sp.getAgeMin() + " - " + sp.getAgeMax() + "\nSex: " + sp.getSex() + "\nDistance: " + sp.getDistance();
-                    Log.d(TAG, "savePreferences: \n" + ans);
-                    PetAns = petModel.getName() +
-                            "\nkind: " + petModel.getKind() +
-                            "\nage: " + petModel.getAge() +
-                            "\nSex: " + petModel.getGender();
-                    Log.d(TAG, "onDataChange: \npet: " + PetAns +
-                            "\nkind filter " + sp.getTypes().contains(petModel.getKind()) +
-                            "\nAge filter " + (sp.getAgeMin() <= petModel.getAge() && petModel.getAge() <= sp.getAgeMax()) +
-                            "\nDistance filter " + (petDistance(petModel) <= sp.getDistance()) +
-                            "\nGender filter " + petModel.getGender().toString().equals(sp.getSex()));
-                    if (sp.getTypes().contains(petModel.getKind())) {                                    //Kind filter
-                        if (sp.getAgeMin() <= petModel.getAge() && petModel.getAge() <= sp.getAgeMax()) {  //Age filter
-                            if (petDistance(petModel) <= sp.getDistance()) {                              //Distance filter
-                                if (!sp.getSex().equals("Doesn't matter")) {
-                                    if (petModel.getGender().toString().equals(sp.getSex())) {                      //Gender filter
-                                        mPetModels.add(petModel);
-                                        Log.d(TAG, "onDataChange: " + petModel.getName() + " added");
-                                    }
-                                } else {
-                                    mPetModels.add(petModel);
-                                    Log.d(TAG, "onDataChange: " + petModel.getName() + " added");
-                                }
-                            }
-                        }
-                    }
+                    filterPet(petModel);
                 } else {
                     mPetModels.add(petModel);
                     Log.d(TAG, "onDataChange: " + petModel.getName() + " added");
@@ -200,6 +177,33 @@ public class SearchFragment extends Fragment {
         }
     };
 
+    private void filterPet(PetModel petModel) {
+        PetAns = petModel.getName() +
+                "\nkind: " + petModel.getKind() +
+                "\tage: " + petModel.getAge() +
+                "\tSex: " + petModel.getGender();
+        Log.d(TAG, "onDataChange: \npet: " + PetAns +
+                "\n\nKind filter: " + sp.getTypes().contains(petModel.getKind()) +
+                "\tAge filter: " + (sp.getAgeMin() <= petModel.getAge() && petModel.getAge() <= sp.getAgeMax()) +
+                "\nDistance filter: " + (petDistance(petModel) <= sp.getDistance()) +
+                "\tGender filter: " + petModel.getGender().toString().equals(sp.getSex()));
+        if (sp.getTypes().contains(petModel.getKind())) {                                    //Kind filter
+            if (sp.getAgeMin() <= petModel.getAge() && petModel.getAge() <= sp.getAgeMax()) {  //Age filter
+                if (petDistance(petModel) <= sp.getDistance()) {                              //Distance filter
+                    if (!sp.getSex().equals("Doesn't matter")) {
+                        if (petModel.getGender().toString().equals(sp.getSex())) {                      //Gender filter
+                            mPetModels.add(petModel);
+                            Log.d(TAG, "onDataChange: " + petModel.getName() + " added");
+                        }
+                    } else {
+                        mPetModels.add(petModel);
+                        Log.d(TAG, "onDataChange: " + petModel.getName() + " added");
+                    }
+                }
+            }
+        }
+    }
+
     private void loginDialog() {
         dialogs.showLoginDialog(R.id.fabAdd);
     }
@@ -210,7 +214,7 @@ public class SearchFragment extends Fragment {
             getUserLocation();
         }
         Location.distanceBetween(userLat, userLng, petModel.getLatitude(), petModel.getLongitude(), results);
-        Log.d(TAG, petModel.getName() + "petDistance: " + results[0] / 1000);
+        Log.d(TAG, petModel.getName() + " petDistance: " + results[0] / 1000);
         return results[0] / 1000;
     }
 
